@@ -47,11 +47,74 @@
 \end{abstract}
 
 
-\section{What kind of sensor is the ATI Mini40 DAQ F/T}
+\section{What kind of sensor is the ATI Mini40 DAQ F/T?}
+
+The transducer is a compact, durable, monolithic structure that converts force and torque into analog strain
+gage signals. 
+The force applied to the transducer flexes three symmetrically placed beams using Hooke’s law (from page 16 of the manual \hyperref{https://www.ati-ia.com/app_content/documents/9620-05-DAQ.pdf}{category}{name}{9620-05-DAQ}):
+\begin{itemize}
+	\item s = E·e
+	\item s = Stress applied to the beam (s is proportional to force)
+	\item E = Elasticity modulus of the beam
+	\item e = Strain applied to the beam
+\end{itemize}
+
+Semiconductor strain gages are attached to the beams and act as strain-sensitive resistors. The resistance of
+the strain gage changes as a function of the applied strain as follows:
+
+\begin{itemize}
+	\item $\Delta$R = Sa·Ro·e
+	\item $\Delta$R = Change in resistance of strain gage
+	\item Sa = Gage factor of strain gage
+	\item Ro = Resistance of strain gage unstrained
+	\item e = Strain applied to strain gage
+\end{itemize}
+
+\subsection{Load calculation}
+From page 18 of the \hyperref{https://www.ati-ia.com/app_content/documents/9620-05-DAQ.pdf}{category}{name}{manual}:
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.9\textwidth]{load_calc.png}
+	\label{fig:load_calc}
+	\caption{Load calculation process}
+\end{figure}
+
+Additionally to this, gain correction factor is only required when a customer amplifier is being used. Refer to page 20 of the \hyperref{https://www.ati-ia.com/app_content/documents/9620-05-DAQ.pdf}{category}{name}{manual} for more information.
 
 \section{Wiring and connecting to a DAQ}
 
+
+There are two different wiring alternatives for the DAQ version of this sensor:
+
+\begin{itemize}
+	\item Differential connections to DAQ (\autoref{fig:diff_wiring}) 
+	\item Single-ended connections to DAQ(\autoref{fig:se_wiring}) 
+\end{itemize}
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\textwidth]{diff_wiring.png}
+	\label{fig:diff_wiring}
+	\caption{Differential wiring connections to data acquisition system (page 35 from \hyperref{https://www.ati-ia.com/app_content/documents/9620-05-DAQ.pdf}{category}{name}{9620-05-DAQ})}
+\end{figure}
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\textwidth]{se_wiring.png}
+	\label{fig:se_wiring}
+	\caption{Single-ended wiring connections to data acquisition system (page 36 from \hyperref{https://www.ati-ia.com/app_content/documents/9620-05-DAQ.pdf}{category}{name}{9620-05-DAQ})}
+\end{figure}
+
+A connection from the DAQ F/T's AGnd/AIGnd line to the data acquisition system’s analog input ground or analog ground is required in most cases.
+This line allows the return of the small amount of current used by the data acquisition system. Noise can result if this current isn't returned via the AGnd/AIGnd path.
+For best noise performance, the cabling from the PS/IFPS connector should be shielded and each strain gage's signals in a twisted pair. The shielding should be connected to the PS/IFPS connector shell and to the shell of the data acquisition system’s connector. If the data acquisition system has no connector or its connector shell is electrically floating, then the shield at the PS/IPFS connector should be connected to the AGnd/AIGnd signal.
+
 \subsection{Sampling}
+
+
+
+
 
 \section{Keysight 34970A connection to PC}
 The connection is made via a GPIB‑USB‑HS cable. The GPIB‑USB‑HS is an IEEE 488 controller device for computers with USB slots. The GPIB‑USB‑HS achieves maximum IEEE 488.2 performance. The exact model can be found in \hyperref{https://www.amazon.com/Kanonaki-GPIB-USB-HS-Interface-Adapter-Controller/dp/B07Q84XJJF}{category}{name}{Amazon}. The differences with the \hyperref{https://www.newark.com/ni/780570-01/gpib-usb-hs-gpib-control-device/dp/14AJ5119}{category}{name}{original} true version of this device are not the sxope of this document. 
