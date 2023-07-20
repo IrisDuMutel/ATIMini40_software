@@ -71,6 +71,7 @@ the strain gage changes as a function of the applied strain as follows:
 \end{itemize}
 
 \subsection{Load calculation}
+
 From page 18 of the \hyperref{https://www.ati-ia.com/app_content/documents/9620-05-DAQ.pdf}{category}{name}{manual}:
 
 \begin{figure}[h!]
@@ -112,9 +113,47 @@ For best noise performance, the cabling from the PS/IFPS connector should be shi
 
 \subsection{Sampling}
 
+For best performance in all applications (page 37 from \hyperref{https://www.ati-ia.com/app_content/documents/9620-05-DAQ.pdf}{category}{name}{9620-05-DAQ}),
+the transducer electronics have bandwidth of 5kHz to 10kHz (depending on gain settings). This allows
+collection of all transducer frequency content. Note: that to satisfy the Nyquist Theorem, the data needs
+to be coupled at a rate greater than twice the highest frequency present, even if data at that frequency
+is not preferred
 
+\subsection{Range}
+As specified in the ATI \hyperref{https://www.ati-ia.com/products/ft/ft_models.aspx?id=mini40}{category}{name}{site}, the range of the sensor for the calibration US-20-40 is the following defined as the average of the worst and best case
+scenarios:
 
+\begin{table}[h!]
+	\centering
+	\caption{Range values in imperial and metric systems\label{tab:range}}
+	\begin{tabular}{||c | c | c | c||} 
+		\hline
+		Fx, Fy & Fz & Tx,Ty & Tz \\ [0.5ex] 
+		\hline\hline
+		20 lbf & 60 lbf & 40 lbf-in & 40 lbf-in\\ 
+		\hline
+		88.9644 N & 266.893 N & 4.51939 N-m & 4.51939 N-m \\
+		\hline
+	\end{tabular}
+\end{table}
 
+\subsection{Resolution}
+As specified in the ATI \hyperref{https://www.ati-ia.com/products/ft/ft_models.aspx?id=mini40}{category}{name}{site}, the resolution of the sensor for the calibration US-20-40 is the following defined as the average of the worst and best case
+scenarios:
+
+\begin{table}[h!]
+	\centering
+	\caption{Resolution values in imperial and metric systems\label{tab:resolution}}
+	\begin{tabular}{||c | c | c | c||} 
+		\hline
+		Fx, Fy & Fz & Tx,Ty & Tz \\ [0.5ex] 
+		\hline\hline
+		1/200 lbf & 1/100 lbf & 1/200 lbf-in & 1/200 lbf-in\\ 
+		\hline
+		0.022241108 N & 0.0444822 N & 0.000564924 N-m & 0.000564924 N-m \\
+		\hline
+	\end{tabular}
+\end{table}
 
 \section{Keysight 34970A connection to PC}
 The connection is made via a GPIB‑USB‑HS cable. The GPIB‑USB‑HS is an IEEE 488 controller device for computers with USB slots. The GPIB‑USB‑HS achieves maximum IEEE 488.2 performance. The exact model can be found in \hyperref{https://www.amazon.com/Kanonaki-GPIB-USB-HS-Interface-Adapter-Controller/dp/B07Q84XJJF}{category}{name}{Amazon}. The differences with the \hyperref{https://www.newark.com/ni/780570-01/gpib-usb-hs-gpib-control-device/dp/14AJ5119}{category}{name}{original} true version of this device are not the sxope of this document. 
