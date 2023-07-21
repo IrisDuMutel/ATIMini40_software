@@ -117,8 +117,28 @@ For best performance in all applications (page 37 from \hyperref{https://www.ati
 the transducer electronics have bandwidth of 5kHz to 10kHz (depending on gain settings). This allows
 collection of all transducer frequency content. Note: that to satisfy the Nyquist Theorem, the data needs
 to be coupled at a rate greater than twice the highest frequency present, even if data at that frequency
-is not preferred
+is not preferred. The forces and torques will be sampled at that frequency, not having anything to do with the sampling rate of the data acquisition unit. 
 
+The data acquisition unit on the other handd has a maximum ampertire time of 400$\mu$s, meaning that's the smallest amount of time it needs for opening and reading from one channel. This aperture time is equivalent to an integration time of 0.02 PLC. The relationship between this two parameters is the following:
+
+\begin{equation}
+	\frac{0.02PLC}{50Hz (instrument power frequency)} = 400\mu s
+\end{equation}
+
+Using a differential wiring with 12 channels, we will need to multiply that aperture time by the number of channels:
+
+\begin{equation}
+	400\mu s \cdot 12 = 4800\mu s
+\end{equation}
+
+An aperture time of 4.8 ms is equivalent to a frequency of around 208 Hz. Rounding the aperture time to 5 ms per data volume (a vector containing one voltage value for each channel), we can obtain 10 measurements every 50 ms. 
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.8\textwidth]{sample_rate.pdf}
+	\label{fig:sample_rate}
+	\caption{Representation of stuff}
+\end{figure}
 \subsection{Range}
 As specified in the ATI \hyperref{https://www.ati-ia.com/products/ft/ft_models.aspx?id=mini40}{category}{name}{site}, the range of the sensor for the calibration US-20-40 is the following defined as the average of the worst and best case
 scenarios:
