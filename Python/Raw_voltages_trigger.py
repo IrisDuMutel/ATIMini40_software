@@ -119,11 +119,11 @@ def DAQ_Example():
     #inst.write("TRIG:SOURCE IMMEDIATE")  # Select continous scan trigger
     inst.write("TRIG:SOURCE TIMER")  # Select the interval timer configuration
     inst.write("TRIG:TIMER 50E-03")  # Set the scan interval to 50 msec
-    # TODO - Error +305
-    # print("[Curr aperture]: ", inst.query("CURR:DC:APER?"), flush=True)
+
+    #What's the aperture before setting it?
     print("[APER]: ", inst.query("VOLT:DC:APER? (@101:102)"), flush=True)
-    inst.write("VOLT:DC:APER 400E-06,(@101:102)")  # time in seconds between 400 μs and 1 second, with 4 μs
-    print("[APER]: ", inst.query("VOLT:DC:APER? (@101:102)"), flush=True)
+    inst.write("VOLT:DC:APER 400E-06,(@101:102)")  # Set aperture time in seconds between 400 μs and 1 second, with 4 μs resolution
+    print("[APER]: ", inst.query("VOLT:DC:APER? (@101:102)"), flush=True) # Double check aperture config
 
     # inst.write("CURR:DC:APER 400E-06,(@101:102)")  # time in seconds between 400 μs and 1 second, with 4 μs
     inst.write("TRIG:COUNT 10")  # Sweep the scan list -> TRIG:TIMER/(CURR:DC:APER*Num_Channels)
@@ -142,14 +142,14 @@ def DAQ_Example():
     # Returns N readings (starting with the oldest reading first) and erases them from memory.
     #print('[Data]: ', inst.query("DATA:REMOVE? 1"), flush=True)
     #values = np.array(inst.query_ascii_values("DATA:REMOVE? 1"))
-    values = inst.query_ascii_values("DATA:REMOVE? 2", container=np.array)
-    print(values[0])
-    # https://edadocs.software.keysight.com/kkbopen/use-a-python-program-to-scan-6-channels-on-a-3497xa-or-daq97xa-data-acquisition-unit-620693047.html
+    # values = inst.query_ascii_values("DATA:REMOVE? 2", container=np.array)
+    # print(values[0])
+    # # https://edadocs.software.keysight.com/kkbopen/use-a-python-program-to-scan-6-channels-on-a-3497xa-or-daq97xa-data-acquisition-unit-620693047.html
 
-    inst.write("DISP ON")
+    # inst.write("DISP ON")
     inst.write("DISP:TEXT 'Done.'")
 
-    # Close connection
+    # # Close connection
     inst.close()
     # ---------------------
 

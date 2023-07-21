@@ -150,10 +150,11 @@ scenarios:
 		\hline
 		Fx, Fy & Fz & Tx,Ty & Tz \\ [0.5ex] 
 		\hline\hline
-		20 lbf & 60 lbf & 40 lbf-in & 40 lbf-in\\ 
+		$\pm$ 20 lbf & $\pm$ 60 lbf & $\pm$ 40 lbf-in & $\pm$ 40 lbf-in\\ 
 		\hline
-		88.9644 N & 266.893 N & 4.51939 N-m & 4.51939 N-m \\
+		$\pm$ 88.9644 N & $\pm$ 266.893 N & $\pm$ 4.51939 N-m & $\pm$ 4.51939 N-m \\
 		\hline
+		
 	\end{tabular}
 \end{table}
 
@@ -175,9 +176,60 @@ scenarios:
 	\end{tabular}
 \end{table}
 
+\subsection{Sensitivity and output range and resolution voltages}
+
+From page 54 of the transducer \href{https://www.ati-ia.com/app_content/documents/9620-05-Transducer%20Section.pdf}{manual}, we can obtain the analog $\pm$ 10 V sensitivity. Using the data from tables \ref{tab:range} and \ref{tab:resolution}, we can obtain the following table:
+
+\begin{table}[h!]
+	\centering
+	\caption{Sensitivity, range and resolution outputs voltages\label{tab:sensit} (imperial system)}
+	\begin{tabular}{||c | c | c | c ||} 
+		\hline
+		 & Fx, Fy & Fz & Tx,Ty,Tz \\ [0.5ex] 
+		\hline\hline
+		Analog $\pm$ 10V sensitivity & 2 lbf/V & 6 lbf/V & 4 lbf-in/V\\ 
+		\hline
+		Range [V] & $\pm$ 10 & $\pm$ 10 & $\pm$ 10 \\
+		\hline
+		Resolution [V] & 1/400 & 1/600 & 1/800 \\
+		\hline
+	\end{tabular}
+\end{table}
+
+The minimum voltage that the DAQ must be able to measure is 1/800 V = 1.25 mV. The range must be $\pm$ 10 V.
+
+Just for clarity purposes, \autoref{tab:sensit} in metric system would be as follows:
+
+\begin{table}[h!]
+	\centering
+	\caption{Sensitivity, range and resolution outputs voltages\label{tab:sensit2} (metric system)}
+	\begin{tabular}{||c | c | c | c ||} 
+		\hline
+		& Fx, Fy & Fz & Tx,Ty,Tz \\ [0.5ex] 
+		\hline\hline
+		Analog $\pm$ 10V sensitivity & 8.89644 N/V & 26.6893 N/V & 17.7929 N/V\\ 
+		\hline
+		Range [V] & $\pm$ 10 & $\pm$ 10 & $\pm$ 10 \\
+		\hline
+		Resolution [V] & 1/400 & 1/600 & 1/800 \\
+		\hline
+	\end{tabular}
+\end{table}
+
 \section{Keysight 34970A connection to PC}
 The connection is made via a GPIB‑USB‑HS cable. The GPIB‑USB‑HS is an IEEE 488 controller device for computers with USB slots. The GPIB‑USB‑HS achieves maximum IEEE 488.2 performance. The exact model can be found in \hyperref{https://www.amazon.com/Kanonaki-GPIB-USB-HS-Interface-Adapter-Controller/dp/B07Q84XJJF}{category}{name}{Amazon}. The differences with the \hyperref{https://www.newark.com/ni/780570-01/gpib-usb-hs-gpib-control-device/dp/14AJ5119}{category}{name}{original} true version of this device are not the sxope of this document. 
 
+There are various manuals for this DAQ. The most helpful one containing command examples is the \href{https://documentation.help/Keysight-34970A-34972A/documentation.pdf}{Keysight 34970A/34972A Command Reference Manual}. From this manual, the information from the following section was found.
+
+\subsection{Important commands}
+
+\textbf{ROUT:SCAN} : This command selects the channels to be included in the scan list. This command is used in conjunction with the CONFigure commands to set up an automated scan. To start the scan, use the INITiate or READ? command.
+
+\textbf{INStrument:DMM} : This command disables or enables the internal digital multimeter. When you change the state of the internal DMM, the instrument issues a Factory Reset (*RST command).
+
+\textbf{TRIGger:SOURce} : Select the trigger source to control the onset of each sweep through the scan list (a sweep is one pass through the scan list). The instrument will accept a software (bus) command, an immediate (continuous) scan trigger, an external TTL trigger pulse, an alarm-initiated action, or an internally paced timer. Usually used: TIMer = Internally paced timer trigger.
+
+\textbf{TRIGger:TIMer} : This command sets the trigger-to-trigger interval (in seconds) for measurements on the channels in the present scan list. This command defines the time from the start of one trigger to the start of the next trigger, up to the specified trigger count.
 
 \section{LabView}
 
@@ -206,7 +258,9 @@ Inside the while loop, the write and read blocks are interacting with the instru
 
 \section{Python}
 
+\section{Resources}
 
+\href{https://documentation.help/Keysight-34970A-34972A/documentation.pdf}{Keysight 34970A/34972A Command Reference Manual}
 
 \bibliographystyle{IEEEtran}
 \bibliography{biblio}
