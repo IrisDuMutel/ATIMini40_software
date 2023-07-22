@@ -231,6 +231,20 @@ There are various manuals for this DAQ. The most helpful one containing command 
 
 \textbf{TRIGger:TIMer} : This command sets the trigger-to-trigger interval (in seconds) for measurements on the channels in the present scan list. This command defines the time from the start of one trigger to the start of the next trigger, up to the specified trigger count.
 
+\textbf{INITiate} : This command changes the state of the triggering system from the ``idle" state to the ``wait-for-trigger" state. Scanning will begin when the specified trigger conditions are satisfied following the receipt of the INITiate command. Readings are stored in the instrument's internal reading memory. Note that the INITiate command also clears the previous set of readings from memory.
+If a scan list is currently defined (see ROUTe:SCAN command), the INITiate command performs a scan of the specified channels.
+Storing readings in memory using the INITiate command is generally faster than sending readings to memory using the READ? command. The INITiate command is also an "overlapped" command. This means that after executing the INITiate command, you can send other commands that do not affect the measurements.
+You can store up to 50,000 readings in memory and all readings are automatically time stamped. If memory overflows, the new readings will overwrite the first (oldest) readings stored; the most recent readings are always preserved.
+For scanning measurements using the multiplexer modules, an
+error is generated if the internal DMM is disabled.
+To retrieve the readings from memory, use the FETCh? command.
+The readings are not erased from memory when you read them.
+You can send the command multiple times to retrieve the same
+data in reading memory.
+
+\textbf{FETCh}: This command transfers readings stored in non-volatile memory to the instrument's output buffer, where you can read them into your computer. The readings stored in memory are not erased when you read them with FETCh?.
+
+
 \section{LabView}
 
 LabView offers two main ways of interacting with the Keysight 34970A DAQ:

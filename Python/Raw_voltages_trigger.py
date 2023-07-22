@@ -76,32 +76,33 @@ def DAQ_Example():
 
     # Channels Configuration
     # ---------------------
-    inst.write("ROUT:OPEN (@101:102)")  # Open channels
+    inst.write("ROUT:OPEN (@101:106)")  # Open channels
 
-    print("[Gains]: ", inst.query("CALC:SCAL:GAIN? (@101:102)"), flush=True)
+    # print("[Gains]: ", inst.query("CALC:SCAL:GAIN? (@101:106)"), flush=True)
     #inst.write("CALC:SCAL:GAIN 1.0,(@101:102)")  # Set to 1
-    print("[Offsets]: ", inst.query("CALC:SCAL:OFFS? (@101:102)"), flush=True)
+    # print("[Offsets]: ", inst.query("CALC:SCAL:OFFS? (@101:106)"), flush=True)
     #inst.write("CALC:SCAL:OFFS 0.0,(@101:102)")  # Set to 0
-    print("[Scaling]: ", inst.query("CALC:SCAL:STAT? (@101:102)"), flush=True)
+    # print("[Scaling]: ", inst.query("CALC:SCAL:STAT? (@101:106)"), flush=True)
     #inst.write("CALC:SCAL:STAT ON,(@101:102)")  # Apply (gain*measurement) + offset
 
-    print("[Config]: ", inst.query("CONF? (@101:102)"), flush=True)
-    inst.write("CONF:VOLT:DC (@101:102)")  # Configure channel for DC voltage
-    #inst.write("VOLT:DC:RANG 10,(@101:102)")  # sets the voltage range
+    # Setting range and resolution according to instrument's capabilities
+    # print("[Default Config]: ", inst.query("CONF? (@101:106)"), flush=True)
+    inst.write("CONF:VOLT:DC 10V, 0.001, (@101:102)")  # Configure channel for DC voltage
+    print("[Measurement Config]: ", inst.query("CONF? (@101:106)"), flush=True)
 
-    print("[Resolution]: ", inst.query("VOLT:DC:RES? (@101:102)"), flush=True)
+    # print("[Resolution]: ", inst.query("VOLT:DC:RES? (@101:106)"), flush=True)
     #inst.write("VOLT:DC:RES 0.00001,(@101:102)")  # sets the resolution
 
     inst.write("FORMAT:READING:CHAN ON")  # Return channel number with each reading
     inst.write("FORMAT:READING:TIME ON")  # Return time stamp with each reading
-    print("[Scaling]: ", inst.query("FORMAT:READING:UNIT?"), flush=True)
+    # print("[Scaling]: ", inst.query("FORMAT:READING:UNIT?"), flush=True)
     #inst.write("FORMAT:READING:UNIT ON")  # Return unit with each reading
 
     #inst.write('DIAG:POKE:SLOT:DATA 101,"SIG0_0"')  # adds label to channel  # TODO - Doesn't work
     #inst.write('DIAG:POKE:SLOT:DATA 102,"SIG0_1"')  # adds label to channel  # TODO - Doesn't work
 
-    print("[Delay]: ", inst.query("ROUT:CHAN:DELAY? (@101:102)"), flush=True)
-    inst.write("ROUT:CHAN:DELAY:AUTO ON,(@101:102)")  # enables automatic delay
+    # print("[Delay]: ", inst.query("ROUT:CHAN:DELAY? (@101:106)"), flush=True)
+    inst.write("ROUT:CHAN:DELAY:AUTO ON,(@101:106)")  # enables automatic delay
     # inst.write("ROUT:CHAN:DELAY 1,(@101:102)")  # Set the delay (msecs) between relay closure and measurement
     # ---------------------
 
@@ -114,37 +115,44 @@ def DAQ_Example():
     inst.write("INST:DMM ON")  # Enables the internal DMM
 
     # Scan List of the desired multiplex channels
-    inst.write("ROUT:SCAN (@101:102)")
+    inst.write("ROUT:SCAN (@101:106)")
 
     #inst.write("TRIG:SOURCE IMMEDIATE")  # Select continous scan trigger
     inst.write("TRIG:SOURCE TIMER")  # Select the interval timer configuration
     inst.write("TRIG:TIMER 50E-03")  # Set the scan interval to 50 msec
 
     #What's the aperture before setting it?
-    print("[APER]: ", inst.query("VOLT:DC:APER? (@101:102)"), flush=True)
-    inst.write("VOLT:DC:APER 400E-06,(@101:102)")  # Set aperture time in seconds between 400 μs and 1 second, with 4 μs resolution
-    print("[APER]: ", inst.query("VOLT:DC:APER? (@101:102)"), flush=True) # Double check aperture config
+    # print("[Default Aperture]: ", inst.query("VOLT:DC:APER? (@101:106)"), flush=True)
+    inst.write("VOLT:DC:APER 400E-06,(@101:106)")  # Set aperture time in seconds between 400 μs and 1 second, with 4 μs resolution
+    print("[Measurement Aperture]: ", inst.query("VOLT:DC:APER? (@101:106)"), flush=True) # Double check aperture config
 
     # inst.write("CURR:DC:APER 400E-06,(@101:102)")  # time in seconds between 400 μs and 1 second, with 4 μs
-    inst.write("TRIG:COUNT 10")  # Sweep the scan list -> TRIG:TIMER/(CURR:DC:APER*Num_Channels)
+    inst.write("TRIG:COUNT 1")  # Sweep the scan list -> TRIG:TIMER/(CURR:DC:APER*Num_Channels)
     #(Note: 10 is for 12 channels)
 
     inst.write("INITIATE")  # Initiate the scan -> stores readings in memory
     inst.write("FETCH?")  # Transfers the readings from memory to the instrument's output buffer.
-
+    # inst.write("*OPC")
     # Wait until there a data available
-    points = 0
-    while (points==0):
-        # Returns the number of readings in memory
-        points = inst.query("DATA:POINTS?")
-        print('[Number of Readings]: ', points, flush=True)
-
+    # points = 0
+    # while (points==0):
+    #     # Returns the number of readings in memory
+    #     points = inst.query("DATA:POINTS?")
+    #     print('[Number of Readings]: ', points, flush=True)
+        
+        # inst.write("FETCH?")
+        # memo = inst.query('MEMory:NSTAtes?')
+        # print('[Memory Limit]: ', memo, flush=True)
+        # inst.write("*RST")
+        # memo = inst.query('MEMory:NSTAtes?')
+        # print('[Memory Limit]: ', memo, flush=True)
     # Returns N readings (starting with the oldest reading first) and erases them from memory.
     #print('[Data]: ', inst.query("DATA:REMOVE? 1"), flush=True)
     #values = np.array(inst.query_ascii_values("DATA:REMOVE? 1"))
     # values = inst.query_ascii_values("DATA:REMOVE? 2", container=np.array)
     # print(values[0])
     # # https://edadocs.software.keysight.com/kkbopen/use-a-python-program-to-scan-6-channels-on-a-3497xa-or-daq97xa-data-acquisition-unit-620693047.html
+    # start the scan and retrieve the scan time
 
     # inst.write("DISP ON")
     inst.write("DISP:TEXT 'Done.'")

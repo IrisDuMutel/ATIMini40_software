@@ -17,5 +17,11 @@ inst.write("VOLT:DC:APER 400E-06,(@101)")
 inst.write("TRIG:COUNT 10")
 inst.write("INITIATE")  # Initiate the scan -> stores readings in memory
 inst.write("FETCH?")
-points = inst.query("DATA:POINTS?")
-print('[Number of Readings]: ', points, flush=True)
+# points = inst.query("DATA:POINTS?")
+
+# print('[Number of Readings]: ', points, flush=True)
+memo = inst.query('MEMory:NSTAtes?')
+print('[Memory Limit]: ', memo, flush=True)
+inst.write("MEM:STAT:DEL 1")
+memo = inst.query('MEMory:NSTAtes?')
+print('[Memory Limit]: ', memo, flush=True)
