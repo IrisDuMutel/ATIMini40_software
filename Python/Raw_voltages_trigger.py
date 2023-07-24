@@ -120,7 +120,7 @@ def DAQ_Example():
     #inst.write("TRIG:SOURCE IMMEDIATE")  # Select continous scan trigger
     inst.write("TRIG:SOURCE TIMER")  # Select the interval timer configuration
     inst.write("TRIG:TIMER 50E-03")  # Set the scan interval to 50 msec
-
+    # inst.write("DATA:POINts:EVENt:THReshold 50E+01")
     #What's the aperture before setting it?
     # print("[Default Aperture]: ", inst.query("VOLT:DC:APER? (@101:106)"), flush=True)
     inst.write("VOLT:DC:APER 400E-06,(@101:106)")  # Set aperture time in seconds between 400 μs and 1 second, with 4 μs resolution
@@ -134,11 +134,13 @@ def DAQ_Example():
     inst.write("FETCH?")  # Transfers the readings from memory to the instrument's output buffer.
     # inst.write("*OPC")
     # Wait until there a data available
-    # points = 0
-    # while (points==0):
-    #     # Returns the number of readings in memory
-    #     points = inst.query("DATA:POINTS?")
-    #     print('[Number of Readings]: ', points, flush=True)
+    points = 0
+    while (points==0):
+        # Returns the number of readings in memory
+        thresh = inst.query("DATA:POINts:EVENt:THReshold?")
+        print("[Memory threshold]: ", thresh, flush=True)
+        points = inst.read("DATA:POINTS?")
+        print('[Number of Readings]: '+ points, flush=True)
         
         # inst.write("FETCH?")
         # memo = inst.query('MEMory:NSTAtes?')

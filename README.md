@@ -2,26 +2,30 @@
 ATI Mini40 DAQ F/T sensor is connected differentially to the first slot of the Keysight 34970A DAQ (16-channel multiplexer). The DAQ is connected to a PC using the GPIB-HS-USB connector from National Instruments, allowing the use of Virtual Instrument Software Architecture (VISA) libraries. 
 
 
-### LabView (2023)
+## LabView (2023)
+
  - Keysight_ATIMini40.vi: A simple data collection project using LabView and VISA blocks for the Keysight 34970A Data Acquisition Unit
 
-### Python
+## Python
 Using [PyVisa](https://pyvisa.readthedocs.io/en/latest/index.html) python package to communicate with Keysight 34970A Data Acquisition Unit
+
+### SCRIPTS AND DESCRIPTION (KEYSIGHT 34970A):
 
 - IDN_query.py: Asking list of resources found by PyVisa and identification query to instruments address. WORKING
 - test_query.py: Script made for testing different query commands. Use this script as test script.
 - Raw_voltages.py: Short configuration file that measures the raw voltages from the insturment and prints them on terminal. WORKING
-- Raw_voltages_trigger.py: Short configuration file that measures the raw voltages from the insturment and prints them on terminal using timer trigger. ERROR 401: Buffer is full
-- DAQ_acquire_Voltages.py: Script that obtains valtgaes and measures the time required for ten scans of a number of channels that can be changed by the user. Aperture is 400 us, trigger timer is 5 ms and trigger count is 10. It only executes once. WORKING
+- Raw_voltages_trigger.py: Short configuration file that measures the raw voltages from the insturment and prints them on terminal using timer trigger. NOT WORKING: ERROR 410: Buffer is full
 
-- DAQ_acquire_Voltages2.py: Same as DAQ_acquire_Voltages but for editing. Trying to get a faster data stream using either READ or FETCH commands
+- DAQ_acquire_Voltages.py: Script that obtains valtgaes and measures the time required for ten scans of a number of channels that can be changed by the user. Trigger_sampling has the following config: Aperture is 400 us, trigger timer is 5 ms and trigger count is 10  Manual_sampling uses the read command. Both funstions execute just once. WORKING
+
+- DAQ_acquire_Voltages2.py: Same as DAQ_acquire_Voltages but for editing. Trying to get a faster data stream using either READ or FETCH commands.
 
 Commands used in these scripts can be found (with additional examples) in the [Keysight 34970A Command reference manual](https://documentation.help/Keysight-34970A-34972A/)
 
 
-### MATLAB
+## MATLAB
 
-### Docs
+## Docs
 Personally crafted documentation containing (what I consider) the most important information from all the components in the setup. In progress.
 
 
