@@ -18,7 +18,7 @@ Using [PyVisa](https://pyvisa.readthedocs.io/en/latest/index.html) python packag
 
 - DAQ_acquire_Voltages.py: Script that obtains valtgaes and measures the time required for ten scans of a number of channels that can be changed by the user. Trigger_sampling has the following config: Aperture is 400 us, trigger timer is 5 ms and trigger count is 10  Manual_sampling uses the read command. Both funstions execute just once. WORKING
 
-- DAQ_acquire_Voltages2.py: Same as DAQ_acquire_Voltages but for editing. Trying to get a faster data stream using either READ or FETCH commands.
+- DAQ_acquire_Voltages2.py: Same as DAQ_acquire_Voltages but reads as fast as possible and writes data nito a CVS file which path is declared at the beginning of the script. 
 
 Commands used in these scripts can be found (with additional examples) in the [Keysight 34970A Command reference manual](https://documentation.help/Keysight-34970A-34972A/)
 
