@@ -227,9 +227,8 @@ def Read_cont(inst,writer):
     # First component is time, the rest are measurements
     print(str(end), ", " + values)
     print("[Execution Time for reading data]: " + str(end - start) + " secs")  # execution time = TOC - TIC
-    # write a row to the csv file
-    data = [str(end), ", " + values]
-    writer.writerow(data)
+    # write a row to the csv file: relative time, v1, v2, v3 ,v4 ,v5, v6
+    writer.writerow(("%.6f" % end + "," + values, ))
     
 
 
