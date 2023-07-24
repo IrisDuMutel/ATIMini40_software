@@ -185,7 +185,7 @@ def DAQ_Timer_Sampling():
     # ---------------------
 
     inst.write("DISP:TEXT 'SCANNING...'")
-    print("Scanning...")
+    # print("Scanning...")
 
     # Enables the internal DMM
     inst.write("INST:DMM ON")
@@ -214,9 +214,12 @@ def DAQ_Timer_Sampling():
 
     inst.write("FETCH?")
     values = inst.read()
-    print("[Data]: " + values)
-
+    
     end = timer()  # TOC
+    # First component is time, the rest are measurements
+    print(str(end), ", " + values)
+
+     
     print("[Execution Time]: " + str(end - start) + " secs")  # execution time = TOC - TIC
     # Close connection
     inst.close()
@@ -246,13 +249,12 @@ if __name__ == '__main__':
 
     # Run this to see the challenge with manual sampling
     # DAQ_Manual_Sampling()
-    for x in range(0, 4):
-        
-        # Run this to see good sampling
-        DAQ_Timer_Sampling()
-        
-
-    Read_Errors()  # Get new errors
-    
+    try:
+        while True:
+            # Run this to see good sampling
+            DAQ_Timer_Sampling()
+    except KeyboardInterrupt:
+        print('interrupted!')
+        Read_Errors()  # Get new errors
 
     
