@@ -38,17 +38,17 @@ def DAQ_Test_Commands():
 
     # Channels Configuration
     # ---------------------
-    inst.write("ROUT:OPEN (@101:102)")  # Open channels
+    inst.write("ROUT:OPEN CHANNEL_LIST")  # Open channels
 
-    print("[Config]: ", inst.query("CONF? (@101:102)"), flush=True)
-    inst.write("CONF:VOLT:AC (@101:102)")  # Configure channel for AC voltage
-    # inst.write("VOLT:AC:RANG 10,(@101:102)")  # sets the voltage range
+    print("[Config]: ", inst.query("CONF? CHANNEL_LIST"), flush=True)
+    inst.write("CONF:VOLT:AC CHANNEL_LIST")  # Configure channel for AC voltage
+    # inst.write("VOLT:AC:RANG 10,CHANNEL_LIST")  # sets the voltage range
 
-    print("[Resolution]: ", inst.query("VOLT:AC:RES? (@101:102)"), flush=True)
-    # inst.write("VOLT:AC:RES 0.00001,(@101:102)")  # sets the resolution
+    print("[Resolution]: ", inst.query("VOLT:AC:RES? CHANNEL_LIST"), flush=True)
+    # inst.write("VOLT:AC:RES 0.00001,CHANNEL_LIST")  # sets the resolution
 
-    print("[Delay]: ", inst.query("ROUT:CHAN:DELAY? (@101:102)"), flush=True)
-    inst.write("ROUT:CHAN:DELAY:AUTO ON,(@101:102)")  # enables automatic delay
+    print("[Delay]: ", inst.query("ROUT:CHAN:DELAY? CHANNEL_LIST"), flush=True)
+    inst.write("ROUT:CHAN:DELAY:AUTO ON,CHANNEL_LIST")  # enables automatic delay
     # ---------------------
 
     # Measurement Setup
@@ -60,15 +60,15 @@ def DAQ_Test_Commands():
     inst.write("INST:DMM ON")  # Enables the internal DMM
 
     # Scan List of the desired multiplex channels
-    inst.write("ROUT:SCAN (@101:102)")
+    inst.write("ROUT:SCAN CHANNEL_LIST")
 
     #inst.write("TRIG:SOURCE IMMEDIATE")  # Select continous scan trigger
     inst.write("TRIG:SOURCE TIMER")  # Select the interval timer configuration
     inst.write("TRIG:TIMER 1E-03")  # Set the scan interval to 50 msec
 
     # TODO - Not working... default bandwidth 200: 200Hz-300kHz
-    #print("[BAND]: ", inst.query("VOLT:AC:BAND? (@101:102)"), flush=True)
-    #inst.write("VOLT:AC:BAND 3,(@101:102)")
+    #print("[BAND]: ", inst.query("VOLT:AC:BAND? CHANNEL_LIST"), flush=True)
+    #inst.write("VOLT:AC:BAND 3,CHANNEL_LIST")
 
     inst.write("TRIG:COUNT 1")  # Sweep the scan list -> TRIG:TIMER / (VOLT:DC:APER * Num_Channels)
     # (Note: 10 is for 12 channels)

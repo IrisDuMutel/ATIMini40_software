@@ -8,11 +8,20 @@ ATI Mini40 DAQ F/T sensor is connected differentially to the first slot of the K
 ### Python
 Using [PyVisa](https://pyvisa.readthedocs.io/en/latest/index.html) python package to communicate with Keysight 34970A Data Acquisition Unit
 
-- IDN_query.py: Asking list of resources found by PyVisa and identification query to instruments address
-- Raw_voltages.py: Short configuration file that measures the raw voltages from the insturment and prints them on terminal
+- IDN_query.py: Asking list of resources found by PyVisa and identification query to instruments address. WORKING
+- test_query.py: Script made for testing different query commands. Use this script as test script.
+- Raw_voltages.py: Short configuration file that measures the raw voltages from the insturment and prints them on terminal. WORKING
+- Raw_voltages_trigger.py: Short configuration file that measures the raw voltages from the insturment and prints them on terminal using timer trigger. ERROR 401: Buffer is full
+- DAQ_acquire_Voltages.py: Script that obtains valtgaes and measures the time required for ten scans of a number of channels that can be changed by the user. Aperture is 400 us, trigger timer is 5 ms and trigger count is 10. It only executes once. WORKING
+
+- DAQ_acquire_Voltages2.py: Same as DAQ_acquire_Voltages but for editing. Trying to get a faster data stream using either READ or FETCH commands
+
+Commands used in these scripts can be found (with additional examples) in the [Keysight 34970A Command reference manual](https://documentation.help/Keysight-34970A-34972A/)
 
 
 ### MATLAB
 
 ### Docs
 Personally crafted documentation containing (what I consider) the most important information from all the components in the setup. In progress.
+
+
