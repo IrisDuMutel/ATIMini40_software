@@ -157,7 +157,10 @@ def DAQ_Manual_Sampling():
 
 def DAQ_Timer_Sampling():
     global CHANNEL_LIST
+    start_func = timer()  # TIC
 
+    
+    
     # Open connection
     # ---------------------
     inst = rm.open_resource(DAQ_ADDRESS)
@@ -209,25 +212,27 @@ def DAQ_Timer_Sampling():
 
     # Initiate the scan when trig condition happens -> stores readings in memory
     inst.write("INITIATE")
+    return inst
+    
 
+
+def Read_cont(inst):
+    global CHANNEL_LIST
     start = timer()  # TIC
-
     inst.write("FETCH?")
     values = inst.read()
-    
     end = timer()  # TOC
     # First component is time, the rest are measurements
     print(str(end), ", " + values)
-
-     
-    print("[Execution Time]: " + str(end - start) + " secs")  # execution time = TOC - TIC
-    # Close connection
-    inst.close()
+    print("[Execution Time for reading data]: " + str(end - start) + " secs")  # execution time = TOC - TIC
+    
+    
 
 
-def Read_Errors():
+def Read_Errors(inst):
     global rm
 
+    inst.close()
     # Open connection
     inst = rm.open_resource(DAQ_ADDRESS)
 
@@ -245,14 +250,14 @@ def Read_Errors():
 
 if __name__ == '__main__':
     #DAQ_Info()
-    Read_Errors()  # Clear error buffer
-
+    # Read_Errors()  # Clear error buffer
+    inst = DAQ_Timer_Sampling()
     # Run this to see the challenge with manual sampling
     # DAQ_Manual_Sampling()
     try:
         while True:
             # Run this to see good sampling
-            DAQ_Timer_Sampling()
+            Read_cont(inst)
     except KeyboardInterrupt:
         print('interrupted!')
         Read_Errors()  # Get new errors
