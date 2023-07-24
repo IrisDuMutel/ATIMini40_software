@@ -3,12 +3,12 @@ import sys
 from time import sleep
 import numpy as np
 from timeit import default_timer as timer
-
+import csv
 import pyvisa as visa
 
 DAQ_ADDRESS = 'GPIB0::9::INSTR'  # DAQ -> KEYSIGHT 3497A
 CHANNEL_LIST = "(@101:106)"
-
+write_path = open('TestData/bbb.csv', 'w')
 rm = visa.ResourceManager()
 
 
@@ -98,6 +98,7 @@ def DAQ_Test_Commands():
 
 
 def DAQ_Manual_Sampling():
+    global write_path
     global CHANNEL_LIST
 
     # Open connection
@@ -155,11 +156,12 @@ def DAQ_Manual_Sampling():
     inst.close()
 
 
-def DAQ_Timer_Sampling():
+def DAQ_Timer_Sampling(write_path):
     global CHANNEL_LIST
     start_func = timer()  # TIC
 
-    
+    # create the csv writer
+    writer = csv.writer(write_path)
     
     # Open connection
     # ---------------------
@@ -204,19 +206,19 @@ def DAQ_Timer_Sampling():
     # Select the interval timer configuration
     inst.write("TRIG:SOURCE TIMER")
     # Set the scan interval to 50 msec
-    inst.write("TRIG:TIMER 50E-03")
+    inst.write("TRIG:TIMER 5E-03")
     # Time in seconds between 400 μs and 1 second, with 4 μs
     inst.write("VOLT:DC:APER 400E-06," + CHANNEL_LIST)
     # Sweep the scan list
-    inst.write("TRIG:COUNT 10") # -> TRIG:TIMER / (VOLT:DC:APER * Num_Channels)
+    inst.write("TRIG:COUNT 1") # -> TRIG:TIMER / (VOLT:DC:APER * Num_Channels)
 
     # Initiate the scan when trig condition happens -> stores readings in memory
     inst.write("INITIATE")
-    return inst
+    return inst,writer
     
 
 
-def Read_cont(inst):
+def Read_cont(inst,writer):
     global CHANNEL_LIST
     start = timer()  # TIC
     inst.write("FETCH?")
@@ -225,16 +227,19 @@ def Read_cont(inst):
     # First component is time, the rest are measurements
     print(str(end), ", " + values)
     print("[Execution Time for reading data]: " + str(end - start) + " secs")  # execution time = TOC - TIC
-    
+    # write a row to the csv file
+    data = [str(end), ", " + values]
+    writer.writerow(data)
     
 
 
 def Read_Errors(inst):
+    global write_path
     global rm
 
     inst.close()
     # Open connection
-    inst = rm.open_resource(DAQ_ADDRESS)
+    [inst] = rm.open_resource(DAQ_ADDRESS)
 
     emptyFlag = False
     while not emptyFlag:
@@ -246,18 +251,19 @@ def Read_Errors(inst):
 
     # Close connection
     inst.close()
+    write_path.close()
 
 
 if __name__ == '__main__':
     #DAQ_Info()
     # Read_Errors()  # Clear error buffer
-    inst = DAQ_Timer_Sampling()
+    [inst,writer] = DAQ_Timer_Sampling(write_path)
     # Run this to see the challenge with manual sampling
     # DAQ_Manual_Sampling()
     try:
         while True:
             # Run this to see good sampling
-            Read_cont(inst)
+            Read_cont(inst,writer)
     except KeyboardInterrupt:
         print('interrupted!')
         Read_Errors()  # Get new errors
