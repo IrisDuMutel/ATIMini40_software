@@ -22,6 +22,8 @@ Using [PyVisa](https://pyvisa.readthedocs.io/en/latest/index.html) python packag
 
 - DAQ_acquire_Voltages_GUI.py: Launches ATIMini40_GUI.ui, which allows easier configuration of the instrument and data log. Working using QTimer 1 ms
 
+- DAQ_acquire_Voltages_GUI2.py: Launches ATIMini40_GUI.ui, which allows easier configuration of the instrument and data log. Trying to avoid using yet another timer. NOT WORKING
+
 
 Commands used in these scripts can be found (with additional examples) in the [Keysight 34970A Command reference manual](https://documentation.help/Keysight-34970A-34972A/)
 
