@@ -42,62 +42,17 @@
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QSpinBox" name="spinBox_ScanNumber">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>110</y>
-       <width>131</width>
-       <height>25</height>
-      </rect>
-     </property>
-     <property name="minimum">
-      <number>1</number>
-     </property>
-     <property name="maximum">
-      <number>10</number>
-     </property>
-    </widget>
     <widget class="QLabel" name="label">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>90</y>
+       <y>70</y>
        <width>121</width>
        <height>21</height>
       </rect>
      </property>
      <property name="text">
       <string>Scan number (1-10)</string>
-     </property>
-    </widget>
-    <widget class="QPlainTextEdit" name="apertureTime">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>170</y>
-       <width>131</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="plainText">
-      <string>400E-06</string>
-     </property>
-    </widget>
-    <widget class="QPlainTextEdit" name="channelList">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>30</y>
-       <width>131</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="lineWidth">
-      <number>1</number>
-     </property>
-     <property name="plainText">
-      <string>101:106</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_2">
@@ -126,19 +81,6 @@
       <string>Aperture [400us-2s]</string>
      </property>
     </widget>
-    <widget class="QPlainTextEdit" name="triggerTimer">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>230</y>
-       <width>131</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="plainText">
-      <string>50E-03</string>
-     </property>
-    </widget>
     <widget class="QLabel" name="label_8">
      <property name="geometry">
       <rect>
@@ -150,6 +92,95 @@
      </property>
      <property name="text">
       <string>Trigger timer [50ms-1s]</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_12">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>280</y>
+       <width>37</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Range</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_13">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>280</y>
+       <width>61</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Resolution</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="textEdit_channelList">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>121</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="textEdit_ScanN">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>90</y>
+       <width>121</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="textEdit_Aperture">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>170</y>
+       <width>121</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="textEdit_Trigger">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>230</y>
+       <width>121</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="textEdit_Range">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>300</y>
+       <width>51</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="textEdit_Resolution">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>300</y>
+       <width>51</width>
+       <height>31</height>
+      </rect>
      </property>
     </widget>
    </widget>
@@ -205,9 +236,9 @@
    <widget class="QFrame" name="frame_2">
     <property name="geometry">
      <rect>
-      <x>210</x>
+      <x>200</x>
       <y>110</y>
-      <width>161</width>
+      <width>321</width>
       <height>101</height>
      </rect>
     </property>
@@ -217,19 +248,6 @@
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QPlainTextEdit" name="path2CSV">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>30</y>
-       <width>131</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="lineWidth">
-      <number>1</number>
-     </property>
-    </widget>
     <widget class="QLabel" name="label_6">
      <property name="geometry">
       <rect>
@@ -247,7 +265,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>60</y>
+       <y>70</y>
        <width>101</width>
        <height>21</height>
       </rect>
@@ -256,12 +274,22 @@
       <string>Log data</string>
      </property>
     </widget>
+    <widget class="QLineEdit" name="textEdit_FilePath">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>281</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
    </widget>
    <widget class="QLabel" name="label_9">
     <property name="geometry">
      <rect>
-      <x>440</x>
-      <y>20</y>
+      <x>530</x>
+      <y>90</y>
       <width>111</width>
       <height>20</height>
      </rect>
@@ -296,14 +324,60 @@
      <string>START</string>
     </property>
    </widget>
-   <widget class="QTextEdit" name="textEdit_values">
+   <widget class="QLabel" name="label_10">
     <property name="geometry">
      <rect>
-      <x>440</x>
-      <y>40</y>
-      <width>291</width>
-      <height>64</height>
+      <x>230</x>
+      <y>400</y>
+      <width>41</width>
+      <height>21</height>
      </rect>
+    </property>
+    <property name="text">
+     <string>Errors</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_Errors">
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>420</y>
+      <width>211</width>
+      <height>101</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_Values">
+    <property name="geometry">
+     <rect>
+      <x>530</x>
+      <y>110</y>
+      <width>411</width>
+      <height>101</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_Time">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>240</y>
+      <width>61</width>
+      <height>21</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_11">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>220</y>
+      <width>41</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Time [s]</string>
     </property>
    </widget>
   </widget>

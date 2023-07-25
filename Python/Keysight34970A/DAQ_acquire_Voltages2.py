@@ -64,9 +64,9 @@ def DAQ_Test_Commands():
 
     #inst.write("TRIG:SOURCE IMMEDIATE")  # Select continous scan trigger
     inst.write("TRIG:SOURCE TIMER")  # Select the interval timer configuration
-    inst.write("TRIG:TIMER 1E-03")  # Set the scan interval to 50 msec
+    inst.write("TRIG:TIMER 50E-03")  # Set the scan interval to 50 msec
 
-    inst.write("TRIG:COUNT 1")  # Sweep the scan list -> TRIG:TIMER / (VOLT:DC:APER * Num_Channels)
+    inst.write("TRIG:COUNT 10")  # Sweep the scan list -> TRIG:TIMER / (VOLT:DC:APER * Num_Channels)
     # (Note: 10 is for 12 channels)
 
     print("[OPER]: ", inst.query("STAT:OPER:COND?"), flush=True)
@@ -206,11 +206,11 @@ def DAQ_Timer_Sampling(write_path):
     # Select the interval timer configuration
     inst.write("TRIG:SOURCE TIMER")
     # Set the scan interval to 50 msec
-    inst.write("TRIG:TIMER 5E-03")
+    inst.write("TRIG:TIMER 50E-03")
     # Time in seconds between 400 μs and 1 second, with 4 μs
     inst.write("VOLT:DC:APER 400E-06," + CHANNEL_LIST)
     # Sweep the scan list
-    inst.write("TRIG:COUNT 1") # -> TRIG:TIMER / (VOLT:DC:APER * Num_Channels)
+    inst.write("TRIG:COUNT 10") # -> TRIG:TIMER / (VOLT:DC:APER * Num_Channels)
 
     # Initiate the scan when trig condition happens -> stores readings in memory
     inst.write("INITIATE")
