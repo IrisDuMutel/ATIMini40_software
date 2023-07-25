@@ -1,4 +1,5 @@
 # Original code provided by Prof. Goncalo Fernandes Pereira Martins
+# Timer GUI version
 import sys
 from time import sleep
 import numpy as np
@@ -13,7 +14,7 @@ CHANNEL_LIST = "(@101:106)"
 
 from PyQt6 import QtCore, QtGui, QtWidgets, uic
 from PyQt6.QtWidgets import QApplication
-from PyQt6.QtCore import QThread, QObject, pyqtSignal
+from PyQt6.QtCore import QThread, QObject, pyqtSignal, QTimer
 
 import pyqtgraph as pg
 from pyqtgraph import PlotWidget
@@ -40,7 +41,6 @@ class MainWindow(QtWidgets.QMainWindow):
         uic.loadUi("Python/Keysight34970A/ATIMini40_GUI.ui", self)
         self.rm = visa.ResourceManager()
         
-
         # Initialize Components on the GUI
         self.comboBox_deviceName.addItem(DAQ_ADDRESS)
         self.textEdit_channelList.setText(CHANNEL_LIST)
@@ -53,20 +53,28 @@ class MainWindow(QtWidgets.QMainWindow):
         # self.lineEdit_Errors.setReadOnly()
         self.savaDataFlag = False
 
-
+        self.timer=QTimer()
+        self.timer.timeout.connect(self.Read_cont)
         # Callback Functions
-        self.loadConfigButton.clicked.connect(self.DAQ_configNinit)
-        self.startButton.clicked.connect(self.Read_cont)
-        self.stopButton.clicked.connect(self.Read_Errors)
-        self.stopButton.setCheckable(True)
-        self.startButton.setCheckable(True)
+        # self.stopButton.setCheckable(True)
+        # self.startButton.setCheckable(True)
+        self.startButton.clicked.connect(self.on_press)
+        self.stopButton.clicked.connect(self.on_release)
         self.checkBox.stateChanged.connect(self.save_data)
-
+        self.timer.timeout.connect(self.Read_cont)
 
     def save_data(self):
         self.savaDataFlag = True
 
-    def DAQ_configNinit(self):
+    def on_press(self):
+        self.DAQ_configuration()
+        self.timer.start(1)
+
+    def on_release(self):
+        self.timer.stop()
+        self.Read_Errors()
+
+    def DAQ_configuration(self):
         # create the csv writer
         write_path = open(self.textEdit_FilePath.text(), "w")
         self.writer = csv.writer(write_path)
@@ -95,18 +103,14 @@ class MainWindow(QtWidgets.QMainWindow):
 
 
 
-    def Read_cont(self):
+    
+    def Read_cont(self):    
         
-        
-        flag_terminate = False
-        while flag_terminate==False:
             start = timer()  # TIC
             self.lineEdit_Values.clear()
             self.inst.write("FETCH?")
             values = self.inst.read()
-
             end = timer()  # TOC
-            flag_terminate = self.stopButton.isChecked()
             # First component is time, the rest are measurements
             print(str(end), ", " + values)
             print("[Execution Time for reading data]: " + str(end - start) + " secs")  # execution time = TOC - TIC
@@ -114,9 +118,8 @@ class MainWindow(QtWidgets.QMainWindow):
             if self.savaDataFlag is True:
                 self.writer.writerow(("%.6f" % end + "," + values  ))
             self.lineEdit_Values.setText(values)   
-            self.lineEdit_Time.setText("%.6f" % (end-self.absolute_start))  
+            self.lineEdit_Time.setText("%.6f" % (end-self.absolute_start))   
     
-
 
     def Read_Errors(self):
         emptyFlag = False
