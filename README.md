@@ -20,8 +20,14 @@ Using [PyVisa](https://pyvisa.readthedocs.io/en/latest/index.html) python packag
 
 - DAQ_acquire_Voltages2.py: Same as DAQ_acquire_Voltages but reads as fast as possible and writes data nito a CVS file which path is declared at the beginning of the script. 
 
+-DAQ_acquire_Voltages_GUI.py: Launches ATIMini40_GUI.ui, which allows easier configuration of the instrument and data log. NOT WORKING
+
+
 Commands used in these scripts can be found (with additional examples) in the [Keysight 34970A Command reference manual](https://documentation.help/Keysight-34970A-34972A/)
 
+### QT UI files
+
+- ATIMini40_GUI.ui
 
 ## MATLAB
 

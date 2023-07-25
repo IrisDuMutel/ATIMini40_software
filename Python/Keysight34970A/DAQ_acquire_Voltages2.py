@@ -206,11 +206,11 @@ def DAQ_Timer_Sampling(write_path):
     # Select the interval timer configuration
     inst.write("TRIG:SOURCE TIMER")
     # Set the scan interval to 50 msec
-    inst.write("TRIG:TIMER 50E-03")
+    inst.write("TRIG:TIMER 5E-03")
     # Time in seconds between 400 μs and 1 second, with 4 μs
     inst.write("VOLT:DC:APER 400E-06," + CHANNEL_LIST)
     # Sweep the scan list
-    inst.write("TRIG:COUNT 10") # -> TRIG:TIMER / (VOLT:DC:APER * Num_Channels)
+    inst.write("TRIG:COUNT 1") # -> TRIG:TIMER / (VOLT:DC:APER * Num_Channels)
 
     # Initiate the scan when trig condition happens -> stores readings in memory
     inst.write("INITIATE")
@@ -223,6 +223,7 @@ def Read_cont(inst,writer):
     start = timer()  # TIC
     inst.write("FETCH?")
     values = inst.read()
+    print(type(values))
     end = timer()  # TOC
     # First component is time, the rest are measurements
     print(str(end), ", " + values)

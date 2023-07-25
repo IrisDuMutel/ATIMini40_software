@@ -101,20 +101,20 @@ class MainWindow(QtWidgets.QMainWindow):
         flag_terminate = False
         while flag_terminate==False:
             start = timer()  # TIC
-            # self.lineEdit_Values.clear()
-            # self.inst.write("FETCH?")
-            # values = self.inst.read()
+            self.lineEdit_Values.clear()
+            self.inst.write("FETCH?")
+            values = self.inst.read()
 
             end = timer()  # TOC
             flag_terminate = self.stopButton.isChecked()
             # First component is time, the rest are measurements
-            # print(str(end), ", " + values)
-            # print("[Execution Time for reading data]: " + str(end - start) + " secs")  # execution time = TOC - TIC
+            print(str(end), ", " + values)
+            print("[Execution Time for reading data]: " + str(end - start) + " secs")  # execution time = TOC - TIC
             # write a row to the csv file: relative time, v1, v2, v3 ,v4 ,v5, v6
-            # if self.savaDataFlag is True:
-            #     self.writer.writerow(("%.6f" % end + "," + values  ))
-            # self.lineEdit_Values.setText(values)   
-            # self.lineEdit_Time.setText("%.6f" % (end-self.absolute_start))  
+            if self.savaDataFlag is True:
+                self.writer.writerow(("%.6f" % end + "," + values  ))
+            self.lineEdit_Values.setText(values)   
+            self.lineEdit_Time.setText("%.6f" % (end-self.absolute_start))  
     
 
 
