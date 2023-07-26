@@ -117,11 +117,11 @@ class MainWindow(QtWidgets.QMainWindow):
             self.lineEdit_Values.setText(values)   
             self.lineEdit_Time.setText("%.6f" % (end-self.absolute_start))
 
-    def Data_Format(self, valuestring):
-        self.values = valuestring.replace('+', '')
-        self.values = self.values.split(,)
+    # def Data_Format(self, valuestring):
+    #     self.values = valuestring.replace('+', '')
+    #     self.values = self.values.split(,)
 
-        def Read_Errors(self):
+    def Read_Errors(self):
         emptyFlag = False
         while not emptyFlag:
             msg = self.inst.query("SYST:ERR?")
