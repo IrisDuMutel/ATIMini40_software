@@ -25,10 +25,10 @@ import numpy as np
 
 DAQ_ADDRESS = 'GPIB0::9::INSTR'
 CHANNEL_LIST = "(@101:106)"
-SCAN_N = "1"
+SCAN_N = "10"
 APERTURE_TIME = "400E-06"
-TRIGGER_TIME = "5E-03"
-FILE_PATH = "TestData/ccc.csv"
+TRIGGER_TIME = "50E-03"
+FILE_PATH = "TestData/ccc.txt"
 RANGE = "10"
 RESOLUTION = "0.001"
 
@@ -50,14 +50,11 @@ class MainWindow(QtWidgets.QMainWindow):
         self.textEdit_Aperture.setText(APERTURE_TIME)
         self.textEdit_Trigger.setText(TRIGGER_TIME)
         self.textEdit_FilePath.setText(FILE_PATH)
-        # self.lineEdit_Errors.setReadOnly()
         self.savaDataFlag = False
 
         self.timer=QTimer()
         self.timer.timeout.connect(self.Read_cont)
         # Callback Functions
-        # self.stopButton.setCheckable(True)
-        # self.startButton.setCheckable(True)
         self.startButton.clicked.connect(self.on_press)
         self.stopButton.clicked.connect(self.on_release)
         self.checkBox.stateChanged.connect(self.save_data)
@@ -75,13 +72,12 @@ class MainWindow(QtWidgets.QMainWindow):
         self.Read_Errors()
 
     def DAQ_configuration(self):
-        # create the csv writer
-        write_path = open(self.textEdit_FilePath.text(), 'a')
-        self.writer = csv.writer(write_path)
+        # create the txt writer
+        if self.savaDataFlag == True:
+            self.write_path = open(self.textEdit_FilePath.text(), 'a')
         self.inst = self.rm.open_resource(self.comboBox_deviceName.currentText())
         # # Reset Device
         self.inst.write("*rst; status:preset; *cls")
-        # print("ROUT:SCAN " + self.textEdit_channelList.text())
         # # Channels Configuration
         self.inst.write("ROUT:OPEN " + self.textEdit_channelList.text())  # Open channels
         self.inst.write("CONF:VOLT:DC " + self.textEdit_Range.text() + "," + self.textEdit_Resolution.text() +", " + self.textEdit_channelList.text())    # Configure channel for DC voltage
@@ -99,7 +95,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.inst.write("VOLT:DC:APER "+ self.textEdit_Aperture.text() + "," + self.textEdit_channelList.text())    # Time in seconds between 400 μs and 1 second, with 4 μs
         # Sweep the scan list
         self.inst.write("TRIG:COUNT " + self.textEdit_ScanN.text()) # -> TRIG:TIMER / (VOLT:DC:APER * Num_Channels)
-        self.inst.write("INITIATE")    # Initiate the scan when trig condition happens -> stores readings in memory
+        
 
 
 
@@ -107,18 +103,19 @@ class MainWindow(QtWidgets.QMainWindow):
     def Read_cont(self):    
         
             start = timer()  # TIC
-            self.lineEdit_Values.clear()
+            self.inst.write("INITIATE")    # Initiate the scan when trig condition happens -> stores readings in memory
             self.inst.write("FETCH?")
             values = self.inst.read()
+
             end = timer()  # TOC
             # First component is time, the rest are measurements
-            print(str(end), ", " + values)
+            print(str(end-self.absolute_start), ", " + values)
             print("[Execution Time for reading data]: " + str(end - start) + " secs")  # execution time = TOC - TIC
             # write a row to the csv file: relative time, v1, v2, v3 ,v4 ,v5, v6
             if self.savaDataFlag is True:
-                self.writer.writerow(("%.6f" % end + "," + values  ))
+                self.write_path.write(("%.6f" % (end-self.absolute_start) + "," + values  ))
             self.lineEdit_Values.setText(values)   
-            self.lineEdit_Time.setText("%.6f" % (end-self.absolute_start))   
+            self.lineEdit_Time.setText("%.6f" % (end-self.absolute_start)) 
     
 
     def Read_Errors(self):
@@ -134,7 +131,7 @@ class MainWindow(QtWidgets.QMainWindow):
         
         # Close connection
         self.inst.close()
-        self.textEdit_FilePath.close()
+        # self.textEdit_FilePath.close()
         
 
 if __name__ == '__main__':
