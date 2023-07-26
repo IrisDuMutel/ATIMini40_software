@@ -115,10 +115,13 @@ class MainWindow(QtWidgets.QMainWindow):
             if self.savaDataFlag is True:
                 self.write_path.write(("%.6f" % (end-self.absolute_start) + "," + values  ))
             self.lineEdit_Values.setText(values)   
-            self.lineEdit_Time.setText("%.6f" % (end-self.absolute_start)) 
-    
+            self.lineEdit_Time.setText("%.6f" % (end-self.absolute_start))
 
-    def Read_Errors(self):
+    def Data_Format(self, valuestring):
+        self.values = valuestring.replace('+', '')
+        self.values = self.values.split(,)
+
+        def Read_Errors(self):
         emptyFlag = False
         while not emptyFlag:
             msg = self.inst.query("SYST:ERR?")
