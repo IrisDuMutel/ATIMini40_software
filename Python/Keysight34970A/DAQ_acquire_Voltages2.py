@@ -264,5 +264,3 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         print('interrupted!')
         Read_Errors(inst)  # Get new errors
-
-    
