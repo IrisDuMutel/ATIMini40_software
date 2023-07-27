@@ -47,7 +47,7 @@ def DAQ_Timer_Sampling(write_path):
     # Select the interval timer configuration
     inst.write("TRIG:SOURCE TIMER")
     # Set the scan interval to 50 msec
-    inst.write("TRIG:TIMER MIN")
+    inst.write("TRIG:TIMER 5E-03")
     # Time in seconds between 400 μs and 1 second, with 4 μs
     inst.write("VOLT:DC:APER MIN," + CHANNEL_LIST)
     # Sweep the scan list
@@ -61,10 +61,10 @@ def DAQ_Timer_Sampling(write_path):
 
 def Read_cont(inst,writer):
     global CHANNEL_LIST
-    
+
     start = timer()  # TIC
     # inst.write("FETCH?")
-    inst.write("R? 8")
+    inst.write("R? ")
     values = inst.read()
     end = timer()  # TOC
 
