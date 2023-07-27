@@ -7,6 +7,6 @@
 \contentsline {subsection}{\numberline {2.4}Sensitivity and output range and resolution voltages}{5}{subsection.2.4}%
 \contentsline {section}{\numberline {3}Keysight 34970A connection to PC}{5}{section.3}%
 \contentsline {subsection}{\numberline {3.1}Important commands}{5}{subsection.3.1}%
-\contentsline {section}{\numberline {4}LabView}{6}{section.4}%
+\contentsline {section}{\numberline {4}LabView}{7}{section.4}%
 \contentsline {section}{\numberline {5}Python}{7}{section.5}%
 \contentsline {section}{\numberline {6}Resources}{7}{section.6}%

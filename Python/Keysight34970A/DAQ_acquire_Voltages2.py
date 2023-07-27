@@ -166,7 +166,6 @@ def DAQ_Timer_Sampling(write_path):
     # Open connection
     # ---------------------
     inst = rm.open_resource(DAQ_ADDRESS)
-
     # Reset Device
     # ---------------------
     inst.write("*rst; status:preset; *cls")
@@ -185,7 +184,6 @@ def DAQ_Timer_Sampling(write_path):
     # print("[Default Delay]: ", inst.query("ROUT:CHAN:DELAY? {}".format(CHANNEL_LIST)), flush=True)
     inst.write("ROUT:CHAN:DELAY:AUTO ON," + CHANNEL_LIST)
     # print("[Delay]: ", inst.query("ROUT:CHAN:DELAY? {}".format(CHANNEL_LIST)), flush=True)
-
     # Measurement Setup
     # ---------------------
 
@@ -206,14 +204,14 @@ def DAQ_Timer_Sampling(write_path):
     # Select the interval timer configuration
     inst.write("TRIG:SOURCE TIMER")
     # Set the scan interval to 50 msec
-    inst.write("TRIG:TIMER 5E-03")
+    inst.write("TRIG:TIMER 50E-03")
     # Time in seconds between 400 μs and 1 second, with 4 μs
     inst.write("VOLT:DC:APER 400E-06," + CHANNEL_LIST)
     # Sweep the scan list
-    inst.write("TRIG:COUNT 1") # -> TRIG:TIMER / (VOLT:DC:APER * Num_Channels)
+    inst.write("TRIG:COUNT 10") # -> TRIG:TIMER / (VOLT:DC:APER * Num_Channels)
 
     # Initiate the scan when trig condition happens -> stores readings in memory
-    inst.write("INITIATE")
+    
     return inst,writer
     
 
@@ -221,25 +219,24 @@ def DAQ_Timer_Sampling(write_path):
 def Read_cont(inst,writer):
     global CHANNEL_LIST
     start = timer()  # TIC
+    inst.write("INITIATE")
     inst.write("FETCH?")
     values = inst.read()
-    print(type(values))
+    # print(np.size(values))
     end = timer()  # TOC
     # First component is time, the rest are measurements
     print(str(end), ", " + values)
     print("[Execution Time for reading data]: " + str(end - start) + " secs")  # execution time = TOC - TIC
+    print("[Sample rate is]: "+ str(10/(end - start)) + " Hz")
     # write a row to the csv file: relative time, v1, v2, v3 ,v4 ,v5, v6
-    writer.writerow(("%.6f" % end + "," + values, ))
+    # writer.writerow(("%.6f" % end + "," + values, ))
     
 
 
 def Read_Errors(inst):
     global write_path
+    global DAQ_ADDRESS
     global rm
-
-    inst.close()
-    # Open connection
-    [inst] = rm.open_resource(DAQ_ADDRESS)
 
     emptyFlag = False
     while not emptyFlag:
@@ -266,6 +263,6 @@ if __name__ == '__main__':
             Read_cont(inst,writer)
     except KeyboardInterrupt:
         print('interrupted!')
-        Read_Errors()  # Get new errors
+        Read_Errors(inst)  # Get new errors
 
     

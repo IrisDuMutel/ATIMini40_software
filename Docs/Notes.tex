@@ -119,7 +119,7 @@ collection of all transducer frequency content. Note: that to satisfy the Nyquis
 to be coupled at a rate greater than twice the highest frequency present, even if data at that frequency
 is not preferred. The forces and torques will be sampled at that frequency, not having anything to do with the sampling rate of the data acquisition unit. 
 
-The data acquisition unit on the other handd has a maximum ampertire time of 400$\mu$s, meaning that's the smallest amount of time it needs for opening and reading from one channel. This aperture time is equivalent to an integration time of 0.02 PLC. The relationship between this two parameters is the following:
+The data acquisition unit on the other hand has a maximum ampertire time of 400$\mu$s, meaning that's the smallest amount of time it needs for opening and reading from one channel. This aperture time is equivalent to an integration time of 0.02 PLC. The relationship between this two parameters is the following:
 
 \begin{equation}
 	\frac{0.02PLC}{50Hz (instrument power frequency)} = 400\mu s
@@ -229,7 +229,26 @@ There are various manuals for this DAQ. The most helpful one containing command 
 
 \textbf{TRIGger:SOURce} : Select the trigger source to control the onset of each sweep through the scan list (a sweep is one pass through the scan list). The instrument will accept a software (bus) command, an immediate (continuous) scan trigger, an external TTL trigger pulse, an alarm-initiated action, or an internally paced timer. Usually used: TIMer = Internally paced timer trigger.
 
-\textbf{TRIGger:TIMer} : This command sets the trigger-to-trigger interval (in seconds) for measurements on the channels in the present scan list. This command defines the time from the start of one trigger to the start of the next trigger, up to the specified trigger count.
+\textbf{TRIGger:TIMer} : This command sets the trigger-to-trigger interval (in seconds) for measurements on the channels in the present scan list. This command defines the time from the start of one trigger to the start of the next trigger, up to the specified trigger count (see TRIGger:COUNt command). A number from 0 seconds to 359,999 with 1 ms resolution. Note that 359,999 seconds is one second less than one hundred hours.
+
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\textwidth]{trigger_timer.png}
+	\label{fig:trigger_timer}
+	\caption{Trigger timer}
+\end{figure}
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\textwidth]{trigger_timer2.png}
+	\label{fig:trigger_timer2}
+	\caption{Trigger timer from hewlett packard manual}
+\end{figure}
+
+
+
+\textbf{TRIGger:COUNt}: This command specifies the number of times to sweep through the scan list. A sweep is one pass through the scan list. The scan stops when the number of specified sweeps has occurred. An integer from 1 to 50,000 triggers, or continuous (INFinity).
 
 \textbf{INITiate} : This command changes the state of the triggering system from the ``idle" state to the ``wait-for-trigger" state. Scanning will begin when the specified trigger conditions are satisfied following the receipt of the INITiate command. Readings are stored in the instrument's internal reading memory. Note that the INITiate command also clears the previous set of readings from memory.
 If a scan list is currently defined (see ROUTe:SCAN command), the INITiate command performs a scan of the specified channels.
@@ -243,6 +262,8 @@ You can send the command multiple times to retrieve the same
 data in reading memory.
 
 \textbf{FETCh}: This command transfers readings stored in non-volatile memory to the instrument's output buffer, where you can read them into your computer. The readings stored in memory are not erased when you read them with FETCh?.
+
+\textbf{VOLT:DC:APERTURE} : This command enables the aperture mode and sets the integration time in seconds (called aperture time) for DC voltage measurements on the specified channels.
 
 
 \section{LabView}
