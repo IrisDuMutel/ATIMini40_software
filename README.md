@@ -45,6 +45,11 @@ Commands used in these scripts can be found (with additional examples) in the [K
 
 ## MATLAB
 
+- Keysight34970A.m
+- readCSV_n_plot2.m: reads CSV file and plots forces and torques
+- test500g.csv: file obtained using cal_mat from Python\NI_USB_6008\ni_daq_6chan_continuous.py
+- test500g2.csv: file obtained using cal_mat2 from Python\NI_USB_6008\ni_daq_6chan_continuous.py
+
 ## Docs
 Personally crafted documentation containing (what I consider) the most important information from all the components in the setup. In progress.
 
