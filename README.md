@@ -5,11 +5,14 @@ ATI Mini40 DAQ F/T sensor is connected differentially to the first slot of the K
 ## LabView (2023)
 
  - Keysight_ATIMini40.vi: A simple data collection project using LabView and VISA blocks for the Keysight 34970A Data Acquisition Unit
+ - atidaqftmx.vi: Data acquisition VI using NI DAQ as NI USB 6002 and 6008. Obtained from [ATI Mini40 software downloads](https://www.ati-ia.com/products/ft/software/daq_software.aspx)
+
 
 ## Python
+
+### Scripts and description using KEYSIGHT 34970A:
 Using [PyVisa](https://pyvisa.readthedocs.io/en/latest/index.html) python package to communicate with Keysight 34970A Data Acquisition Unit
 
-### SCRIPTS AND DESCRIPTION (KEYSIGHT 34970A):
 
 - IDN_query.py: Asking list of resources found by PyVisa and identification query to instruments address. WORKING
 - test_query.py: Script made for testing different query commands. Use this script as test script.
@@ -26,15 +29,20 @@ Using [PyVisa](https://pyvisa.readthedocs.io/en/latest/index.html) python packag
 
 Commands used in these scripts can be found (with additional examples) in the [Keysight 34970A Command reference manual](https://documentation.help/Keysight-34970A-34972A/)
 
-### SCRIPTS AND DESCRIPTION (NI USB 6008):
+### Scripts and description using NI USB 6008:
+
+Using [NI-DAQmx](https://nidaqmx-python.readthedocs.io/en/latest/)
 
 - ni_daq_6chan_continuous.py: Obtains forces and torques (lbf and lbf-in, respectively) from ATIMini40 with a single-ended connection. Use cal_mat2 for correct results on F/T. Bias voltage is obtained at the beginning of the readings and automatically subtracted from all the other measurements.
 
 The single ended connection is as follows:
 
-<img src="Docs\Images\NIUSB6008_ATIMini40Connection.jpg"  width="400" height="300">
+<img src="Docs\Images\NIUSB6008_ATIMini40Connection_grounded.jpg"  width="400" height="300">
+
+Reference cables have been grounded, obtaining less noisy signals.
 
 The GUI currently looks like this:
+
 
 <img src="Docs\Images\NIUSB6008_GUI.png"  width="700" height="400">
 
@@ -51,12 +59,18 @@ The GUI currently looks like this:
 
 - ATIMini40_GUI.ui
 
-## MATLAB
+## [MATLAB](MATLAB)
 
+### Scripts
 - Keysight34970A.m
 - readCSV_n_plot2.m: reads CSV file and plots forces and torques
+
+### Log files
 - test500g.csv: file obtained using cal_mat from Python\NI_USB_6008\ni_daq_6chan_continuous.py
 - test500g2.csv: file obtained using cal_mat2 from Python\NI_USB_6008\ni_daq_6chan_continuous.py
+- log_20230728.csv: file obtained with ni_daq_6chan_continuous_GUI.py, 50Hz sampling rate and no grounding of sensor's reference cables.
+- log_20230728_grounded.csv: file obtained with ni_daq_6chan_continuous_GUI.py, 50Hz sampling rate and grounding sensor's reference cables, as in the image in this document.
+- log_20230728_100Hz.csv: file obtained with ni_daq_6chan_continuous_GUI.py, 100Hz sampling rate and no grounding of sensor's reference cables. No improvement has been obtained with respect to noise.
 
 ## Docs
 Personally crafted documentation containing (what I consider) the most important information from all the components in the setup. In progress.
