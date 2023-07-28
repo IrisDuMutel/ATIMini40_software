@@ -20,9 +20,9 @@ FILE_PATH = "TestData/ccc.txt"
 RANGE = "10"
 RESOLUTION = "0.001"
 CHANNEL_LIST = "Dev3/ai0,Dev3/ai1,Dev3/ai2,Dev3/ai3,Dev3/ai4,Dev3/ai5"
-FILE_PATH = "TestData/fff2.txt"
-analog_task = None
-write_path = open(FILE_PATH, 'a')
+FILE_PATH = "TestData/log_20230728.txt"
+
+
 absolute_start = timer()
 FS = "50"  # Hz
 SAMPLE_PER_CHANNEL = "1"
@@ -41,7 +41,7 @@ class MainWindow(QtWidgets.QMainWindow):
         super().__init__(*args, **kwargs)
         self.absolute_start = timer()
         self.N_Nm = False
-        
+        self.analog_task_flag = False
         # Load ui File
         uic.loadUi("Python/NI_USB_6008/ATIMini40_GUI.ui", self)
     
@@ -69,24 +69,24 @@ class MainWindow(QtWidgets.QMainWindow):
         self.N_Nm = True
 
     def save_data(self):
+        self.lineEdit_Errors.setText("Logging data in " + self.textEdit_FilePath.text() + "\n")
         self.savaDataFlag = True
 
-
     def on_press(self):
+        self.lineEdit_Errors.setText("Start logging... \n")
         self.ai_single_continuous()
         self.timer.start(1)
 
     def on_release(self):
+        self.close_all()
         self.timer.stop()
 
 
     def my_callback(self,task_handle, every_n_samples_event_type, number_of_samples, callback_data):
-        global analog_task
-        global write_path
         global absolute_start
         global bias_vector
         global cal_mat2
-        np_values = analog_task.read(number_of_samples_per_channel=nidaqmx.constants.READ_ALL_AVAILABLE,
+        np_values = self.analog_task.read(number_of_samples_per_channel=nidaqmx.constants.READ_ALL_AVAILABLE,
                                     timeout=nidaqmx.constants.WAIT_INFINITELY)
         end = timer()
         print("Sample Size: " + str(len(np_values)))
@@ -95,7 +95,7 @@ class MainWindow(QtWidgets.QMainWindow):
         
         res = np.dot(cal_mat2,unbiased_volt)
         if self.N_Nm is True:
-            write_path.write(str(end-absolute_start)+","+str(res[0]*4.4482216152605)+","+str(res[1]*4.4482216152605)+","+str(res[2]*4.4482216152605)+","+str(res[3]*0.1129848333)+","+str(res[4]*0.1129848333)+","+str(res[5]*0.1129848333)+"\n" )
+            self.write_path.write(str(end-absolute_start)+","+str(res[0]*4.4482216152605)+","+str(res[1]*4.4482216152605)+","+str(res[2]*4.4482216152605)+","+str(res[3]*0.1129848333)+","+str(res[4]*0.1129848333)+","+str(res[5]*0.1129848333)+"\n" )
             self.lineEdit_Values.setText  ("{:.2f}".format(res[0]*4.4482216152605)) 
             self.lineEdit_Values_2.setText("{:.2f}".format(res[1]*4.4482216152605)) 
             self.lineEdit_Values_3.setText("{:.2f}".format(res[2]*4.4482216152605)) 
@@ -103,7 +103,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.lineEdit_Values_5.setText("{:.2f}".format(res[4]*0.1129848333)) 
             self.lineEdit_Values_6.setText("{:.2f}".format(res[5]*0.1129848333))
         else:
-            write_path.write(str(end-absolute_start)+","+str(res[0])+","+str(res[1])+","+str(res[2])+","+str(res[3])+","+str(res[4])+","+str(res[5])+"\n" )
+            self.write_path.write(str(end-absolute_start)+","+str(res[0])+","+str(res[1])+","+str(res[2])+","+str(res[3])+","+str(res[4])+","+str(res[5])+"\n" )
             self.lineEdit_Values.setText  ("{:.2f}".format(res[0])) 
             self.lineEdit_Values_2.setText("{:.2f}".format(res[1])) 
             self.lineEdit_Values_3.setText("{:.2f}".format(res[2])) 
@@ -113,10 +113,10 @@ class MainWindow(QtWidgets.QMainWindow):
             
         self.lineEdit_Time.setText("%.6f" % (end-self.absolute_start))
         
-
+        return 0
 
     def ai_single_continuous(self):
-        global analog_task
+        
         global bias_vector
 
         if self.checkBox_NNm.isChecked() == True:
@@ -124,49 +124,55 @@ class MainWindow(QtWidgets.QMainWindow):
 
         #  Create Task
         # --------------
-        analog_task = nidaqmx.Task()
-
+        self.analog_task = nidaqmx.Task()
         #  Create Virtual Channel - Analog Input
         # --------------------------------------
-        analog_task.ai_channels.add_ai_voltage_chan(physical_channel=self.textEdit_channelList.text(),
+        self.analog_task.ai_channels.add_ai_voltage_chan(physical_channel=self.textEdit_channelList.text(),
                                                     name_to_assign_to_channel="",
                                                     terminal_config=constants.TerminalConfiguration.RSE,
-                                                    min_val=-int(self.textEdit_Range.text()),
-                                                    max_val=int(self.textEdit_Range.text()),
+                                                    min_val=-float(self.textEdit_Range.text()),
+                                                    max_val=float(self.textEdit_Range.text()),
                                                     units=constants.VoltageUnits.VOLTS,
                                                     custom_scale_name=None)
 
         #  Sets the source of the Sample Clock, the rate of the Sample
         #  Clock, and the number of samples to acquire or generate.
         
-        # analog_task.start()
-        bias_vector = analog_task.read()
+        # self.analog_task.start()
+        bias_vector = self.analog_task.read()
     
 
-        analog_task.timing.cfg_samp_clk_timing(rate=int(self.textEdit_FS.text()),
+        self.analog_task.timing.cfg_samp_clk_timing(rate=int(self.textEdit_FS.text()),
                                             source=None,
                                             active_edge=nidaqmx.constants.Edge.RISING,
                                             sample_mode=nidaqmx.constants.AcquisitionType.CONTINUOUS,
                                             samps_per_chan=int(self.textEdit_SPC.text()))
 
         # Register my_callback function
-        analog_task.register_every_n_samples_acquired_into_buffer_event(int(self.textEdit_SPC.text()), self.my_callback)
-
+        self.analog_task.register_every_n_samples_acquired_into_buffer_event(int(self.textEdit_SPC.text()), self.my_callback)
+        
         #  Start Task
         # -----------
-        analog_task.start()
+        self.analog_task.start()
 
-        #  Acquire Analog Value
-        # ---------------------
-        # my_callback function takes care of the analog acquisition
+        self.analog_task_flag = True
+        self.write_path = open(self.textEdit_FilePath.text(), 'a')
+        # input("")
+        
 
-        input("")
-
+    def close_all(self):
+        self.timer.stop()
+        self.lineEdit_Errors.setText("Stopping... \n")
         #  Stop and Clear Task
         # --------------------
-        analog_task.stop()
-        analog_task.close()
+        self.analog_task_flag = False
+        self.analog_task.stop()
+        self.analog_task.close()
 
+    def closeEvent(self, *args, **kwargs):
+        if self.analog_task_flag:
+            self.analog_task.stop()
+            self.analog_task.close()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

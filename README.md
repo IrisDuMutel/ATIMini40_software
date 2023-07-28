@@ -30,6 +30,13 @@ Commands used in these scripts can be found (with additional examples) in the [K
 
 - ni_daq_6chan_continuous.py: Obtains forces and torques (lbf and lbf-in, respectively) from ATIMini40 with a single-ended connection. Use cal_mat2 for correct results on F/T. Bias voltage is obtained at the beginning of the readings and automatically subtracted from all the other measurements.
 
+The single ended connection is as follows:
+
+<img src="Docs\Images\NIUSB6008_ATIMini40Connection.jpg"  width="400" height="300">
+
+The GUI currently looks like this:
+
+<img src="Docs\Images\NIUSB6008_GUI.png"  width="700" height="400">
 
 #### FROM [ENGR EDU](http://engredu.com/2022/11/21/ni-articles/):
 
