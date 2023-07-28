@@ -24,15 +24,16 @@ FILE_PATH = "TestData/fff2.txt"
 analog_task = None
 write_path = open(FILE_PATH, 'a')
 absolute_start = timer()
-FS = "50.0"  # Hz
+FS = "50"  # Hz
 SAMPLE_PER_CHANNEL = "1"
 
-cal_mat2 = [[0.02058, -0.03389, -0.11862, 2.75633, 0.12850, -2.92805],  # Fx
+
+cal_mat2 = [[0.02058, -0.03389, -0.11862, 2.75633, 0.12850, -2.92805],  #   Fx
             [ 0.10871, -3.22046, -0.04227, 1.55904, -0.08018, 1.69995], #   Fy
             [ 4.71416, 0.03714, 4.63646, 0.05165, 4.77859, -0.02723],   #   Fz
             [ 0.02905, -0.69919, 2.62607, 0.37939, -2.65824, 0.36622],  #   Tx
             [ -2.99499, -0.02691, 1.49603, -0.57982, 1.57237, 0.62804], #   Ty
-            [ 0.05304, -1.48329, 0.05987, -1.45823, 0.07161, -1.56646]] #   Tz]
+            [ 0.05304, -1.48329, 0.05987, -1.45823, 0.07161, -1.56646]] #   Tz
 
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -63,6 +64,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.checkBox.stateChanged.connect(self.save_data)
         self.timer.timeout.connect(self.my_callback)
 
+
+    def NNm(self):
+        self.N_Nm = True
+
     def save_data(self):
         self.savaDataFlag = True
 
@@ -85,25 +90,38 @@ class MainWindow(QtWidgets.QMainWindow):
                                     timeout=nidaqmx.constants.WAIT_INFINITELY)
         end = timer()
         print("Sample Size: " + str(len(np_values)))
-        # print(np_values)
         
-        # print("[" + str(np_values[0][0]-bias_vector[0])+", "+str(np_values[1][0]-bias_vector[1])+", "+str(np_values[2][0]-bias_vector[2]) + ", "+str(np_values[3][0]-bias_vector[3])+", "+str(np_values[4][0]-bias_vector[4])+", "+str(np_values[5][0]-bias_vector[5])+"]")
         unbiased_volt = [(np_values[0][0]-bias_vector[0]), (np_values[1][0]-bias_vector[1]), (np_values[2][0]-bias_vector[2]), (np_values[3][0]-bias_vector[3]), (np_values[4][0]-bias_vector[4]), (np_values[5][0]-bias_vector[5])]
+        
         res = np.dot(cal_mat2,unbiased_volt)
         if self.N_Nm is True:
             write_path.write(str(end-absolute_start)+","+str(res[0]*4.4482216152605)+","+str(res[1]*4.4482216152605)+","+str(res[2]*4.4482216152605)+","+str(res[3]*0.1129848333)+","+str(res[4]*0.1129848333)+","+str(res[5]*0.1129848333)+"\n" )
+            self.lineEdit_Values.setText  ("{:.2f}".format(res[0]*4.4482216152605)) 
+            self.lineEdit_Values_2.setText("{:.2f}".format(res[1]*4.4482216152605)) 
+            self.lineEdit_Values_3.setText("{:.2f}".format(res[2]*4.4482216152605)) 
+            self.lineEdit_Values_4.setText("{:.2f}".format(res[3]*0.1129848333)) 
+            self.lineEdit_Values_5.setText("{:.2f}".format(res[4]*0.1129848333)) 
+            self.lineEdit_Values_6.setText("{:.2f}".format(res[5]*0.1129848333))
         else:
             write_path.write(str(end-absolute_start)+","+str(res[0])+","+str(res[1])+","+str(res[2])+","+str(res[3])+","+str(res[4])+","+str(res[5])+"\n" )
-
+            self.lineEdit_Values.setText  ("{:.2f}".format(res[0])) 
+            self.lineEdit_Values_2.setText("{:.2f}".format(res[1])) 
+            self.lineEdit_Values_3.setText("{:.2f}".format(res[2])) 
+            self.lineEdit_Values_4.setText("{:.2f}".format(res[3])) 
+            self.lineEdit_Values_5.setText("{:.2f}".format(res[4])) 
+            self.lineEdit_Values_6.setText("{:.2f}".format(res[5]))
             
-        write_path.write(str(end-absolute_start)+","+str(res[0]*4.4482216152605)+","+str(res[1]*4.4482216152605)+","+str(res[2]*4.4482216152605)+","+str(res[3]*0.1129848333)+","+str(res[4]*0.1129848333)+","+str(res[5]*0.1129848333)+"\n" )
-        print((end-absolute_start) , res )
-        return 0
+        self.lineEdit_Time.setText("%.6f" % (end-self.absolute_start))
+        
 
 
     def ai_single_continuous(self):
         global analog_task
         global bias_vector
+
+        if self.checkBox_NNm.isChecked() == True:
+            self.N_Nm = True
+
         #  Create Task
         # --------------
         analog_task = nidaqmx.Task()

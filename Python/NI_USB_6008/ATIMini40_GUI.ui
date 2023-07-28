@@ -147,6 +147,19 @@
       </rect>
      </property>
     </widget>
+    <widget class="QCheckBox" name="checkBox_NNm">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>90</y>
+       <width>91</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>F[N],T[Nm]</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QComboBox" name="comboBox_deviceName">
     <property name="geometry">
@@ -316,7 +329,7 @@
      <rect>
       <x>210</x>
       <y>290</y>
-      <width>731</width>
+      <width>91</width>
       <height>31</height>
      </rect>
     </property>
@@ -342,6 +355,56 @@
     </property>
     <property name="text">
      <string>Time [s]</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_Values_2">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>290</y>
+      <width>91</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_Values_3">
+    <property name="geometry">
+     <rect>
+      <x>410</x>
+      <y>290</y>
+      <width>91</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_Values_4">
+    <property name="geometry">
+     <rect>
+      <x>510</x>
+      <y>290</y>
+      <width>91</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_Values_5">
+    <property name="geometry">
+     <rect>
+      <x>610</x>
+      <y>290</y>
+      <width>91</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_Values_6">
+    <property name="geometry">
+     <rect>
+      <x>710</x>
+      <y>290</y>
+      <width>91</width>
+      <height>31</height>
+     </rect>
     </property>
    </widget>
   </widget>
