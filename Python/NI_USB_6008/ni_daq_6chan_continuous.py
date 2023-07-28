@@ -9,6 +9,7 @@ FILE_PATH = "TestData/fff2.txt"
 analog_task = None
 write_path = open(FILE_PATH, 'a')
 absolute_start = timer()
+N_Nm = False
 
 cal_mat = [[0.23881,  -0.39328,  -1.37672,  31.98992,   1.49137, -33.98297],
            [1.26170, -37.37657,  -0.49064,  18.09416,  -0.93058,  19.72958],
@@ -29,7 +30,7 @@ def my_callback(task_handle, every_n_samples_event_type, number_of_samples, call
     global write_path
     global absolute_start
     global bias_vector
-    global cal_mat2
+    global cal_mat2, N_Nm
     np_values = analog_task.read(number_of_samples_per_channel=nidaqmx.constants.READ_ALL_AVAILABLE,
                                  timeout=nidaqmx.constants.WAIT_INFINITELY)
     end = timer()
@@ -39,7 +40,13 @@ def my_callback(task_handle, every_n_samples_event_type, number_of_samples, call
     # print("[" + str(np_values[0][0]-bias_vector[0])+", "+str(np_values[1][0]-bias_vector[1])+", "+str(np_values[2][0]-bias_vector[2]) + ", "+str(np_values[3][0]-bias_vector[3])+", "+str(np_values[4][0]-bias_vector[4])+", "+str(np_values[5][0]-bias_vector[5])+"]")
     unbiased_volt = [(np_values[0][0]-bias_vector[0]), (np_values[1][0]-bias_vector[1]), (np_values[2][0]-bias_vector[2]), (np_values[3][0]-bias_vector[3]), (np_values[4][0]-bias_vector[4]), (np_values[5][0]-bias_vector[5])]
     res = np.dot(cal_mat2,unbiased_volt)
-    write_path.write(str(end-absolute_start)+","+str(res[0])+","+str(res[1])+","+str(res[2])+","+str(res[3])+","+str(res[4])+","+str(res[5])+"\n" )
+    if N_Nm is True:
+        write_path.write(str(end-absolute_start)+","+str(res[0]*4.4482216152605)+","+str(res[1]*4.4482216152605)+","+str(res[2]*4.4482216152605)+","+str(res[3]*0.1129848333)+","+str(res[4]*0.1129848333)+","+str(res[5]*0.1129848333)+"\n" )
+    else:
+        write_path.write(str(end-absolute_start)+","+str(res[0])+","+str(res[1])+","+str(res[2])+","+str(res[3])+","+str(res[4])+","+str(res[5])+"\n" )
+
+        
+    write_path.write(str(end-absolute_start)+","+str(res[0]*4.4482216152605)+","+str(res[1]*4.4482216152605)+","+str(res[2]*4.4482216152605)+","+str(res[3]*0.1129848333)+","+str(res[4]*0.1129848333)+","+str(res[5]*0.1129848333)+"\n" )
     print((end-absolute_start) , res )
     return 0
 

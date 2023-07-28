@@ -28,7 +28,8 @@ Commands used in these scripts can be found (with additional examples) in the [K
 
 ### SCRIPTS AND DESCRIPTION (NI USB 6008):
 
-- ni_daq_6chan_continuous.py
+- ni_daq_6chan_continuous.py: Obtains forces and torques (lbf and lbf-in, respectively) from ATIMini40 with a single-ended connection. Use cal_mat2 for correct results on F/T. Bias voltage is obtained at the beginning of the readings and automatically subtracted from all the other measurements.
+
 
 #### FROM [ENGR EDU](http://engredu.com/2022/11/21/ni-articles/):
 
