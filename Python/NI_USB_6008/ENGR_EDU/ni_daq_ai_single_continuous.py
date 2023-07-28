@@ -40,8 +40,8 @@ def ai_single_continuous():
 
     #  Sets the source of the Sample Clock, the rate of the Sample
     #  Clock, and the number of samples to acquire or generate.
-    Fs = 1000.0  # Hz
-    samples_per_channel = 1000
+    Fs = 100.0  # Hz
+    samples_per_channel = 1
     analog_task.timing.cfg_samp_clk_timing(rate=Fs,
                                            source=None,
                                            active_edge=nidaqmx.constants.Edge.RISING,

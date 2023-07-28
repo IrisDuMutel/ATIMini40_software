@@ -39,9 +39,7 @@ cal_mat2 = [[0.02058, -0.03389, -0.11862, 2.75633, 0.12850, -2.92805],  #   Fx
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.absolute_start = timer()
-        self.N_Nm = False
-        self.analog_task_flag = False
+        
         # Load ui File
         uic.loadUi("Python/NI_USB_6008/ATIMini40_GUI.ui", self)
     
@@ -54,46 +52,66 @@ class MainWindow(QtWidgets.QMainWindow):
         self.textEdit_FS.setText(FS)
         self.textEdit_SPC.setText(SAMPLE_PER_CHANNEL)
         self.textEdit_FilePath.setText(FILE_PATH)
-        self.savaDataFlag = False
 
+        # Variable initialiation
         self.timer=QTimer()
-        self.timer.timeout.connect(self.my_callback)
+        self.absolute_start = timer()
+
         # Callback Functions
-        self.startButton.clicked.connect(self.on_press)
-        self.stopButton.clicked.connect(self.on_release)
+        self.startButton.clicked.connect(self.on_press_start)
+        self.stopButton.clicked.connect(self.on_press_stop)
         self.checkBox.stateChanged.connect(self.save_data)
         self.timer.timeout.connect(self.my_callback)
+        
+        # Flag initialization
+        self.savaDataFlag = False
+        self.reset_abs_time = False
+        self.N_Nm = False
+        self.analog_task_flag = False
 
-
+    # If measuring in N and N-m
     def NNm(self):
         self.N_Nm = True
 
+    # If logging data into .txt file
     def save_data(self):
         self.lineEdit_Errors.setText("Logging data in " + self.textEdit_FilePath.text() + "\n")
         self.savaDataFlag = True
 
-    def on_press(self):
+    # Pressing start
+    def on_press_start(self):
         self.lineEdit_Errors.setText("Start logging... \n")
         self.ai_single_continuous()
         self.timer.start(1)
 
-    def on_release(self):
+    # Pressing stop
+    def on_press_stop(self):
         self.close_all()
         self.timer.stop()
 
 
     def my_callback(self,task_handle, every_n_samples_event_type, number_of_samples, callback_data):
-        global absolute_start
         global bias_vector
         global cal_mat2
+
+        if self.reset_abs_time == True:
+            self.absolute_start = timer()
+            self.reset_abs_time = False
+
         np_values = self.analog_task.read(number_of_samples_per_channel=nidaqmx.constants.READ_ALL_AVAILABLE,
                                     timeout=nidaqmx.constants.WAIT_INFINITELY)
-        end = timer()
-        print("Sample Size: " + str(len(np_values)))
         
+        # TOC
+        end = timer()
+
+        # print("Sample Size: " + str(len(np_values)))
+        
+        # Remove bias voltages
         unbiased_volt = [(np_values[0][0]-bias_vector[0]), (np_values[1][0]-bias_vector[1]), (np_values[2][0]-bias_vector[2]), (np_values[3][0]-bias_vector[3]), (np_values[4][0]-bias_vector[4]), (np_values[5][0]-bias_vector[5])]
         
+        # Multiply by calibration matrix. Results are in lbf, lbf-in
         res = np.dot(cal_mat2,unbiased_volt)
+
         if self.N_Nm is True:
             self.write_path.write(str(end-absolute_start)+","+str(res[0]*4.4482216152605)+","+str(res[1]*4.4482216152605)+","+str(res[2]*4.4482216152605)+","+str(res[3]*0.1129848333)+","+str(res[4]*0.1129848333)+","+str(res[5]*0.1129848333)+"\n" )
             self.lineEdit_Values.setText  ("{:.2f}".format(res[0]*4.4482216152605)) 
@@ -111,7 +129,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.lineEdit_Values_5.setText("{:.2f}".format(res[4])) 
             self.lineEdit_Values_6.setText("{:.2f}".format(res[5]))
             
-        self.lineEdit_Time.setText("%.6f" % (end-self.absolute_start))
+        self.lineEdit_Time.setText("{:.2f}".format(end-self.absolute_start))
         
         return 0
 
@@ -162,6 +180,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def close_all(self):
         self.timer.stop()
+        self.reset_abs_time = True
         self.lineEdit_Errors.setText("Stopping... \n")
         #  Stop and Clear Task
         # --------------------
@@ -169,7 +188,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.analog_task.stop()
         self.analog_task.close()
 
-    def closeEvent(self, *args, **kwargs):
+    def closeEvent(self):
         if self.analog_task_flag:
             self.analog_task.stop()
             self.analog_task.close()
