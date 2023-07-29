@@ -27,7 +27,7 @@ Using [PyVisa](https://pyvisa.readthedocs.io/en/latest/index.html) python packag
 
 - DAQ_acquire_Voltages_GUI.py: Launches ATIMini40_GUI.ui, which allows easier configuration of the instrument and data log. Working using QTimer 1 ms. The fastest you can get is 10Hz. The instrument is the limitation. CRASHING
 
-- DAQ_acquire_Voltages_GUI2.py: WORKING. Uses streamers
+- DAQ_acquire_Voltages_GUI2.py: WORKING. Uses streamers To be explained soon
 
 Commands used in these scripts can be found (with additional examples) in the [Keysight 34970A Command reference manual](https://documentation.help/Keysight-34970A-34972A/)
 
