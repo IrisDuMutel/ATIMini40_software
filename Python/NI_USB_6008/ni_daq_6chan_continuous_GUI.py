@@ -153,10 +153,6 @@ class MainWindow(QtWidgets.QMainWindow):
                                                     units=constants.VoltageUnits.VOLTS,
                                                     custom_scale_name=None)
 
-        #  Sets the source of the Sample Clock, the rate of the Sample
-        #  Clock, and the number of samples to acquire or generate.
-        
-        # self.analog_task.start()
         bias_vector = self.analog_task.read()
     
 
@@ -167,7 +163,7 @@ class MainWindow(QtWidgets.QMainWindow):
                                             samps_per_chan=int(self.textEdit_SPC.text()))
 
         # Register my_callback function
-        self.analog_task.register_every_n_samples_acquired_into_buffer_event(int(self.textEdit_SPC.text()), self.my_callback)
+        # self.analog_task.register_every_n_samples_acquired_into_buffer_event(int(self.textEdit_SPC.text()), self.my_callback)
         
         #  Start Task
         # -----------

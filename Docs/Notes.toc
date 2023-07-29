@@ -1,12 +1,16 @@
 \contentsline {section}{\numberline {1}What kind of sensor is the ATI Mini40 DAQ F/T?}{1}{section.1}%
 \contentsline {subsection}{\numberline {1.1}Load calculation}{2}{subsection.1.1}%
-\contentsline {section}{\numberline {2}Wiring and connecting to a DAQ}{2}{section.2}%
-\contentsline {subsection}{\numberline {2.1}Sampling}{3}{subsection.2.1}%
+\contentsline {section}{\numberline {2}Wiring and connecting to a DAQ}{3}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Sampling}{4}{subsection.2.1}%
 \contentsline {subsection}{\numberline {2.2}Range}{4}{subsection.2.2}%
 \contentsline {subsection}{\numberline {2.3}Resolution}{4}{subsection.2.3}%
 \contentsline {subsection}{\numberline {2.4}Sensitivity and output range and resolution voltages}{5}{subsection.2.4}%
 \contentsline {section}{\numberline {3}Keysight 34970A connection to PC}{5}{section.3}%
 \contentsline {subsection}{\numberline {3.1}Important commands}{5}{subsection.3.1}%
 \contentsline {section}{\numberline {4}LabView}{7}{section.4}%
-\contentsline {section}{\numberline {5}Python}{7}{section.5}%
-\contentsline {section}{\numberline {6}Resources}{7}{section.6}%
+\contentsline {subsection}{\numberline {4.1}Keysight 34970A}{7}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}NI USB 6008}{8}{subsection.4.2}%
+\contentsline {section}{\numberline {5}Python}{8}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Keysight 34790A}{8}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}NI USB 6008 DAQ}{8}{subsection.5.2}%
+\contentsline {section}{\numberline {6}Resources}{9}{section.6}%

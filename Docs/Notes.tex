@@ -43,14 +43,16 @@
 \maketitle
 \tableofcontents
 \begin{abstract}
-	This document is meant to be a summary of all the relevant information I have found while working with the ATI Mini40 DAQ F/T sensor. It contain all the information and instructions to operate such sensor in various environments such as LabView, Python and MATLAB using the Keysight 34970A Data Acquisition Unit. 
+	This document is meant to be a summary of all the relevant information found while working with the ATI Mini40 DAQ F/T sensor. It contain all the information and instructions to operate such sensor in various environments such as LabView, Python and MATLAB using the Keysight 34970A Data Acquisition Unit and the  NI USB 6008 DAQ. 
+	
+	This document is also a description of the files contained in this project.
 \end{abstract}
 
 
 \section{What kind of sensor is the ATI Mini40 DAQ F/T?}
 
 The transducer is a compact, durable, monolithic structure that converts force and torque into analog strain
-gage signals. 
+gauge signals. 
 The force applied to the transducer flexes three symmetrically placed beams using Hooke’s law (from page 16 of the manual \hyperref{https://www.ati-ia.com/app_content/documents/9620-05-DAQ.pdf}{category}{name}{9620-05-DAQ}):
 \begin{itemize}
 	\item s = E·e
@@ -59,15 +61,15 @@ The force applied to the transducer flexes three symmetrically placed beams usin
 	\item e = Strain applied to the beam
 \end{itemize}
 
-Semiconductor strain gages are attached to the beams and act as strain-sensitive resistors. The resistance of
-the strain gage changes as a function of the applied strain as follows:
+Semiconductor strain gauges are attached to the beams and act as strain-sensitive resistors. The resistance of
+the strain gauge changes as a function of the applied strain as follows:
 
 \begin{itemize}
 	\item $\Delta$R = Sa·Ro·e
-	\item $\Delta$R = Change in resistance of strain gage
-	\item Sa = Gage factor of strain gage
-	\item Ro = Resistance of strain gage unstrained
-	\item e = Strain applied to strain gage
+	\item $\Delta$R = Change in resistance of strain gauge
+	\item Sa = gauge factor of strain gauge
+	\item Ro = Resistance of strain gauge unstrained
+	\item e = Strain applied to strain gauge
 \end{itemize}
 
 \subsection{Load calculation}
@@ -96,20 +98,20 @@ There are two different wiring alternatives for the DAQ version of this sensor:
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.7\textwidth]{diff_wiring.png}
-	\label{fig:diff_wiring}
 	\caption{Differential wiring connections to data acquisition system (page 35 from \hyperref{https://www.ati-ia.com/app_content/documents/9620-05-DAQ.pdf}{category}{name}{9620-05-DAQ})}
+	\label{fig:diff_wiring}
 \end{figure}
 
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.7\textwidth]{se_wiring.png}
-	\label{fig:se_wiring}
 	\caption{Single-ended wiring connections to data acquisition system (page 36 from \hyperref{https://www.ati-ia.com/app_content/documents/9620-05-DAQ.pdf}{category}{name}{9620-05-DAQ})}
+	\label{fig:se_wiring}
 \end{figure}
 
 A connection from the DAQ F/T's AGnd/AIGnd line to the data acquisition system’s analog input ground or analog ground is required in most cases.
 This line allows the return of the small amount of current used by the data acquisition system. Noise can result if this current isn't returned via the AGnd/AIGnd path.
-For best noise performance, the cabling from the PS/IFPS connector should be shielded and each strain gage's signals in a twisted pair. The shielding should be connected to the PS/IFPS connector shell and to the shell of the data acquisition system’s connector. If the data acquisition system has no connector or its connector shell is electrically floating, then the shield at the PS/IPFS connector should be connected to the AGnd/AIGnd signal.
+For best noise performance, the cabling from the PS/IFPS connector should be shielded and each strain gauge's signals in a twisted pair. The shielding should be connected to the PS/IFPS connector shell and to the shell of the data acquisition system’s connector. If the data acquisition system has no connector or its connector shell is electrically floating, then the shield at the PS/IPFS connector should be connected to the AGnd/AIGnd signal.
 
 \subsection{Sampling}
 
@@ -119,7 +121,7 @@ collection of all transducer frequency content. Note: that to satisfy the Nyquis
 to be coupled at a rate greater than twice the highest frequency present, even if data at that frequency
 is not preferred. The forces and torques will be sampled at that frequency, not having anything to do with the sampling rate of the data acquisition unit. 
 
-The data acquisition unit on the other hand has a maximum ampertire time of 400$\mu$s, meaning that's the smallest amount of time it needs for opening and reading from one channel. This aperture time is equivalent to an integration time of 0.02 PLC. The relationship between this two parameters is the following:
+The data acquisition unit on the other hand has a maximum aperture time of 400$\mu$s, meaning that's the smallest amount of time it needs for opening and reading from one channel. This aperture time is equivalent to an integration time of 0.02 PLC. The relationship between this two parameters is the following:
 
 \begin{equation}
 	\frac{0.02PLC}{50Hz (instrument power frequency)} = 400\mu s
@@ -268,6 +270,10 @@ data in reading memory.
 
 \section{LabView}
 
+For LabView, a calibration file has to be loaded inside the VI. Use the file FT17838.cal and choose desired units. May not work well when using single-ended connection. In that case, use the matrices provided in ATImatrices.m under the MATLAB/Scripts folder.
+ 
+\subsection{Keysight 34970A}
+
 LabView offers two main ways of interacting with the Keysight 34970A DAQ:
 
 \begin{itemize}
@@ -291,7 +297,63 @@ Inside the while loop, the write and read blocks are interacting with the instru
 	\item MEASure:VOLTage:DC? 10V, 0.001, (@101:106): The first part of the command 'MEASure:VOLTage:DC$?$` is requesting the measurement of the voltage. The question mark indicates a query command. The two numbers following such query are the \textit{range} and the \textit{resolution}, respectively. There are alternative values for these parameters. See more in pages 211 to 217 from the \hyperref{https://www.manualsbase.com/manual/439362/switch/hp_(hewlett-packard)/hp_34970a/}{category}{name}{manual}.
 \end{itemize}
 
+\subsection{NI USB 6008}
+
+Using the VI provided by the \hyperref{https://www.ati-ia.com/products/ft/software/daq_software.aspx}{category}{name}{DAQ software download page} from ATI.
+
+
 \section{Python}
+
+Using dedicated libraries, different software interfaces have been created for the two alternative DAQ units:
+
+\subsection{Keysight 34790A}
+
+Using \hyperref{https://pyvisa.readthedocs.io/en/latest/index.html}{name}{category}{PyVisa} python libraries.
+
+\subsection{NI USB 6008 DAQ}
+
+Using \hyperref{https://nidaqmx-python.readthedocs.io/en/latest/}{name}{cat}{NI-DAQmx} python libraries.
+
+\begin{figure}[h!]
+	\begin{subfigure}{.5\textwidth}
+		\centering
+		\includegraphics[width=0.7\textwidth,angle=180]{NIUSB6008_ATIMini40Connection.jpg}
+		\caption{Single-ended connection with only brown-white reference cable grounded}
+		\label{fig:NIUSB6008_ATIMini40Connection}
+	\end{subfigure}%
+	\begin{subfigure}{.5\textwidth}
+		\centering
+		\includegraphics[width=.8\linewidth]{Forces_check50Hz.png}
+		\caption{Fz test check}
+		\label{fig:Forces_check50Hz}
+	\end{subfigure}
+	\caption{Single-ended connection results with non-connected references}
+	\label{fig:test1}
+\end{figure} 
+
+\begin{figure}[h!]
+	\begin{subfigure}{.5\textwidth}
+		\centering
+		\includegraphics[width=0.7\textwidth,angle=180]{NIUSB6008_ATIMini40Connection_grounded.jpg}
+		\caption{Single-ended connection with all reference cables grounded}
+		\label{fig:NIUSB6008_ATIMini40Connection}
+	\end{subfigure}%
+	\begin{subfigure}{.5\textwidth}
+		\centering
+		\includegraphics[width=.8\linewidth]{Forces_check50Hz_grounded.png}
+		\caption{Fz test check}
+		\label{fig:Forces_check50Hz_grounded}
+	\end{subfigure}
+	\caption{Single-ended connection results with grounded references}
+	\label{fig:test2}
+\end{figure}
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.8\textwidth]{NIUSB6008_GUI.png}
+	\caption{Qt GUI for NI USB 6008}
+	\label{fig:NIUSB6008_GUI}
+\end{figure}
 
 \section{Resources}
 
