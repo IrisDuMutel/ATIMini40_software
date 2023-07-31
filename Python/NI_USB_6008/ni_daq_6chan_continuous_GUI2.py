@@ -24,10 +24,10 @@ RESOLUTION = "0.001"
 CHANNEL_LIST = "Dev3/ai0,Dev3/ai1,Dev3/ai2,Dev3/ai3,Dev3/ai4,Dev3/ai5"
 FILE_PATH = "TestData/log_20230728.txt"
 
-
+QTIM_VAL = '50' # In ms
 absolute_start = timer()
-FS = "50"  # Hz
-SAMPLE_PER_CHANNEL = "1"
+FS = "100"  # Hz
+SAMPLE_PER_CHANNEL = str(np.floor(int(QTIM_VAL)*int(FS)*0.001))
 
 
 cal_mat2 = [[0.02058, -0.03389, -0.11862, 2.75633, 0.12850, -2.92805],  #   Fx
@@ -52,13 +52,14 @@ class MainWindow(QtWidgets.QMainWindow):
         self.textEdit_Range.setText(RANGE)
         self.textEdit_Resolution.setText(RESOLUTION)
         self.textEdit_FS.setText(FS)
-        self.textEdit_SPC.setText(SAMPLE_PER_CHANNEL)
+        self.textEdit_QTIM_VAL.setText(QTIM_VAL)
         self.textEdit_FilePath.setText(FILE_PATH)
+        
 
         # Variable initialiation
         self.timer=QTimer()
         self.absolute_start = timer()   
-        self.timer.setInterval(50)
+        self.timer.setInterval(int(QTIM_VAL))
 
         # Callback Functions
         self.startButton.clicked.connect(self.on_press_start)
@@ -101,12 +102,10 @@ class MainWindow(QtWidgets.QMainWindow):
             self.absolute_start = timer()
             self.reset_abs_time = False
 
-        # np_values = self.analog_task.read(number_of_samples_per_channel=nidaqmx.constants.READ_ALL_AVAILABLE,
-                                    # timeout=nidaqmx.constants.WAIT_INFINITELY)
 
-        self.instream_reader.read_many_sample(self.in_stream_array,int(self.textEdit_SPC.text()),timeout = 10)
+        self.instream_reader.read_many_sample(self.in_stream_array,self.SPC,timeout = 10)
         np_values = np.array(self.in_stream_array)
-        print(np_values)
+        # print(np_values)
 
         # TOC
         end = timer()
@@ -114,8 +113,8 @@ class MainWindow(QtWidgets.QMainWindow):
         # print("Sample Size: " + str(len(np_values)))
         
         # Remove bias voltages
-        # unbiased_volt = [(np_values[0][0]-bias_vector[0]), (np_values[1][0]-bias_vector[1]), (np_values[2][0]-bias_vector[2]), (np_values[3][0]-bias_vector[3]), (np_values[4][0]-bias_vector[4]), (np_values[5][0]-bias_vector[5])]
-        
+        unbiased_volt = [[(np_values[0]-bias_vector[0])], [(np_values[1]-bias_vector[1])], [(np_values[2]-bias_vector[2])], [(np_values[3]-bias_vector[3])], [(np_values[4]-bias_vector[4])], [(np_values[5]-bias_vector[5])]]
+        # print(unbiased_volt)
         # # Multiply by calibration matrix. Results are in lbf, lbf-in
         # res = np.dot(cal_mat2,unbiased_volt)
 
@@ -147,6 +146,7 @@ class MainWindow(QtWidgets.QMainWindow):
         if self.checkBox_NNm.isChecked() == True:
             self.N_Nm = True
 
+        self.SPC = int(int(self.textEdit_FS.text())*int(self.textEdit_QTIM_VAL.text())*0.001)
         #  Create Task
         # --------------
         self.analog_task = nidaqmx.Task()
@@ -163,21 +163,18 @@ class MainWindow(QtWidgets.QMainWindow):
         #  Sets the source of the Sample Clock, the rate of the Sample
         #  Clock, and the number of samples to acquire or generate.
         
-        # self.analog_task.start()
         bias_vector = self.analog_task.read()
-    
+        print(bias_vector)
 
         self.analog_task.timing.cfg_samp_clk_timing(rate=int(self.textEdit_FS.text()),
                                             source=None,
                                             active_edge=nidaqmx.constants.Edge.RISING,
                                             sample_mode=nidaqmx.constants.AcquisitionType.CONTINUOUS,
-                                            samps_per_chan=int(self.textEdit_SPC.text()*6))
+                                            samps_per_chan=int(self.SPC*6))
 
-        # Register my_callback function
-        # self.analog_task.register_every_n_samples_acquired_into_buffer_event(int(self.textEdit_SPC.text()), self.my_callback)
-        
+        # Register reader
         self.instream_reader = AnalogMultiChannelReader(self.analog_task.in_stream)
-        self.in_stream_array = np.array([np.zeros(int(self.textEdit_SPC.text()),dtype=np.float64)]*6)
+        self.in_stream_array = np.array([np.zeros(self.SPC,dtype=np.float64)]*6)
 
 
 

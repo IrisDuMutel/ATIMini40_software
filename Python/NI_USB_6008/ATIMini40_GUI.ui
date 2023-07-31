@@ -17,8 +17,8 @@
    <widget class="QFrame" name="frame">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>110</y>
+      <x>20</x>
+      <y>120</y>
       <width>161</width>
       <height>361</height>
      </rect>
@@ -42,24 +42,11 @@
       <string>Channel list</string>
      </property>
     </widget>
-    <widget class="QLabel" name="label_5">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>150</y>
-       <width>121</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Samples per channel</string>
-     </property>
-    </widget>
     <widget class="QLabel" name="label_8">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>210</y>
+       <y>230</y>
        <width>141</width>
        <height>21</height>
       </rect>
@@ -107,21 +94,11 @@
       <string/>
      </property>
     </widget>
-    <widget class="QLineEdit" name="textEdit_SPC">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>170</y>
-       <width>121</width>
-       <height>31</height>
-      </rect>
-     </property>
-    </widget>
     <widget class="QLineEdit" name="textEdit_FS">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>230</y>
+       <y>250</y>
        <width>121</width>
        <height>31</height>
       </rect>
@@ -158,6 +135,32 @@
      </property>
      <property name="text">
       <string>F[N],T[Nm]</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="textEdit_QTIM_VAL">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>190</y>
+       <width>121</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_14">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>160</y>
+       <width>121</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>QTimer interval</string>
      </property>
     </widget>
    </widget>
@@ -405,6 +408,19 @@
       <width>91</width>
       <height>31</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>280</y>
+      <width>291</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Samples per channel = QTimer Interval * Sample Rate</string>
     </property>
    </widget>
   </widget>
