@@ -67,7 +67,7 @@ The GUI currently looks like this:
 
 - ATImatrices.m: Script containing the conversion matrices from voltages to lbf/lbf-in. This is the matrix to be used. An additional conversion is needed to obtain forces and torques in N and N-m. 
 - readCSV_n_plot2.m: reads CSV file and plots forces and torques
-- readCSV_n_plot3.m: reads CSV file and plots forces and torques fromatted by DAQ_acquire_Voltages_GUI2.py
+- readCSV_n_plot3.m: reads CSV file and plots forces and torques fromatted by DAQ_acquire_Voltages_GUI2.py. Be careful when setting the value for QTimer, If chosen too small, the GUI may crash or a delay may be noticed on the display.
 
 ### [Log files](MATLAB/LogFiles)
 - test500g.csv: file obtained using cal_mat from Python\NI_USB_6008\ni_daq_6chan_continuous.py
