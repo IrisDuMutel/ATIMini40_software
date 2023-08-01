@@ -24,9 +24,9 @@ RESOLUTION = "0.001"
 CHANNEL_LIST = "Dev3/ai0,Dev3/ai1,Dev3/ai2,Dev3/ai3,Dev3/ai4,Dev3/ai5"
 FILE_PATH = "TestData/log_20230728.txt"
 
-QTIM_VAL = '50' # In ms
+QTIM_VAL = '500' # In ms
 absolute_start = timer()
-FS = "100"  # Hz
+FS = "150"  # Hz
 SAMPLE_PER_CHANNEL = str(np.floor(int(QTIM_VAL)*int(FS)*0.001))
 
 
@@ -37,6 +37,12 @@ cal_mat2 = [[0.02058, -0.03389, -0.11862, 2.75633, 0.12850, -2.92805],  #   Fx
             [ -2.99499, -0.02691, 1.49603, -0.57982, 1.57237, 0.62804], #   Ty
             [ 0.05304, -1.48329, 0.05987, -1.45823, 0.07161, -1.56646]] #   Tz
 
+TRANS_MAT = [[4.4482216152605, 0, 0, 0, 0, 0],
+             [0, 4.4482216152605, 0, 0, 0, 0],
+             [0, 0, 4.4482216152605, 0, 0, 0],
+             [0, 0, 0, 0.1129848333, 0, 0],
+             [0, 0, 0, 0, 0.1129848333, 0],
+             [0, 0, 0, 0, 0, 0.1129848333]]
 
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self, *args, **kwargs):
@@ -65,6 +71,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.startButton.clicked.connect(self.on_press_start)
         self.stopButton.clicked.connect(self.on_press_stop)
         self.checkBox.stateChanged.connect(self.save_data)
+        self.checkBox_NNm.stateChanged.connect(self.NNm)
         self.timer.timeout.connect(self.my_callback)
         
         # Flag initialization
@@ -72,19 +79,35 @@ class MainWindow(QtWidgets.QMainWindow):
         self.reset_abs_time = False
         self.N_Nm = False
         self.analog_task_flag = False
+        self.header_flag = False
 
     # If measuring in N and N-m
     def NNm(self):
-        self.N_Nm = True
+        if self.N_Nm == True:
+            self.N_Nm = False
+        else:
+            self.N_Nm = True
 
     # If logging data into .txt file
     def save_data(self):
-        self.lineEdit_Errors.setText("Logging data in " + self.textEdit_FilePath.text() + "\n")
-        self.savaDataFlag = True
+        self.SPC = int(int(self.textEdit_FS.text())*int(self.textEdit_QTIM_VAL.text())*0.001)
+        self.lineEdit_Errors.insertPlainText("Logging data in " + self.textEdit_FilePath.text() + "\n")
+        if self.savaDataFlag == True:
+            self.savaDataFlag = False
+            self.write_path.close()
+        else:
+            self.savaDataFlag = True
+            self.write_path = open(self.textEdit_FilePath.text(), 'a')
+            if self.header_flag==False:
+                self.write_path.write("First line indicates sampling freq [Hz], samples per channel, QTimer [ms] \n")
+                self.write_path.write("Fx, Fy, Fz, Mz, My, Mz \n")
+                self.write_path.write((self.textEdit_FS.text()) + "," +  str(self.SPC) +","+ str(self.textEdit_QTIM_VAL.text()) + ",0"+ ",0" +"\n")
+                self.header_flag = True
 
     # Pressing start
     def on_press_start(self):
-        self.lineEdit_Errors.setText("Start logging... \n")
+        self.lineEdit_Errors.clear()
+        self.lineEdit_Errors.insertPlainText("Start logging... \n")
         self.ai_single_continuous()
         self.timer.start()
 
@@ -97,7 +120,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def my_callback(self):
         global bias_vector
         global cal_mat2
-
+        global TRANS_MAT
         if self.reset_abs_time == True:
             self.absolute_start = timer()
             self.reset_abs_time = False
@@ -110,41 +133,44 @@ class MainWindow(QtWidgets.QMainWindow):
         # TOC
         end = timer()
 
-        # print("Sample Size: " + str(len(np_values)))
         
         # Remove bias voltages
-        unbiased_volt = [[(np_values[0]-bias_vector[0])], [(np_values[1]-bias_vector[1])], [(np_values[2]-bias_vector[2])], [(np_values[3]-bias_vector[3])], [(np_values[4]-bias_vector[4])], [(np_values[5]-bias_vector[5])]]
-        # print(unbiased_volt)
-        # # Multiply by calibration matrix. Results are in lbf, lbf-in
-        # res = np.dot(cal_mat2,unbiased_volt)
+        unbiased_volt = [(np_values[0]-bias_vector[0]), (np_values[1]-bias_vector[1]), (np_values[2]-bias_vector[2]), (np_values[3]-bias_vector[3]), (np_values[4]-bias_vector[4]), (np_values[5]-bias_vector[5])]
 
-        # if self.N_Nm is True:
-        #     self.write_path.write(str(end-absolute_start)+","+str(res[0]*4.4482216152605)+","+str(res[1]*4.4482216152605)+","+str(res[2]*4.4482216152605)+","+str(res[3]*0.1129848333)+","+str(res[4]*0.1129848333)+","+str(res[5]*0.1129848333)+"\n" )
-        #     self.lineEdit_Values.setText  ("{:.2f}".format(res[0]*4.4482216152605)) 
-        #     self.lineEdit_Values_2.setText("{:.2f}".format(res[1]*4.4482216152605)) 
-        #     self.lineEdit_Values_3.setText("{:.2f}".format(res[2]*4.4482216152605)) 
-        #     self.lineEdit_Values_4.setText("{:.2f}".format(res[3]*0.1129848333)) 
-        #     self.lineEdit_Values_5.setText("{:.2f}".format(res[4]*0.1129848333)) 
-        #     self.lineEdit_Values_6.setText("{:.2f}".format(res[5]*0.1129848333))
-        # else:
-        #     self.write_path.write(str(end-absolute_start)+","+str(res[0])+","+str(res[1])+","+str(res[2])+","+str(res[3])+","+str(res[4])+","+str(res[5])+"\n" )
-        #     self.lineEdit_Values.setText  ("{:.2f}".format(res[0])) 
-        #     self.lineEdit_Values_2.setText("{:.2f}".format(res[1])) 
-        #     self.lineEdit_Values_3.setText("{:.2f}".format(res[2])) 
-        #     self.lineEdit_Values_4.setText("{:.2f}".format(res[3])) 
-        #     self.lineEdit_Values_5.setText("{:.2f}".format(res[4])) 
-        #     self.lineEdit_Values_6.setText("{:.2f}".format(res[5]))
-            
-        # self.lineEdit_Time.setText("{:.2f}".format(end-self.absolute_start))
-        
+        # Multiply by calibration matrix. Results are in lbf, lbf-in
+        res = np.dot(cal_mat2,unbiased_volt)
+        res_trans = res.transpose()
+        print(res_trans)
+        if self.N_Nm is True:
+            self.lineEdit_Values.setText  ("{:.2f}".format(np.mean(res[0]*4.4482216152605)) )
+            self.lineEdit_Values_2.setText("{:.2f}".format(np.mean(res[1]*4.4482216152605)) )
+            self.lineEdit_Values_3.setText("{:.2f}".format(np.mean(res[2]*4.4482216152605)) )
+            self.lineEdit_Values_4.setText("{:.2f}".format(np.mean(res[3]*0.1129848333)) )
+            self.lineEdit_Values_5.setText("{:.2f}".format(np.mean(res[4]*0.1129848333)) )
+            self.lineEdit_Values_6.setText("{:.2f}".format(np.mean(res[5]*0.1129848333)))
+            if self.savaDataFlag==True:
+                for i in range(0,self.SPC):
+                    self.write_path.write(str(res_trans[i][0]*4.4482216152605)+","+str(res_trans[i][1]*4.4482216152605)+","+str(res_trans[i][2]*4.4482216152605)+","+str(res_trans[i][3]*0.1129848333)+","+str(res_trans[i][4]*0.1129848333)+","+str(res_trans[i][5]*0.1129848333)+"\n")
+                # self.write_path.write(str(res_trans[0])+"\n"+str(res_trans[1])+"\n"+str(res_trans[2])+"\n"+str(res_trans[3])+"\n"+str(res_trans[4])+"\n"+str(res_trans[5]))       
+        else:
+            self.lineEdit_Values.setText  ("{:.2f}".format(np.mean(res[0]))) 
+            self.lineEdit_Values_2.setText("{:.2f}".format(np.mean(res[1]))) 
+            self.lineEdit_Values_3.setText("{:.2f}".format(np.mean(res[2]))) 
+            self.lineEdit_Values_4.setText("{:.2f}".format(np.mean(res[3]))) 
+            self.lineEdit_Values_5.setText("{:.2f}".format(np.mean(res[4]))) 
+            self.lineEdit_Values_6.setText("{:.2f}".format(np.mean(res[5])))
+            if self.savaDataFlag==True:
+                for i in range(0,self.SPC):
+                    self.write_path.write(str(res_trans[i][0])+","+str(res_trans[i][1])+","+str(res_trans[i][2])+","+str(res_trans[i][3])+","+str(res_trans[i][4])+","+str(res_trans[i][5])+"\n")
+                # self.write_path.write(str(res_trans[0])+"\n"+str(res_trans[1])+"\n"+str(res_trans[2])+"\n"+str(res_trans[3])+"\n"+str(res_trans[4])+"\n"+str(res_trans[5]))       
+
+        self.lineEdit_Time.setText("{:.2f}".format(end-self.absolute_start))
+        print("{:.2f}".format(end-self.absolute_start))
         return 0
 
     def ai_single_continuous(self):
         
         global bias_vector
-
-        if self.checkBox_NNm.isChecked() == True:
-            self.N_Nm = True
 
         self.SPC = int(int(self.textEdit_FS.text())*int(self.textEdit_QTIM_VAL.text())*0.001)
         #  Create Task
@@ -162,7 +188,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         #  Sets the source of the Sample Clock, the rate of the Sample
         #  Clock, and the number of samples to acquire or generate.
-        
+        self.lineEdit_Errors.insertPlainText("Getting bias values... \n")
         bias_vector = self.analog_task.read()
         print(bias_vector)
 
@@ -181,15 +207,15 @@ class MainWindow(QtWidgets.QMainWindow):
         #  Start Task
         # -----------
         self.analog_task.start()
-
+        self.lineEdit_Errors.insertPlainText("Start data stream... \n")
         self.analog_task_flag = True
-        self.write_path = open(self.textEdit_FilePath.text(), 'a')
         
+            
 
     def close_all(self):
         self.timer.stop()
         self.reset_abs_time = True
-        self.lineEdit_Errors.setText("Stopping... \n")
+        self.lineEdit_Errors.insertPlainText("Stopping... \n")
         #  Stop and Clear Task
         # --------------------
         self.analog_task_flag = False
