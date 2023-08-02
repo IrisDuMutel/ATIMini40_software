@@ -25,7 +25,7 @@ Using [PyVisa](https://pyvisa.readthedocs.io/en/latest/index.html) python packag
 
 - DAQ_acquire_Voltages3.py: Acquires voltages as fast as possible. The number of scans is infinite (granting a more continuous data rate). The trigger timer is set to MIN, to set the scan-to-scan interval to a minimum. Using the <span style="font-family:Calibri;"> R? [<max_count>]</span> command to erase read and erase from non-volatile memory not stopping the scan.
 
-- DAQ_acquire_Voltages_GUI.py: Launches ATIMini40_GUI.ui, which allows easier configuration of the instrument and data log. Working using QTimer 1 ms. The fastest you can get is 10Hz. The instrument is the limitation. CRASHING
+- **DAQ_acquire_Voltages_GUI.py**: Launches ATIMini40_GUI.ui, which allows easier configuration of the instrument and data log. Working using QTimer 1 ms. The fastest you can get is 10Hz. The instrument is the limitation. CRASHING
  
 
 Commands used in these scripts can be found (with additional examples) in the [Keysight 34970A Command reference manual](https://documentation.help/Keysight-34970A-34972A/)
@@ -38,9 +38,9 @@ Using [NI-DAQmx](https://nidaqmx-python.readthedocs.io/en/latest/)
 
 - ni_daq_6chan_continuous.py: Obtains forces and torques (lbf and lbf-in, respectively) from ATIMini40 with a single-ended connection. Use cal_mat2 for correct results on F/T. Bias voltage is obtained at the beginning of the readings and automatically subtracted from all the other measurements.
 
-- ni_daq_6chan_continuous_GUI.py: Using 1 sample per channel and SF as high as 50Hz. Otherwise, crashes. 
+- ni_daq_6chan_continuous_GUI.py: Using 1 sample per channel and sample rate as high as 50Hz. Otherwise, crashes. 
 
-- ni_daq_6chan_continuous_GUI2.py: WORKING. Uses streamers To be explained soon
+- **ni_daq_6chan_continuous_GUI2.py**: WORKING. Uses streamers To be explained soon
 
 The single ended connection is as follows:
 
@@ -85,3 +85,14 @@ The GUI currently looks like this:
 Personally crafted documentation containing (what I consider) the most important information from all the components in the setup. In progress.
 
 
+# Intructions on how to use this repository
+
+### 1.- Clone repository
+
+`git clone https://github.com/IrisDuMutel/ATIMini40_software.git`
+
+### 2.- Choose software based on your instrument
+
+Refer to the **bold** text in the different subfolders to find the most updated scripts. Use **DAQ_acquire_Voltages_GUI.py** when using Keysight 34970A and **ni_daq_6chan_continuous_GUI2.py** when using a NI DAQ unit.
+
+Change data sampling parameters on the GUI that will come up when launching the scritps. For more information, check the [documentation file](Docs\Notes.pdf)-
