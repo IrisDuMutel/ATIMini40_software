@@ -218,6 +218,55 @@ Just for clarity purposes, \autoref{tab:sensit} in metric system would be as fol
 	\end{tabular}
 \end{table}
 
+\section{SICK WLA16 Photoelectric sensors}
+
+The \hyperref{https://www.sick.com/us/en/photoelectric-sensors/photoelectric-sensors/w16/wla16p-24162100a00/p/p512654}{sensors}{SICK}{SICK photoelectric sensors} have been chosen for this application as they have proven their applicability in UAV related research topics in the past \cite{Scanavino2021}. It has to be powered with 10 V to 20 V. For more specifications regarding the power of the sensor, see the \hyperref{https://cdn.sick.com/media/pdf/4/54/654/dataSheet_WLA16P-24162100A00_1218660_en.pdf}{category}{name}{manual}.
+
+The connection type is as in \autoref{fig:SICKpins}:
+
+\begin{figure}[h!]
+	\begin{subfigure}{.5\textwidth}
+		\centering
+		\includegraphics[width=0.5\textwidth]{SICKpins1.png}
+		\label{fig:SICKpins2}
+	\end{subfigure}%
+	\begin{subfigure}{.5\textwidth}
+		\centering
+		\includegraphics[width=.5\linewidth]{SICKpins2.png}
+		\label{fig:SICKpins2}
+	\end{subfigure}
+	\caption{SICK WLA16 Photoelectric sensors pinout}
+	\label{fig:SICKpins}
+\end{figure} 
+
+These sensors have four cables which have the following fucntionality:
+\begin{itemize}
+	\item Brown (pin 1): Positive power input.
+	\item White (pin 2): Digital output. When and object is present between the sensor and the reflector, the signal is high.
+	\item Blue (pin 3): GND 	
+	\item Black (pin 4): Digital output. When an object is present between the sensor and the reflector, the signal is low.
+\end{itemize}
+
+The arduino connection to be used with the \textit{RPM\_1sensor.ino} script are as in \autoref{fig:sick_arduino_analog}:
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.5\textwidth,angle=180]{SICK_arduino.jpg}
+	\caption{SICK sensor analog connection to arduino mega 2560 R3}
+	\label{fig:sick_arduino_analog}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.5\textwidth]{SICK_arduino_digital.jpg}
+	\caption{SICK sensor digital connection to arduino mega 2560 R3}
+	\label{fig:sick_arduino_digital}
+\end{figure}
+
+
+In this project, there are several arduino files that collect data from this sensor according to the connection established. Eventhoug the sensors are purely digital, the analog alternative was also tested.
+
+
 \section{Keysight 34970A connection to PC}
 The connection is made via a GPIB‑USB‑HS cable. The GPIB‑USB‑HS is an IEEE 488 controller device for computers with USB slots. The GPIB‑USB‑HS achieves maximum IEEE 488.2 performance. The exact model can be found in \hyperref{https://www.amazon.com/Kanonaki-GPIB-USB-HS-Interface-Adapter-Controller/dp/B07Q84XJJF}{category}{name}{Amazon}. The differences with the \hyperref{https://www.newark.com/ni/780570-01/gpib-usb-hs-gpib-control-device/dp/14AJ5119}{category}{name}{original} true version of this device are not the sxope of this document. 
 

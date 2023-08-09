@@ -5,12 +5,13 @@
 \contentsline {subsection}{\numberline {2.2}Range}{4}{subsection.2.2}%
 \contentsline {subsection}{\numberline {2.3}Resolution}{4}{subsection.2.3}%
 \contentsline {subsection}{\numberline {2.4}Sensitivity and output range and resolution voltages}{5}{subsection.2.4}%
-\contentsline {section}{\numberline {3}Keysight 34970A connection to PC}{5}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Important commands}{5}{subsection.3.1}%
-\contentsline {section}{\numberline {4}LabView}{7}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Keysight 34970A}{7}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}NI USB 6008}{8}{subsection.4.2}%
-\contentsline {section}{\numberline {5}Python}{8}{section.5}%
-\contentsline {subsection}{\numberline {5.1}Keysight 34790A}{8}{subsection.5.1}%
-\contentsline {subsection}{\numberline {5.2}NI USB 6008 DAQ}{8}{subsection.5.2}%
-\contentsline {section}{\numberline {6}Resources}{9}{section.6}%
+\contentsline {section}{\numberline {3}SICK WLA16 Photoelectric sensors}{5}{section.3}%
+\contentsline {section}{\numberline {4}Keysight 34970A connection to PC}{6}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Important commands}{7}{subsection.4.1}%
+\contentsline {section}{\numberline {5}LabView}{8}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Keysight 34970A}{8}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}NI USB 6008}{8}{subsection.5.2}%
+\contentsline {section}{\numberline {6}Python}{9}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Keysight 34790A}{9}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}NI USB 6008 DAQ}{9}{subsection.6.2}%
+\contentsline {section}{\numberline {7}Resources}{9}{section.7}%
