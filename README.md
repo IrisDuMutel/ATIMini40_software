@@ -12,7 +12,11 @@ ATI Mini40 DAQ F/T sensor is connected differentially to the first slot of the K
 
 Scripts created to check the functionality of SICK W16 photoelectric sensors.
 
-- RPM_1sensor.ino: Script that reads both digital outputs of one sensor and prints them in serial at 9600 baud.
+- RPM_1sensor.ino: Script that reads both outputs of one sensor and prints them in serial at 9600 baud. Equal to RPM_1sensor_analog.ino
+-RPM_1sensor_analog.ino: Script that reads both outputs of one sensor as analog signals and prints them in serial at 9600 baud.
+-RPM_1sensor_digital.ino: Script that reads both outputs of one sensor as digital signals and prints them at 9600 baud.
+
+Use PuTTY for logging of serial data. When using VSCode serial data logging, the data might be corrupted.
  
 
 ## [LabView](LabView) (2023)
@@ -66,6 +70,7 @@ The GUI currently looks like this:
 
 <img src="Docs\Images\NIUSB6008_GUI.png"  width="700" height="400">
 
+
 #### FROM [ENGR EDU](http://engredu.com/2022/11/21/ni-articles/):
 
 - ni_daq_ai_single_demand.py
@@ -75,9 +80,15 @@ The GUI currently looks like this:
 - ni_daq_ai_single_continuous_gui.py
 - ni_max_Continuous.ui
 
+### [Scripts and description using SICK WLA16 sensors with NI USB-6008](Python\SICKWLA16):
+
+- RPM_1sensor.py: This script contains the same exact code as the example from the [nidaqmx-python](https://github.com/ni/nidaqmx-python/blob/master/examples/di_sw_timed.py) GitHub repository.
+-RPM_4sensor.py: Includes GUI interface. Reads from four channels using Qt timers. NOT WORKING
+
 ### QT UI files
 
 - ATIMini40_GUI.ui
+- RPM_GUI.ui
 
 ## [MATLAB](MATLAB)
 

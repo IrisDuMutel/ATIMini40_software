@@ -26,6 +26,7 @@ hold on;grid on;
 plot(time2/1000, White2/1023,'lineWidth',1.5)
 plot(time2/1000, Black2/1023,'lineWidth',1.5)
 legend('White','Black')
+xlabel('Time [s]')
 
 
 figure()
