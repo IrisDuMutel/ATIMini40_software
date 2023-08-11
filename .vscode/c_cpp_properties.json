@@ -18,6 +18,9 @@
             "includePath": [
                 "C:\\Users\\d066566\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.3\\cores\\arduino",
                 "C:\\Users\\d066566\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.3\\variants\\mega",
+                "C:\\Users\\d066566\\Documents\\Arduino\\libraries\\U8g2\\src",
+                "C:\\Users\\d066566\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.3\\libraries\\SPI\\src",
+                "C:\\Users\\d066566\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.3\\libraries\\Wire\\src",
                 "c:\\users\\d066566\\appdata\\local\\arduino15\\packages\\arduino\\tools\\avr-gcc\\7.3.0-atmel3.6.1-arduino7\\lib\\gcc\\avr\\7.3.0\\include",
                 "c:\\users\\d066566\\appdata\\local\\arduino15\\packages\\arduino\\tools\\avr-gcc\\7.3.0-atmel3.6.1-arduino7\\lib\\gcc\\avr\\7.3.0\\include-fixed",
                 "c:\\users\\d066566\\appdata\\local\\arduino15\\packages\\arduino\\tools\\avr-gcc\\7.3.0-atmel3.6.1-arduino7\\avr\\include"

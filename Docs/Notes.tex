@@ -266,6 +266,74 @@ The arduino connection to be used with the \textit{RPM\_1sensor.ino} script are 
 
 In this project, there are several arduino files that collect data from this sensor according to the connection established. Eventhoug the sensors are purely digital, the analog alternative was also tested.
 
+\subsection{On Timers and interrupts}
+
+Arduino Mega2650 R3 contains an \hyperref{https://ww1.microchip.com/downloads/en/devicedoc/atmel-2549-8-bit-avr-microcontroller-atmega640-1280-1281-2560-2561_datasheet.pdf}{category}{name}{ATMEGA2650 microcontroller}, and a 16 MHz oscillator.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.5\textwidth]{arduino_mega.png}
+	\caption{Arduino mega2650, the oscillator is in the blue circle and the microcontroller is in the red one}
+	\label{fig:arduino_mega}
+\end{figure}
+
+\textbf{Waveform Generation mode} or WGMn3:0 bits located in the Timer/Control regsiters A and B. (from page 139 of the manual) determines the counting sequence. When setting TCCR1A and TCCR1B to 0, we are choosing the \textit{normal} mode, in which the counting direction is always incremented and no counter clear is implemented.  The counter simply overruns when passes its maximum 16-bit value and then restarts from the bottom. In the case of a 16 it counter, we have the following:
+
+\begin{equation}
+	Steps = 2^{16bits} = 65536
+\end{equation}
+
+The oscillator of the board can process 16000000 steps in one second, so our counter runs into an overflow every:
+
+\begin{equation}
+	\frac{65536 steps}{16e10^{6}\frac{steps}{second}} \approx 4ms
+\end{equation}
+
+The following figure represents the counter behavior with a waveform generator in normal mode and a prescaler of 1.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.6\textwidth]{Counter.pdf}
+	\caption{Counter overflow process}
+	\label{fig:counter}
+\end{figure}
+
+A prescaler is a number used to control the overflow frequency of a  counter. If the prescaler is set to 1, this means that the equation above is going to rule out counter overflow.
+
+We can enable the counter overflow interrupt by setting the TOIE1 bit to 1. This allows us to construct an interrupt that is triggered every time the counter overflows. The prescaler of timer 1 (CS1n with n from 0 to 2) acts as follows:
+
+\begin{equation}
+	\frac{65536 [steps]}{16e10^{6}/prescaler[\frac{steps}{second}]}
+\end{equation}
+
+The table with values of the prescaler and the bits to be set is the following:
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width = 0.6\textwidth]{CSn.png}
+	\caption{Clock select bit description}
+	\label{fig:CSn}
+\end{figure}
+
+This means that the minimum interrupt frequency we can obtain with a 16-bit counter is around 4 milliseconds. 
+
+
+There's other two ways of controlling counter overflow frequency:
+
+\begin{itemize}
+	\item Start the counter at a different value than 0. Refer to \autoref{eq:formula1} to figure out how to compute the starting point
+	\item Use clear timer on compare match. This mode can be activated by setting WGM12 to 1. It allows the user to manipulate the counter resolution by comparing the counter value to a pre-established value.
+\end{itemize}
+
+
+\begin{equation}
+	Start = 65536 - \frac{f_{clock}}{Prescaler\cdot f_{target}}
+	\label{eq:formula1}
+\end{equation}
+
+
+ 
+
 
 \section{Keysight 34970A connection to PC}
 The connection is made via a GPIB‑USB‑HS cable. The GPIB‑USB‑HS is an IEEE 488 controller device for computers with USB slots. The GPIB‑USB‑HS achieves maximum IEEE 488.2 performance. The exact model can be found in \hyperref{https://www.amazon.com/Kanonaki-GPIB-USB-HS-Interface-Adapter-Controller/dp/B07Q84XJJF}{category}{name}{Amazon}. The differences with the \hyperref{https://www.newark.com/ni/780570-01/gpib-usb-hs-gpib-control-device/dp/14AJ5119}{category}{name}{original} true version of this device are not the sxope of this document. 
@@ -305,12 +373,10 @@ There are various manuals for this DAQ. The most helpful one containing command 
 If a scan list is currently defined (see ROUTe:SCAN command), the INITiate command performs a scan of the specified channels.
 Storing readings in memory using the INITiate command is generally faster than sending readings to memory using the READ? command. The INITiate command is also an "overlapped" command. This means that after executing the INITiate command, you can send other commands that do not affect the measurements.
 You can store up to 50,000 readings in memory and all readings are automatically time stamped. If memory overflows, the new readings will overwrite the first (oldest) readings stored; the most recent readings are always preserved.
-For scanning measurements using the multiplexer modules, an
-error is generated if the internal DMM is disabled.
+For scanning measurements using the multiplexer modules, an error is generated if the internal DMM is disabled.
 To retrieve the readings from memory, use the FETCh? command.
 The readings are not erased from memory when you read them.
-You can send the command multiple times to retrieve the same
-data in reading memory.
+You can send the command multiple times to retrieve the same data in reading memory.
 
 \textbf{FETCh}: This command transfers readings stored in non-volatile memory to the instrument's output buffer, where you can read them into your computer. The readings stored in memory are not erased when you read them with FETCh?.
 
