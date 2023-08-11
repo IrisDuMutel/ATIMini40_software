@@ -332,8 +332,22 @@ There's other two ways of controlling counter overflow frequency:
 \end{equation}
 
 
- 
+In the case of building a tachometer with a digital sensor, this \hyperref{https://www.youtube.com/watch?v=6QZMt4yyylU}{category}{name}{video} has been used as inspiration, changing the value of the oscillator.
 
+In our case, using a prescaler of 256 allows us to reduce the counter maximum to 62500 (from $2^{16}/256$).
+In this case, the time it takes for one revolution to complete can be described as:
+
+\begin{equation}
+	\frac{counter [\frac{steps}{1rotation}]}{62500 [\frac{steps}{1second}]}
+\end{equation} 
+
+To obtain the RPM value:
+
+\begin{equation}
+	\frac{60seconds}{1minute}\cdot\frac{62500 [\frac{steps}{1second}]}{counter [\frac{steps}{1rotation}]}
+\end{equation}
+
+Depending on the value of the counter when entering the interrupt we can get a hypothetical maximum of 3750000 RPM and a minimum of 57 RPM.
 
 \section{Keysight 34970A connection to PC}
 The connection is made via a GPIB‑USB‑HS cable. The GPIB‑USB‑HS is an IEEE 488 controller device for computers with USB slots. The GPIB‑USB‑HS achieves maximum IEEE 488.2 performance. The exact model can be found in \hyperref{https://www.amazon.com/Kanonaki-GPIB-USB-HS-Interface-Adapter-Controller/dp/B07Q84XJJF}{category}{name}{Amazon}. The differences with the \hyperref{https://www.newark.com/ni/780570-01/gpib-usb-hs-gpib-control-device/dp/14AJ5119}{category}{name}{original} true version of this device are not the sxope of this document. 

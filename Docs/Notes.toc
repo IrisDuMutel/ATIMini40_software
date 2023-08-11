@@ -12,7 +12,7 @@
 \contentsline {section}{\numberline {5}LabView}{10}{section.5}%
 \contentsline {subsection}{\numberline {5.1}Keysight 34970A}{10}{subsection.5.1}%
 \contentsline {subsection}{\numberline {5.2}NI USB 6008}{10}{subsection.5.2}%
-\contentsline {section}{\numberline {6}Python}{11}{section.6}%
+\contentsline {section}{\numberline {6}Python}{10}{section.6}%
 \contentsline {subsection}{\numberline {6.1}Keysight 34790A}{11}{subsection.6.1}%
 \contentsline {subsection}{\numberline {6.2}NI USB 6008 DAQ}{11}{subsection.6.2}%
 \contentsline {section}{\numberline {7}Resources}{11}{section.7}%

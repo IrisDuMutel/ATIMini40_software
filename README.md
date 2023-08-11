@@ -12,9 +12,8 @@ ATI Mini40 DAQ F/T sensor is connected differentially to the first slot of the K
 
 Scripts created to check the functionality of SICK W16 photoelectric sensors.
 
-- RPM_1sensor.ino: Script that reads both outputs of one sensor and prints them in serial at 9600 baud. Equal to RPM_1sensor_analog.ino
--RPM_1sensor_analog.ino: Script that reads both outputs of one sensor as analog signals and prints them in serial at 9600 baud.
--RPM_1sensor_digital.ino: Script that reads both outputs of one sensor as digital signals and prints them at 9600 baud.
+-sensor_analog.ino: Script that reads both outputs of one sensor as analog signals and prints them in serial at 9600 baud.
+-sensor_digital.ino: Script that reads both outputs of one sensor as digital signals and prints them at 9600 baud.
 
 Use PuTTY for logging of serial data. When using VSCode serial data logging, the data might be corrupted.
  
