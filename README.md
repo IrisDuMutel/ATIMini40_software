@@ -1,3 +1,16 @@
+# Instructions on how to use this repository
+
+### 1.- Clone repository
+
+`git clone https://github.com/IrisDuMutel/ATIMini40_software.git`
+
+### 2.- Choose software based on your instrument
+
+Refer to the **bold** text in the different subfolders to find the most updated scripts. Use **DAQ_acquire_Voltages_GUI.py** when using Keysight 34970A and **ni_daq_6chan_continuous_GUI2.py** when using a NI DAQ unit.
+
+Change data sampling parameters on the GUI that will come up when launching the scritps. For more information, check the [documentation file](Docs\Notes.pdf).
+
+
 # This repository contains code for the use of the following devices:
 
 - *SICK WLA16 Photoelectric sensors* using an Arduino Mega 2560 R3
@@ -116,17 +129,6 @@ This folder contains some of the log files obtained during the creation of this 
 Personally crafted documentation containing (what is considered) the most important information from all the components in the setup. Forgive any incompleteness, we'll try and keep it up-to-date as much as possible.
 
 
-# Instructions on how to use this repository
-
-### 1.- Clone repository
-
-`git clone https://github.com/IrisDuMutel/ATIMini40_software.git`
-
-### 2.- Choose software based on your instrument
-
-Refer to the **bold** text in the different subfolders to find the most updated scripts. Use **DAQ_acquire_Voltages_GUI.py** when using Keysight 34970A and **ni_daq_6chan_continuous_GUI2.py** when using a NI DAQ unit.
-
-Change data sampling parameters on the GUI that will come up when launching the scritps. For more information, check the [documentation file](Docs\Notes.pdf).
 
 
 
