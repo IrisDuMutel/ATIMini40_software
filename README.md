@@ -128,7 +128,5 @@ Refer to the **bold** text in the different subfolders to find the most updated 
 
 Change data sampling parameters on the GUI that will come up when launching the scritps. For more information, check the [documentation file](Docs\Notes.pdf).
 
-### 3.- Read the documentation related to your application
 
-In th
 
