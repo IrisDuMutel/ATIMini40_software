@@ -396,6 +396,8 @@ The algorithm is as follows:
 The resolution of the readings depends on the product of $60000\frac{ms}{1min} \times \frac{1}{t_{elapsed}}$. Depending on the delay imposed, the resolution will change. Also, the minimum and maximum values to be read will be different.
 
 
+The Arduino counters have been defined as \textit{volatile} floats, which is directing the compiler to load the variable from RAM and not from a storage register. Values stored in registers can be inaccurate under certain conditions. Variables such as counters inside interrupts are being changed by something beyond the control of the code section (setup or loop code se), which is when variables should be declared as volatiles.
+
 \section{Castle Phoenix Edge 50A ESC}
 
 The manual of these ESC is in the following \hyperref{https://dzf8vqv24eqhg.cloudfront.net/userfiles/4671/6540/ckfinder/files/Product%20Manuals/Aircraft%20Helis/Phoenix%20Edge%20Series/edge_guide.pdf?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9kemY4dnF2MjRlcWhnLmNsb3VkZnJvbnQubmV0L3VzZXJmaWxlcy80NjcxLzY1NDAvY2tmaW5kZXIvZmlsZXMvUHJvZHVjdCUyME1hbnVhbHMvQWlyY3JhZnQlMjBIZWxpcy9QaG9lbml4JTIwRWRnZSUyMFNlcmllcy9lZGdlX2d1aWRlLnBkZiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTY5MjExNDY5OX19fV19&Signature=Ttin0Hxd-W1Av7ACk8UNA7CYOoaI9~KpY5-N3fKi5dI-KHRJRYZSGEDBNtASKJYoFXJGzLuWZmpiy5EDsTr-ZWxcN2yKQiWBwiXAG5Ntc3~4cLVdHm6XacfGUEBSlxb20EiOOYZ8MGA5RKDY~8~ws85YxoU8X4pa79NiWuHGlPQ4phsYztgbzeIrGpJSADMONCXLsvYziu1AHUeHOdPgZNyapAdTpVS85KuHCU7op72VtraeqWH9zaRxO6dwdQxqBsx3qs18JsE3f4ET3khM7HGiHr6H9p5j-l0ij8cLhZET0bTB7Hqlwe95accVxRQzJJ4EjaYpaK0CzYUycD~RwA__&Key-Pair-Id=K2TK3EG287XSFC}{category}{name}{link}.

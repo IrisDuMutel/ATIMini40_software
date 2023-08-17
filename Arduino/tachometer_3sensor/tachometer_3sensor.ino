@@ -4,16 +4,15 @@
 const int IR_PIN1 = 2;  // IR sensor input pin
 const int IR_PIN2 = 3;  // IR sensor input pin
 const int IR_PIN3 = 18;  // IR sensor input pin
-volatile unsigned int counter = 0;  // Counter variable for revolutions
 unsigned long actualMillis = 0;  // Variable to store previous time
 unsigned long previousMillis = 0;  // Variable to store previous time
 float timeee;
 unsigned long rpmtime1;
 unsigned long rpmtime2;
 unsigned long rpmtime3;
-float rpmfloat1;
-float rpmfloat2;
-float rpmfloat3;
+volatile float rpmfloat1;
+volatile float rpmfloat2;
+volatile float rpmfloat3;
 float rpm1;
 float rpm2;
 float rpm3;

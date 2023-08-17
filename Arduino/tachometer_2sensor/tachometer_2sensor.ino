@@ -7,8 +7,8 @@ volatile unsigned int counter = 0;  // Counter variable for revolutions
 unsigned long previousMillis = 0;  // Variable to store previous time
 unsigned long rpmtime;
 unsigned long rpmtime2;
-float rpmfloat;
-float rpmfloat2;
+volatile float rpmfloat;
+volatile float rpmfloat2;
 unsigned int rpm;
 unsigned int rpm2;
 bool tooslow  = 1;

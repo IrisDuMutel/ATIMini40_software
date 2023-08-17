@@ -3,10 +3,9 @@
 
 const int IR_PIN = 2;  // IR sensor input pin
 
-volatile unsigned int counter = 0;  // Counter variable for revolutions
 unsigned long previousMillis = 0;  // Variable to store previous time
 unsigned long rpmtime;
-float rpmfloat;
+volatile float rpmfloat;
 unsigned int rpm;
 bool tooslow = 1;
 
