@@ -264,8 +264,28 @@ The arduino connection to be used with the \textit{sensor\_analog.ino} script ar
 	\label{fig:sick_arduino_digital}
 \end{figure}
 
+Specifications of these sensors can be found in this table:
 
+\begin{table}[h!]
+	\centering
+	\caption{SICK WLA16 Photoelectric sensor specifications\label{tab:SICK16}}
+	\begin{tabular}{||c | c | c | c||} 
+		\hline
+		Fx, Fy & Fz & Tx,Ty & Tz \\ [0.5ex] 
+		\hline\hline
+		$\pm$ 20 lbf & $\pm$ 60 lbf & $\pm$ 40 lbf-in & $\pm$ 40 lbf-in\\ 
+		\hline
+		$\pm$ 88.9644 N & $\pm$ 266.893 N & $\pm$ 4.51939 N-m & $\pm$ 4.51939 N-m \\
+		\hline
+	\end{tabular}
+\end{table}
+
+
+
+\subsubsection{Codes}
 In this project, there are several arduino files that collect data from this sensor according to the connection established. Eventhoug the sensors are purely digital, the analog alternative was also tested.
+
+
 
 The digital connection and function of 1 up to 4 sensors can be tested with the codes in the Arduino folder (tachometer\_nsensor), with \textit{n} the number of sensors willing to be connected.
 
@@ -312,7 +332,7 @@ A prescaler is a number used to control the overflow frequency of a  counter. If
 We can enable the counter overflow interrupt by setting the TOIE1 bit to 1. This allows us to construct an interrupt that is triggered every time the counter overflows. The prescaler of timer 1 (CS1n with n from 0 to 2) acts as follows:
 
 \begin{equation}
-	\frac{65536 [steps]}{16e10^{6}/prescaler[\frac{steps}{second}]}
+	\frac{65536 [steps]}{16\cdot10^{6}/prescaler[\frac{steps}{second}]}
 \end{equation}
 
 The table with values of the prescaler and the bits to be set is the following:
@@ -396,7 +416,9 @@ The algorithm is as follows:
 The resolution of the readings depends on the product of $60000\frac{ms}{1min} \times \frac{1}{t_{elapsed}}$. Depending on the delay imposed, the resolution will change. Also, the minimum and maximum values to be read will be different.
 
 
-The Arduino counters have been defined as \textit{volatile} floats, which is directing the compiler to load the variable from RAM and not from a storage register. Values stored in registers can be inaccurate under certain conditions. Variables such as counters inside interrupts are being changed by something beyond the control of the code section (setup or loop code se), which is when variables should be declared as volatiles.
+The Arduino counters have been defined as \textit{volatile}\cite{volatiles} floats, which is directing the compiler to load the variable from RAM and not from a storage register. Values stored in registers can be inaccurate under certain conditions. Variables such as counters inside interrupts are being changed by something beyond the control of the code section (setup or loop code). Declaring them as \textit{volatile}, the changes in them are immediately visible in the \textit{loop()} function. If not, the variable state might be loaded int o a register when entering the function and would not be updated anymore until the function ends. 
+Declaring a variable \textit{volatile} is a directive to the compiler.
+
 
 \section{Castle Phoenix Edge 50A ESC}
 
