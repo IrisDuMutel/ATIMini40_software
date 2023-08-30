@@ -6,7 +6,7 @@
 \contentsline {subsection}{\numberline {2.3}Resolution}{4}{subsection.2.3}%
 \contentsline {subsection}{\numberline {2.4}Sensitivity and output range and resolution voltages}{5}{subsection.2.4}%
 \contentsline {section}{\numberline {3}SICK WLA16 Photoelectric sensors}{5}{section.3}%
-\contentsline {subsubsection}{\numberline {3.0.1}Codes}{7}{subsubsection.3.0.1}%
+\contentsline {subsubsection}{\numberline {3.0.1}Codes files}{7}{subsubsection.3.0.1}%
 \contentsline {subsection}{\numberline {3.1}On Timers and interrupts}{7}{subsection.3.1}%
 \contentsline {subsection}{\numberline {3.2}On only interrupt based algorithms (FINAL CHOICE)}{9}{subsection.3.2}%
 \contentsline {section}{\numberline {4}Castle Phoenix Edge 50A ESC}{10}{section.4}%
