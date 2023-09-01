@@ -17,6 +17,7 @@ Change data sampling parameters on the GUI that will come up when launching the 
 - *ATI Mini40 DAQ F/T* sensor using:
     - DAQ NI USB-6008
     - Keysight 34970A Digital Acquisition Unit
+- *Phoenix Edge 50 AMP ESC*
 
 # ATI Mini40 DAQ F/T sensor software resources
 ATI Mini40 DAQ F/T sensor is connected differentially to the first slot of the Keysight 34970A DAQ (16-channel multiplexer). The DAQ is connected to a PC using the GPIB-HS-USB connector from National Instruments, allowing the use of Virtual Instrument Software Architecture (VISA) libraries. 
