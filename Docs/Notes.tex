@@ -269,19 +269,28 @@ Specifications of these sensors can be found in this table:
 \begin{table}[h!]
 	\centering
 	\caption{SICK WLA16 Photoelectric sensor specifications: digital output\label{tab:SICK16}}
-	\begin{tabular}{||c | c | c | c ||} 
+	\begin{tabular}{||c | c ||} 
 		\hline
-		Output number &  &  &  \\ [0.5ex] 
+		Output number & 2 (balck and white pins)\\ [0.5ex] 
 		\hline
-		$\pm$ Signal voltage H-L & $\pm$ 60 lbf & $\pm$ 40 lbf-in & $\pm$ 40 lbf-in\\ 
+		Signal voltage High-Low (V) & $U_B$-2.5V / 0 (PNP) and $U_B$ / $<$ 2.5 V (NPN) \\ 
 		\hline
-		$\pm$ Output curr & $\pm$ 266.893 N & $\pm$ 4.51939 N-m & $\pm$ 4.51939 N-m \\
+		Output current & $\leq$ 100 mA \\
 		\hline
-		$\pm$ Switching frequency & $\pm$ 266.893 N & $\pm$ 4.51939 N-m & $\pm$ 4.51939 N-m \\
+		Switching frequency & 1000 Hz \\
+		\hline
+		Response time & $\leq$ 500 $\mu$s \\
+		\hline
+		Repeatability (response time) & 150 $\mu$s \\
 		\hline
 	\end{tabular}
 \end{table}
 
+A switching frequency of 1000 Hz implies that the sensor can complete 1000 readings in one second. In other words, it can read one complete measurement in one-thousandth of a second.
+
+In the case of a quadcopter like the one intended to use in this work, the speed of the propellers stays in the range of 1000 up to 12000 revolutions per minute. Translating this numbers to revolutions per second, the range becomes 17 to 200 revolutions per second, which fits comfortably in the switching frequency of the sensors chosen.
+
+It must be said that the switching frequecy stated in the datsheet is obtained with a light/dark ratio of 1 to 1.
 
 
 \subsubsection{Codes files}
