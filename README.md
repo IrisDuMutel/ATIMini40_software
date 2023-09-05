@@ -26,12 +26,13 @@ To know more about how these devices are used, refer to the [documentation](http
 
 <details close>
 <summary>For Phoenix Edge 50A</summary>
+<br>
 - Potentiometer.ino: This is a very simple script to use with any arduino that allows you to control any BLDC motor (with and ESC) with a potentiometer.
 </details>
 
 <details close>
 <summary>For SICK W16 Photoelectic sensors</summary>
-
+<br>
 - sensor_analog.ino: Script that reads both outputs of one photoelectric sensor as analog signals and prints them in serial at 9600 baud.
 - sensor_digital.ino: Script that reads both outputs of one photoelectric sensor as digital signals and prints them at 9600 baud.
 - timer_example.ino: Simple implementation of a timer overflow print. Timer 1 is enabled and so is the counter overflow interrupt, in which the value of the timer is set to be printed.
