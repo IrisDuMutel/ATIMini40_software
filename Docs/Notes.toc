@@ -18,4 +18,6 @@
 \contentsline {section}{\numberline {7}Python}{14}{section.7}%
 \contentsline {subsection}{\numberline {7.1}Keysight 34790A}{14}{subsection.7.1}%
 \contentsline {subsection}{\numberline {7.2}NI USB 6008 DAQ}{14}{subsection.7.2}%
-\contentsline {section}{\numberline {8}Resources}{14}{section.8}%
+\contentsline {section}{\numberline {8}The final architecture}{16}{section.8}%
+\contentsline {subsection}{\numberline {8.1}Data collection procedure}{16}{subsection.8.1}%
+\contentsline {section}{\numberline {9}Resources}{16}{section.9}%
