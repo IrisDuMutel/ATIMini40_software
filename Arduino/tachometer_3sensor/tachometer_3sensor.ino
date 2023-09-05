@@ -54,9 +54,9 @@ void loop() {
   timeee = (actualMillis - previousMillis);
   rpmfloat1 = 60000 * (rpmtime1/timeee);
   rpm1 = rpmfloat1;
-  rpmfloat2 = 1000 * (rpmtime2/timeee);
+  rpmfloat2 = 60000 * (rpmtime2/timeee);
   rpm2 = rpmfloat2;
-  rpmfloat3 = 1000 * (rpmtime3/timeee);
+  rpmfloat3 = 60000 * (rpmtime3/timeee);
   rpm3 = rpmfloat3;
   rpmtime1 = 0;
   rpmtime2 = 0;

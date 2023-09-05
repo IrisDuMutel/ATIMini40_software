@@ -5,7 +5,9 @@ const int IR_PIN1 = 2;  // IR sensor input pin
 const int IR_PIN2 = 3;  // IR sensor input pin
 const int IR_PIN3 = 18;  // IR sensor input pin
 const int IR_PIN4 = 19;  // IR sensor input pin
+unsigned long actualMillis = 0;  // Variable to store previous time
 unsigned long previousMillis = 0;  // Variable to store previous time
+float timeee;
 unsigned long rpmtime1;
 unsigned long rpmtime2;
 unsigned long rpmtime3;
@@ -56,11 +58,11 @@ void loop() {
   timeee = (actualMillis - previousMillis);
   rpmfloat1 = 60000 * (rpmtime1/timeee);
   rpm1 = rpmfloat1;
-  rpmfloat2 = 1000 * (rpmtime2/timeee);
+  rpmfloat2 = 60000 * (rpmtime2/timeee);
   rpm2 = rpmfloat2;
-  rpmfloat3 = 1000 * (rpmtime3/timeee);
+  rpmfloat3 = 60000 * (rpmtime3/timeee);
   rpm3 = rpmfloat3;
-  rpmfloat4 = 1000 * (rpmtime4/timeee);
+  rpmfloat4 = 60000 * (rpmtime4/timeee);
   rpm3 = rpmfloat4;
   rpmtime1 = 0;
   rpmtime2 = 0;
