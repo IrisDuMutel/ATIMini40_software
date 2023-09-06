@@ -219,6 +219,161 @@ Just for clarity purposes, \autoref{tab:sensit} in metric system would be as fol
 	\end{tabular}
 \end{table}
 
+
+\section{Keysight 34970A connection to PC}
+The connection is made via a GPIB‑USB‑HS cable. The GPIB‑USB‑HS is an IEEE 488 controller device for computers with USB slots. The GPIB‑USB‑HS achieves maximum IEEE 488.2 performance. The exact model can be found in \hyperref{https://www.amazon.com/Kanonaki-GPIB-USB-HS-Interface-Adapter-Controller/dp/B07Q84XJJF}{category}{name}{Amazon}. The differences with the \hyperref{https://www.newark.com/ni/780570-01/gpib-usb-hs-gpib-control-device/dp/14AJ5119}{category}{name}{original} true version of this device are not the sxope of this document. 
+
+There are various manuals for this DAQ. The most helpful one containing command examples is the \href{https://documentation.help/Keysight-34970A-34972A/documentation.pdf}{Keysight 34970A/34972A Command Reference Manual}. From this manual, the information from the following section was found.
+
+\subsection{Important commands}
+
+\textbf{ROUT:SCAN} : This command selects the channels to be included in the scan list. This command is used in conjunction with the CONFigure commands to set up an automated scan. To start the scan, use the INITiate or READ? command.
+
+\textbf{INStrument:DMM} : This command disables or enables the internal digital multimeter. When you change the state of the internal DMM, the instrument issues a Factory Reset (*RST command).
+
+\textbf{TRIGger:SOURce} : Select the trigger source to control the onset of each sweep through the scan list (a sweep is one pass through the scan list). The instrument will accept a software (bus) command, an immediate (continuous) scan trigger, an external TTL trigger pulse, an alarm-initiated action, or an internally paced timer. Usually used: TIMer = Internally paced timer trigger.
+
+\textbf{TRIGger:TIMer} : This command sets the trigger-to-trigger interval (in seconds) for measurements on the channels in the present scan list. This command defines the time from the start of one trigger to the start of the next trigger, up to the specified trigger count (see TRIGger:COUNt command). A number from 0 seconds to 359,999 with 1 ms resolution. Note that 359,999 seconds is one second less than one hundred hours.
+
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\textwidth]{trigger_timer.png}
+	\label{fig:trigger_timer}
+	\caption{Trigger timer}
+\end{figure}
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\textwidth]{trigger_timer2.png}
+	\label{fig:trigger_timer2}
+	\caption{Trigger timer from hewlett packard manual}
+\end{figure}
+
+
+
+\textbf{TRIGger:COUNt}: This command specifies the number of times to sweep through the scan list. A sweep is one pass through the scan list. The scan stops when the number of specified sweeps has occurred. An integer from 1 to 50,000 triggers, or continuous (INFinity).
+
+\textbf{INITiate} : This command changes the state of the triggering system from the ``idle" state to the ``wait-for-trigger" state. Scanning will begin when the specified trigger conditions are satisfied following the receipt of the INITiate command. Readings are stored in the instrument's internal reading memory. Note that the INITiate command also clears the previous set of readings from memory.
+If a scan list is currently defined (see ROUTe:SCAN command), the INITiate command performs a scan of the specified channels.
+Storing readings in memory using the INITiate command is generally faster than sending readings to memory using the READ? command. The INITiate command is also an "overlapped" command. This means that after executing the INITiate command, you can send other commands that do not affect the measurements.
+You can store up to 50,000 readings in memory and all readings are automatically time stamped. If memory overflows, the new readings will overwrite the first (oldest) readings stored; the most recent readings are always preserved.
+For scanning measurements using the multiplexer modules, an error is generated if the internal DMM is disabled.
+To retrieve the readings from memory, use the FETCh? command.
+The readings are not erased from memory when you read them.
+You can send the command multiple times to retrieve the same data in reading memory.
+
+\textbf{FETCh}: This command transfers readings stored in non-volatile memory to the instrument's output buffer, where you can read them into your computer. The readings stored in memory are not erased when you read them with FETCh?.
+
+\textbf{VOLT:DC:APERTURE} : This command enables the aperture mode and sets the integration time in seconds (called aperture time) for DC voltage measurements on the specified channels.
+
+
+\section{LabView}
+
+For LabView, a calibration file has to be loaded inside the VI. Use the file FT17838.cal and choose desired units. May not work well when using single-ended connection. In that case, use the matrices provided in ATImatrices.m under the MATLAB/Scripts folder.
+
+\subsection{Keysight 34970A}
+
+LabView offers two main ways of interacting with the Keysight 34970A DAQ:
+
+\begin{itemize}
+	\item General purpose Virtual Instrument Software Architecture (VISA) blocks.NI-VISA is an API that provides a programming interface to control Ethernet/LXI, GPIB, serial, USB, PXI, and VXI instruments in NI application development environments like LabVIEW, LabWindows/CVI, and Measurement Studio. The API is installed through the NI-VISA driver \cite{NIVISA}.
+	\item Agilent Technologies / Keysight Technologies 34970A \hyperref{http://sine.ni.com/apps/utf8/niid_web_display.model_page?p_model_id=5547}{category}{name}{drivers}. These block are based on the VISA blocks but offer a more user-friendly approach to configuring the instrument as well as reading data from it. 
+\end{itemize}
+
+The \hyperref{https://github.com/IrisDuMutel/ATIMini40_software/tree/master/LabView}{cat1}{visa}{example}  provided in this repository uses generic VISA blocks. In \autoref{fig:labview_block}, the block diagram of the VI can be seen:
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.9\textwidth]{labview_block.png}
+	\caption{LabView block diagram}
+	\label{fig:labview_block}
+\end{figure}
+
+Inside the while loop, the write and read blocks are interacting with the instrument. Every iteration, the \textit{write} block sends the following commands to the DAQ:
+
+\begin{itemize}
+	\item DISP OFF: This command turns off the display of the external instrument. This speeds up the sampling process.
+	\item MEASure:VOLTage:DC? 10V, 0.001, (@101:106): The first part of the command 'MEASure:VOLTage:DC$?$` is requesting the measurement of the voltage. The question mark indicates a query command. The two numbers following such query are the \textit{range} and the \textit{resolution}, respectively. There are alternative values for these parameters. See more in pages 211 to 217 from the \hyperref{https://www.manualsbase.com/manual/439362/switch/hp_(hewlett-packard)/hp_34970a/}{category}{name}{manual}.
+\end{itemize}
+
+\subsection{NI USB 6008}
+
+Using the VI provided by the \hyperref{https://www.ati-ia.com/products/ft/software/daq_software.aspx}{category}{name}{DAQ software download page} from ATI.
+
+
+\section{Python}
+
+Using \hyperref{https://www.qt.io/product/development-tools}{category}{name}{Qt creator}, a base interface was created to interact with all python codes (see \autoref{fig:NIUSB6008_GUI}). Since the final choice for the DAQ was the NI USB 6008, the interface has been adapted to the configuration parameters of this specific device.
+
+There are several ways of creating a multi-channel analog reading software using Qt and the NI-DAQmx python libraries \cite{goncalo}:
+
+\begin{itemize}
+	\item \textbf{NI Callback functions}: 
+	\item \textbf{\hyperref{https://doc.qt.io/qt-6/qtimer.html}{category}{name}{QTimers}} $\leftarrow$ used in this project for ATI Mini40 and NI USB 6008 DAQ.
+	\item \textbf{\hyperref{https://realpython.com/intro-to-python-threading/}{category}{name}{Python Threads}} :
+\end{itemize}
+
+
+Please, visit \hyperref{http://engredu.com/2023/07/29/ni-acquisition-strategies/}{category}{name}{ENGedu} for fantastic code examples and references using these methods.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\textwidth]{NIUSB6008_GUI.png}
+	\caption{Qt interface for NI USB 6008 Data Acquisition Unit}
+	\label{fig:NIUSB6008_GUI}
+\end{figure}
+
+
+\subsection{Keysight 34790A}
+
+Using \hyperref{https://pyvisa.readthedocs.io/en/latest/index.html}{name}{category}{PyVisa} python libraries.
+
+\subsection{NI USB 6008 DAQ}
+
+Using \hyperref{https://nidaqmx-python.readthedocs.io/en/latest/}{name}{cat}{NI-DAQmx} python libraries.
+
+\begin{figure}[h!]
+	\begin{subfigure}{.5\textwidth}
+		\centering
+		\includegraphics[width=0.7\textwidth,angle=180]{NIUSB6008_ATIMini40Connection.jpg}
+		\caption{Single-ended connection with only brown-white reference cable grounded}
+		\label{fig:NIUSB6008_ATIMini40Connection}
+	\end{subfigure}%
+	\begin{subfigure}{.5\textwidth}
+		\centering
+		\includegraphics[width=.8\linewidth]{Forces_check50Hz.png}
+		\caption{Fz test check}
+		\label{fig:Forces_check50Hz}
+	\end{subfigure}
+	\caption{Single-ended connection results with non-connected references}
+	\label{fig:test1}
+\end{figure} 
+
+\begin{figure}[h!]
+	\begin{subfigure}{.5\textwidth}
+		\centering
+		\includegraphics[width=0.7\textwidth,angle=180]{NIUSB6008_ATIMini40Connection_grounded.jpg}
+		\caption{Single-ended connection with all reference cables grounded}
+		\label{fig:NIUSB6008_ATIMini40Connection}
+	\end{subfigure}%
+	\begin{subfigure}{.5\textwidth}
+		\centering
+		\includegraphics[width=.8\linewidth]{Forces_check50Hz_grounded.png}
+		\caption{Fz test check}
+		\label{fig:Forces_check50Hz_grounded}
+	\end{subfigure}
+	\caption{Single-ended connection results with grounded references}
+	\label{fig:test2}
+\end{figure}
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.8\textwidth]{NIUSB6008_GUI.png}
+	\caption{Qt GUI for NI USB 6008}
+	\label{fig:NIUSB6008_GUI}
+\end{figure}
+
 \section{SICK WLA16 Photoelectric sensors}
 
 The \hyperref{https://www.sick.com/us/en/photoelectric-sensors/photoelectric-sensors/w16/wla16p-24162100a00/p/p512654}{sensors}{SICK}{SICK photoelectric sensors} have been chosen for this application as they have proven their applicability in UAV related research topics in the past \cite{Scanavino2021}. It has to be powered with 10 V to 20 V. For more specifications regarding the power of the sensor, see the \hyperref{https://cdn.sick.com/media/pdf/4/54/654/dataSheet_WLA16P-24162100A00_1218660_en.pdf}{category}{name}{manual}.
@@ -466,166 +621,29 @@ The ESC connection to the arduino is shown in \autoref{fig:arduino_ESC}:
 
 The rest of the cables are connected to a potentiometer that acts as radio controller.
 
-\section{Keysight 34970A connection to PC}
-The connection is made via a GPIB‑USB‑HS cable. The GPIB‑USB‑HS is an IEEE 488 controller device for computers with USB slots. The GPIB‑USB‑HS achieves maximum IEEE 488.2 performance. The exact model can be found in \hyperref{https://www.amazon.com/Kanonaki-GPIB-USB-HS-Interface-Adapter-Controller/dp/B07Q84XJJF}{category}{name}{Amazon}. The differences with the \hyperref{https://www.newark.com/ni/780570-01/gpib-usb-hs-gpib-control-device/dp/14AJ5119}{category}{name}{original} true version of this device are not the sxope of this document. 
-
-There are various manuals for this DAQ. The most helpful one containing command examples is the \href{https://documentation.help/Keysight-34970A-34972A/documentation.pdf}{Keysight 34970A/34972A Command Reference Manual}. From this manual, the information from the following section was found.
-
-\subsection{Important commands}
-
-\textbf{ROUT:SCAN} : This command selects the channels to be included in the scan list. This command is used in conjunction with the CONFigure commands to set up an automated scan. To start the scan, use the INITiate or READ? command.
-
-\textbf{INStrument:DMM} : This command disables or enables the internal digital multimeter. When you change the state of the internal DMM, the instrument issues a Factory Reset (*RST command).
-
-\textbf{TRIGger:SOURce} : Select the trigger source to control the onset of each sweep through the scan list (a sweep is one pass through the scan list). The instrument will accept a software (bus) command, an immediate (continuous) scan trigger, an external TTL trigger pulse, an alarm-initiated action, or an internally paced timer. Usually used: TIMer = Internally paced timer trigger.
-
-\textbf{TRIGger:TIMer} : This command sets the trigger-to-trigger interval (in seconds) for measurements on the channels in the present scan list. This command defines the time from the start of one trigger to the start of the next trigger, up to the specified trigger count (see TRIGger:COUNt command). A number from 0 seconds to 359,999 with 1 ms resolution. Note that 359,999 seconds is one second less than one hundred hours.
-
-
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=0.7\textwidth]{trigger_timer.png}
-	\label{fig:trigger_timer}
-	\caption{Trigger timer}
-\end{figure}
-
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=0.7\textwidth]{trigger_timer2.png}
-	\label{fig:trigger_timer2}
-	\caption{Trigger timer from hewlett packard manual}
-\end{figure}
 
 
 
-\textbf{TRIGger:COUNt}: This command specifies the number of times to sweep through the scan list. A sweep is one pass through the scan list. The scan stops when the number of specified sweeps has occurred. An integer from 1 to 50,000 triggers, or continuous (INFinity).
+\section{The quadcopter}
+?????
 
-\textbf{INITiate} : This command changes the state of the triggering system from the ``idle" state to the ``wait-for-trigger" state. Scanning will begin when the specified trigger conditions are satisfied following the receipt of the INITiate command. Readings are stored in the instrument's internal reading memory. Note that the INITiate command also clears the previous set of readings from memory.
-If a scan list is currently defined (see ROUTe:SCAN command), the INITiate command performs a scan of the specified channels.
-Storing readings in memory using the INITiate command is generally faster than sending readings to memory using the READ? command. The INITiate command is also an "overlapped" command. This means that after executing the INITiate command, you can send other commands that do not affect the measurements.
-You can store up to 50,000 readings in memory and all readings are automatically time stamped. If memory overflows, the new readings will overwrite the first (oldest) readings stored; the most recent readings are always preserved.
-For scanning measurements using the multiplexer modules, an error is generated if the internal DMM is disabled.
-To retrieve the readings from memory, use the FETCh? command.
-The readings are not erased from memory when you read them.
-You can send the command multiple times to retrieve the same data in reading memory.
+\section{Power supply}
 
-\textbf{FETCh}: This command transfers readings stored in non-volatile memory to the instrument's output buffer, where you can read them into your computer. The readings stored in memory are not erased when you read them with FETCh?.
+The system needs more than one source of power to feed the boards and the sensors. 
 
-\textbf{VOLT:DC:APERTURE} : This command enables the aperture mode and sets the integration time in seconds (called aperture time) for DC voltage measurements on the specified channels.
+The Arduinos are powered with a PC, while the sensors require a higher voltage and current.
 
+The tachometers are powered by a switching adapter that provides 12 V and a maximum of 500 mA which is a suitable option since the current draw of these devices is not very high.
 
-\section{LabView}
+The force/torque sensor is powered by its own black box. Please, refer to page 13 from the \hyperref{https://www.ati-ia.com/app_content/documents/9620-05-DAQ.pdf}{category}{name}{manual} for more information regarding powering this component.
 
-For LabView, a calibration file has to be loaded inside the VI. Use the file FT17838.cal and choose desired units. May not work well when using single-ended connection. In that case, use the matrices provided in ATImatrices.m under the MATLAB/Scripts folder.
- 
-\subsection{Keysight 34970A}
-
-LabView offers two main ways of interacting with the Keysight 34970A DAQ:
-
-\begin{itemize}
-	\item General purpose Virtual Instrument Software Architecture (VISA) blocks.NI-VISA is an API that provides a programming interface to control Ethernet/LXI, GPIB, serial, USB, PXI, and VXI instruments in NI application development environments like LabVIEW, LabWindows/CVI, and Measurement Studio. The API is installed through the NI-VISA driver \cite{NIVISA}.
-	\item Agilent Technologies / Keysight Technologies 34970A \hyperref{http://sine.ni.com/apps/utf8/niid_web_display.model_page?p_model_id=5547}{category}{name}{drivers}. These block are based on the VISA blocks but offer a more user-friendly approach to configuring the instrument as well as reading data from it. 
-\end{itemize}
-
-The \hyperref{https://github.com/IrisDuMutel/ATIMini40_software/tree/master/LabView}{cat1}{visa}{example}  provided in this repository uses generic VISA blocks. In \autoref{fig:labview_block}, the block diagram of the VI can be seen:
-
-\begin{figure}[!h]
-	\centering
-	\includegraphics[width=0.9\textwidth]{labview_block.png}
-	\caption{LabView block diagram}
-	\label{fig:labview_block}
-\end{figure}
-
-Inside the while loop, the write and read blocks are interacting with the instrument. Every iteration, the \textit{write} block sends the following commands to the DAQ:
-
-\begin{itemize}
-	\item DISP OFF: This command turns off the display of the external instrument. This speeds up the sampling process.
-	\item MEASure:VOLTage:DC? 10V, 0.001, (@101:106): The first part of the command 'MEASure:VOLTage:DC$?$` is requesting the measurement of the voltage. The question mark indicates a query command. The two numbers following such query are the \textit{range} and the \textit{resolution}, respectively. There are alternative values for these parameters. See more in pages 211 to 217 from the \hyperref{https://www.manualsbase.com/manual/439362/switch/hp_(hewlett-packard)/hp_34970a/}{category}{name}{manual}.
-\end{itemize}
-
-\subsection{NI USB 6008}
-
-Using the VI provided by the \hyperref{https://www.ati-ia.com/products/ft/software/daq_software.aspx}{category}{name}{DAQ software download page} from ATI.
-
-
-\section{Python}
-
-Using \hyperref{https://www.qt.io/product/development-tools}{category}{name}{Qt creator}, a base interface was created to interact with all python codes (see \autoref{fig:NIUSB6008_GUI}). Since the final choice for the DAQ was the NI USB 6008, the interface has been adapted to the configuration parameters of this specific device.
-
-There are several ways of creating a multi-channel analog reading software using Qt and the NI-DAQmx python libraries \cite{goncalo}:
-
-\begin{itemize}
-	\item \textbf{NI Callback functions}: 
-	\item \textbf{\hyperref{https://doc.qt.io/qt-6/qtimer.html}{category}{name}{QTimers}} $\leftarrow$ used in this project for ATI Mini40 and NI USB 6008 DAQ.
-	\item \textbf{\hyperref{https://realpython.com/intro-to-python-threading/}{category}{name}{Python Threads}} :
-\end{itemize}
-
-
-Please, visit \hyperref{http://engredu.com/2023/07/29/ni-acquisition-strategies/}{category}{name}{ENGedu} for fantastic code examples and references using these methods.
-
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=0.7\textwidth]{NIUSB6008_GUI.png}
-	\caption{Qt interface for NI USB 6008 Data Acquisition Unit}
-	\label{fig:NIUSB6008_GUI}
-\end{figure}
-
-
-\subsection{Keysight 34790A}
-
-Using \hyperref{https://pyvisa.readthedocs.io/en/latest/index.html}{name}{category}{PyVisa} python libraries.
-
-\subsection{NI USB 6008 DAQ}
-
-Using \hyperref{https://nidaqmx-python.readthedocs.io/en/latest/}{name}{cat}{NI-DAQmx} python libraries.
-
-\begin{figure}[h!]
-	\begin{subfigure}{.5\textwidth}
-		\centering
-		\includegraphics[width=0.7\textwidth,angle=180]{NIUSB6008_ATIMini40Connection.jpg}
-		\caption{Single-ended connection with only brown-white reference cable grounded}
-		\label{fig:NIUSB6008_ATIMini40Connection}
-	\end{subfigure}%
-	\begin{subfigure}{.5\textwidth}
-		\centering
-		\includegraphics[width=.8\linewidth]{Forces_check50Hz.png}
-		\caption{Fz test check}
-		\label{fig:Forces_check50Hz}
-	\end{subfigure}
-	\caption{Single-ended connection results with non-connected references}
-	\label{fig:test1}
-\end{figure} 
-
-\begin{figure}[h!]
-	\begin{subfigure}{.5\textwidth}
-		\centering
-		\includegraphics[width=0.7\textwidth,angle=180]{NIUSB6008_ATIMini40Connection_grounded.jpg}
-		\caption{Single-ended connection with all reference cables grounded}
-		\label{fig:NIUSB6008_ATIMini40Connection}
-	\end{subfigure}%
-	\begin{subfigure}{.5\textwidth}
-		\centering
-		\includegraphics[width=.8\linewidth]{Forces_check50Hz_grounded.png}
-		\caption{Fz test check}
-		\label{fig:Forces_check50Hz_grounded}
-	\end{subfigure}
-	\caption{Single-ended connection results with grounded references}
-	\label{fig:test2}
-\end{figure}
-
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=0.8\textwidth]{NIUSB6008_GUI.png}
-	\caption{Qt GUI for NI USB 6008}
-	\label{fig:NIUSB6008_GUI}
-\end{figure}
-
+The quadcopter is powered with two Astec DS550-3 power supplies connected in parallel using active load sharing. This way, a stable 12V and 90A (max) can be provided to the quadcopter, granting the repeatability of the experiments.
 
 \section{The final architecture}
 
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=0.5\textwidth]{black.jpeg}
+	\includegraphics[width=0.9\textwidth]{General_setup.pdf}
 	\caption{A graph of the overall system, representing all devices and the connections between them}
 	\label{fig:overall_system}
 \end{figure}
