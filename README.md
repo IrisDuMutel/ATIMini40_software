@@ -151,7 +151,7 @@ This folder contains some of the log files obtained during the creation of this 
 </details>
 
 
-## [Docs](Docs)
+## [Docs](Docs/Notes.pdf)
 Personally crafted documentation containing (what is considered) the most important information from all the components in the setup. Forgive any incompleteness, we'll try and keep it up-to-date as much as possible.
 
 

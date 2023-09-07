@@ -460,7 +460,7 @@ The digital connection and function of 1 up to 4 sensors can be tested with the 
 \textit{tachometer\_3sensor.ino} and \textit{tachometer\_4sensor.ino} deal with three and four sensors, respectively by using only interrupts on three and four pins of the arduino Mega. This way, a delay is introduced for the counters to measure the sensor occurrences and once the delay is over, the elapsed time and counts are used to compute the RPM.
 
 
-\subsection{On Timers and interrupts}
+\subsection{Timers and interrupts}
 \label{sec:ontimersandinterrupts}
 
 Arduino Mega2650 R3 contains an \hyperref{https://ww1.microchip.com/downloads/en/devicedoc/atmel-2549-8-bit-avr-microcontroller-atmega640-1280-1281-2560-2561_datasheet.pdf}{category}{name}{ATMEGA2650 microcontroller}, and a 16 MHz oscillator.
@@ -544,7 +544,7 @@ To obtain the RPM value:
 
 Depending on the value of the counter when entering the interrupt we can get a hypothetical maximum of 3750000 RPM and a minimum of 57 RPM.
 
-\subsection{On only interrupt based algorithms (FINAL CHOICE)}
+\subsection{Only interrupt based algorithms (FINAL CHOICE)}
 
 In the end, the use of timers to control 4 tachometers is becoming a very tedious task and readings are not correct. The final solution that was adopted is the use of four interrupts attached to the interrupt enabled pins of the arduino Mega 2650 R3 (2, 3, 18, 19, 20, 21 (pins 20 \& 21 are not available to use for interrupts while they are used for I2C communication)). Increasing four counters and computing the rpm every loop iteration allows the control of the resolution and maximum and minimum values to be captured with the sensors.
 
@@ -587,7 +587,7 @@ Declaring a variable \textit{volatile} is a directive to the compiler.
 
 
 \section{Castle Phoenix Edge 50A ESC}
-
+\label{sec:ESC}
 The manual of these ESC is in the following \hyperref{https://dzf8vqv24eqhg.cloudfront.net/userfiles/4671/6540/ckfinder/files/Product%20Manuals/Aircraft%20Helis/Phoenix%20Edge%20Series/edge_guide.pdf?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9kemY4dnF2MjRlcWhnLmNsb3VkZnJvbnQubmV0L3VzZXJmaWxlcy80NjcxLzY1NDAvY2tmaW5kZXIvZmlsZXMvUHJvZHVjdCUyME1hbnVhbHMvQWlyY3JhZnQlMjBIZWxpcy9QaG9lbml4JTIwRWRnZSUyMFNlcmllcy9lZGdlX2d1aWRlLnBkZiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTY5MjExNDY5OX19fV19&Signature=Ttin0Hxd-W1Av7ACk8UNA7CYOoaI9~KpY5-N3fKi5dI-KHRJRYZSGEDBNtASKJYoFXJGzLuWZmpiy5EDsTr-ZWxcN2yKQiWBwiXAG5Ntc3~4cLVdHm6XacfGUEBSlxb20EiOOYZ8MGA5RKDY~8~ws85YxoU8X4pa79NiWuHGlPQ4phsYztgbzeIrGpJSADMONCXLsvYziu1AHUeHOdPgZNyapAdTpVS85KuHCU7op72VtraeqWH9zaRxO6dwdQxqBsx3qs18JsE3f4ET3khM7HGiHr6H9p5j-l0ij8cLhZET0bTB7Hqlwe95accVxRQzJJ4EjaYpaK0CzYUycD~RwA__&Key-Pair-Id=K2TK3EG287XSFC}{category}{name}{link}.
 
 The programming instructions were followed to obtain the following configuration:
@@ -625,7 +625,19 @@ The rest of the cables are connected to a potentiometer that acts as radio contr
 
 
 \section{The quadcopter}
-?????
+
+The quadcopter used in the ground/ceiling/wall effect tests is depicted in figure ??? and is constituted by a metallic frame that enables different distancing between the motors. The ESC are the ones discussed in \autoref{sec:ESC}, which can be powered by a 2s LiPo battery (7.4 V) up to an 8s (33.6 V). These controllers draw a maximum of 50 A at full throttle.
+
+More than one motor type is used since different propeller sizes are tested:
+
+\begin{itemize}
+	\item 9" x 4.7"??
+	\item To be completed
+	\item 13" x 6.5"
+	\item 15" x 5.5"
+\end{itemize}
+
+
 
 \section{Power supply}
 
