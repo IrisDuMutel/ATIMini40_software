@@ -11,8 +11,8 @@ int potValue;  // value from the analog pin
 
 void setup() {
   // Attach the ESC on pin 9
-  Serial.begin(9600);
-  ESC.attach(9,1000,2000); // (pin, min pulse width, max pulse width in microseconds) 
+  Serial.begin(4800);
+  ESC.attach(3,1000,2000); // (pin, min pulse width, max pulse width in microseconds) 
 }
 
 void loop() {

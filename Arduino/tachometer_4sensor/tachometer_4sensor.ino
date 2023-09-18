@@ -68,9 +68,9 @@ void loop() {
   rpmtime2 = 0;
   rpmtime3 = 0;
   rpmtime4 = 0;
-  Serial.print(timeee, 5);
-  Serial.print("RPM: ");
-  Serial.println(rpm1);
+//  Serial.print(timeee, 5);
+//  Serial.print("RPM: ");
+  Serial.print(rpm1);
   Serial.print(", ");
   Serial.print(rpm2);
   Serial.print(", ");

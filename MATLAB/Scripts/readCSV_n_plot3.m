@@ -3,7 +3,7 @@ close all
 
 %%%% For extended files containing voltages and time vector
 folder = fileparts(pwd);
-file1 = '../LogFiles/log_bb.csv';
+file1 = '../LogFiles/20230916/log_20230916_2.csv';
 test1 = readtable(file1);
 
 
@@ -37,6 +37,13 @@ plot(time1,ones(1,length(time1))*Weight_series(7))
 legend('Fx','Fy','Fz','Mx','My','Mz')
 xlabel('Time [s]')
 ylabel('Force-Torque [N, N-m]')
+
+
+%% FFT and filtering
+fft_Fx1 = fft(Fx1);
+Ts = 1/150;
+
+
 
 
 figure()
@@ -73,4 +80,47 @@ plot(time1,My1,'linewidth',2)
 plot(time1,Mz1,'linewidth',2)
 legend('Mx','My','Mz')
 ylabel('Torques [N-m]')
+xlabel('Time [s]')
+
+
+figure()
+subplot(3,1,1)
+hold on;grid on;
+plot(time1,Fx1,'linewidth',2)
+xlim([0 time1(end)])
+legend('Fx')
+ylabel('Force X [N]')
+subplot(3,1,2)
+hold on;grid on;
+plot(time1,Fy1,'linewidth',2,'Color', "#D95319")
+xlim([0 time1(end)])
+legend('Fy')
+ylabel('Force Y [N]')
+subplot(3,1,3)
+hold on;grid on;
+plot(time1,Fz1,'linewidth',2,'Color',"#EDB120")
+xlim([0 time1(end)])
+legend('Fz')
+ylabel('Force Z [N]')
+xlabel('Time [s]')
+
+figure()
+subplot(3,1,1)
+hold on;grid on;
+plot(time1,Mx1,'linewidth',2)
+xlim([0 time1(end)])
+legend('Mx')
+ylabel('Torque X [N·m]')
+subplot(3,1,2)
+hold on;grid on;
+plot(time1,My1,'linewidth',2)
+xlim([0 time1(end)])
+legend('My')
+ylabel('Torque Y [N·m]')
+subplot(3,1,3)
+hold on;grid on;
+plot(time1,Mz1,'linewidth',2)
+xlim([0 time1(end)])
+legend('Mz')
+ylabel('Torque Z [N·m]')
 xlabel('Time [s]')

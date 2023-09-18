@@ -367,12 +367,17 @@ Using \hyperref{https://nidaqmx-python.readthedocs.io/en/latest/}{name}{cat}{NI-
 	\label{fig:test2}
 \end{figure}
 
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=0.8\textwidth]{NIUSB6008_GUI.png}
-	\caption{Qt GUI for NI USB 6008}
-	\label{fig:NIUSB6008_GUI}
-\end{figure}
+
+The sampling frequency is chosen by the user. The default value is 150 Hz. In this case, being a high frequency, the Qtimer that is in charge of refreshing the GUI and in control of the python process needs to have a not so fast frequency. A QTimer of 500 ms is chosen as default. Th relationship between these two frequecies result in the following equation:
+
+\begin{equation}
+	Samples\hspace{1mm}per\hspace{1mm}channel = Desired\hspace{1mm}frequency[Hz] \cdot QTimer[s]
+\end{equation}
+
+In the case of this application, six channels are required. Using the default values, a total of 75 samples per channel is obtained.
+
+To log data into a \textit{.txt} file, write the name of the desired file in the textbox and then check the \textit{log data} checkbox (see \autoref{fig:NIUSB6008_GUI}).
+
 
 \section{SICK WLA16 Photoelectric sensors}
 
@@ -628,14 +633,16 @@ The rest of the cables are connected to a potentiometer that acts as radio contr
 
 The quadcopter used in the ground/ceiling/wall effect tests is depicted in figure ??? and is constituted by a metallic frame that enables different distancing between the motors. The ESC are the ones discussed in \autoref{sec:ESC}, which can be powered by a 2s LiPo battery (7.4 V) up to an 8s (33.6 V). These controllers draw a maximum of 50 A at full throttle.
 
-More than one motor type is used since different propeller sizes are tested:
+More than one motor type is used since different propeller sizes are tested trying to stay close to a ratio of 2 between the diameter and the pitch. The propsed propellers are the following:
 
 \begin{itemize}
-	\item 9" x 4.7"??
-	\item To be completed
-	\item 13" x 6.5"
-	\item 15" x 5.5"
+	\item 9" x 4.7" (Ratio = 1.92)
+	\item 10" x 4.5" (Ratio = 2.22)
+	\item 12" x 6" (Ratio = 2)
+	\item 13" x 6.5" (Ratio = 2)
+	\item 15" x 5.5" (Ratio = 2.72)
 \end{itemize}
+
 
 
 
