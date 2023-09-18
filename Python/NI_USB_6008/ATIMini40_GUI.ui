@@ -405,12 +405,12 @@
      <rect>
       <x>210</x>
       <y>280</y>
-      <width>291</width>
+      <width>341</width>
       <height>21</height>
      </rect>
     </property>
     <property name="text">
-     <string>Samples per channel = QTimer Interval * Sample Rate</string>
+     <string>Samples per channel = QTimer Interval * Desired sample Rate</string>
     </property>
    </widget>
    <widget class="QPlainTextEdit" name="lineEdit_Errors">
@@ -430,7 +430,7 @@
      <x>0</x>
      <y>0</y>
      <width>947</width>
-     <height>17</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
