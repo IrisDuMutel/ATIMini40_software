@@ -22,7 +22,7 @@ FILE_PATH = "TestData/ccc.txt"
 RANGE = "10"
 RESOLUTION = "0.001"
 CHANNEL_LIST = "Dev3/ai0,Dev3/ai1,Dev3/ai2,Dev3/ai3,Dev3/ai4,Dev3/ai5"
-FILE_PATH = "TestData/log_20230728.txt"
+FILE_PATH = "TestData/log_today.txt"
 
 QTIM_VAL = '500' # In ms
 absolute_start = timer()
@@ -75,7 +75,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.timer.timeout.connect(self.my_callback)
         
         # Flag initialization
-        self.savaDataFlag = False
+        self.saveDataFlag = False
         self.reset_abs_time = False
         self.N_Nm = False
         self.analog_task_flag = False
@@ -90,13 +90,15 @@ class MainWindow(QtWidgets.QMainWindow):
 
     # If logging data into .txt file
     def save_data(self):
-        self.SPC = int(int(self.textEdit_FS.text())*int(self.textEdit_QTIM_VAL.text())*0.001)
-        self.lineEdit_Errors.insertPlainText("Logging data in " + self.textEdit_FilePath.text() + "\n")
-        if self.savaDataFlag == True:
-            self.savaDataFlag = False
+        if self.checkBox.isChecked() == False:
+            self.lineEdit_Errors.insertPlainText("Insert new log file name and check save box \n")
+            self.saveDataFlag = False
             self.write_path.close()
+
         else:
-            self.savaDataFlag = True
+            self.saveDataFlag = True
+            self.SPC = int(int(self.textEdit_FS.text())*int(self.textEdit_QTIM_VAL.text())*0.001)
+            self.lineEdit_Errors.insertPlainText("Logging data in " + self.textEdit_FilePath.text() + "\n")
             self.write_path = open(self.textEdit_FilePath.text(), 'a')
             if self.header_flag==False:
                 self.write_path.write("First line indicates sampling freq [Hz], samples per channel, QTimer [ms] \n")
@@ -148,7 +150,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.lineEdit_Values_4.setText("{:.2f}".format(np.mean(res[3]*0.1129848333)) )
             self.lineEdit_Values_5.setText("{:.2f}".format(np.mean(res[4]*0.1129848333)) )
             self.lineEdit_Values_6.setText("{:.2f}".format(np.mean(res[5]*0.1129848333)))
-            if self.savaDataFlag==True:
+            if self.saveDataFlag==True:
                 for i in range(0,self.SPC):
                     self.write_path.write(str(res_trans[i][0]*4.4482216152605)+","+str(res_trans[i][1]*4.4482216152605)+","+str(res_trans[i][2]*4.4482216152605)+","+str(res_trans[i][3]*0.1129848333)+","+str(res_trans[i][4]*0.1129848333)+","+str(res_trans[i][5]*0.1129848333)+"\n")
                 # self.write_path.write(str(res_trans[0])+"\n"+str(res_trans[1])+"\n"+str(res_trans[2])+"\n"+str(res_trans[3])+"\n"+str(res_trans[4])+"\n"+str(res_trans[5]))       
@@ -159,7 +161,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.lineEdit_Values_4.setText("{:.2f}".format(np.mean(res[3]))) 
             self.lineEdit_Values_5.setText("{:.2f}".format(np.mean(res[4]))) 
             self.lineEdit_Values_6.setText("{:.2f}".format(np.mean(res[5])))
-            if self.savaDataFlag==True:
+            if self.saveDataFlag==True:
                 for i in range(0,self.SPC):
                     self.write_path.write(str(res_trans[i][0])+","+str(res_trans[i][1])+","+str(res_trans[i][2])+","+str(res_trans[i][3])+","+str(res_trans[i][4])+","+str(res_trans[i][5])+"\n")
                 # self.write_path.write(str(res_trans[0])+"\n"+str(res_trans[1])+"\n"+str(res_trans[2])+"\n"+str(res_trans[3])+"\n"+str(res_trans[4])+"\n"+str(res_trans[5]))       
@@ -215,7 +217,12 @@ class MainWindow(QtWidgets.QMainWindow):
     def close_all(self):
         self.timer.stop()
         self.reset_abs_time = True
+        self.lineEdit_Errors.clear()
         self.lineEdit_Errors.insertPlainText("Stopping... \n")
+        self.checkBox.setChecked(False)
+        self.checkBox_NNm.setChecked(False)
+        # self.textEdit_FS.clear()
+        self.lineEdit_Errors.insertPlainText("Please, reset all controls on GUI \n")
         #  Stop and Clear Task
         # --------------------
         self.analog_task_flag = False
