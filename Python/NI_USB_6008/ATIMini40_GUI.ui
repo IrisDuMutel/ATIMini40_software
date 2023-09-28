@@ -19,12 +19,12 @@
      <rect>
       <x>20</x>
       <y>120</y>
-      <width>161</width>
+      <width>261</width>
       <height>361</height>
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
+     <enum>QFrame::Box</enum>
     </property>
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
@@ -35,8 +35,11 @@
        <x>10</x>
        <y>10</y>
        <width>71</width>
-       <height>16</height>
+       <height>21</height>
       </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
      </property>
      <property name="text">
       <string>Channel list</string>
@@ -47,9 +50,12 @@
       <rect>
        <x>10</x>
        <y>230</y>
-       <width>141</width>
+       <width>121</width>
        <height>21</height>
       </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
      </property>
      <property name="text">
       <string>Sample rate [Hz]</string>
@@ -59,10 +65,13 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>280</y>
-       <width>37</width>
+       <y>300</y>
+       <width>51</width>
        <height>20</height>
       </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
      </property>
      <property name="text">
       <string>Range</string>
@@ -71,11 +80,14 @@
     <widget class="QLabel" name="label_13">
      <property name="geometry">
       <rect>
-       <x>90</x>
-       <y>280</y>
-       <width>61</width>
+       <x>80</x>
+       <y>300</y>
+       <width>71</width>
        <height>20</height>
       </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
      </property>
      <property name="text">
       <string>Resolution</string>
@@ -86,7 +98,7 @@
       <rect>
        <x>10</x>
        <y>30</y>
-       <width>121</width>
+       <width>241</width>
        <height>31</height>
       </rect>
      </property>
@@ -108,7 +120,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>300</y>
+       <y>320</y>
        <width>51</width>
        <height>31</height>
       </rect>
@@ -117,9 +129,9 @@
     <widget class="QLineEdit" name="textEdit_Resolution">
      <property name="geometry">
       <rect>
-       <x>90</x>
-       <y>300</y>
-       <width>51</width>
+       <x>80</x>
+       <y>320</y>
+       <width>71</width>
        <height>31</height>
       </rect>
      </property>
@@ -127,14 +139,20 @@
     <widget class="QCheckBox" name="checkBox_NNm">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>90</y>
-       <width>91</width>
-       <height>21</height>
+       <x>10</x>
+       <y>110</y>
+       <width>111</width>
+       <height>31</height>
       </rect>
      </property>
      <property name="text">
       <string>F[N],T[Nm]</string>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>14</width>
+       <height>14</height>
+      </size>
      </property>
     </widget>
     <widget class="QLineEdit" name="textEdit_QTIM_VAL">
@@ -154,15 +172,43 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>160</y>
+       <y>170</y>
        <width>121</width>
        <height>21</height>
       </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
      </property>
      <property name="text">
       <string>QTimer interval [ms]</string>
      </property>
     </widget>
+    <widget class="QLabel" name="label_5">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>90</y>
+       <width>161</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Units (if unchecked lbf, lbf-in)</string>
+     </property>
+    </widget>
+    <zorder>label_12</zorder>
+    <zorder>label_13</zorder>
+    <zorder>textEdit_channelList</zorder>
+    <zorder>textEdit_FS</zorder>
+    <zorder>textEdit_Range</zorder>
+    <zorder>textEdit_Resolution</zorder>
+    <zorder>checkBox_NNm</zorder>
+    <zorder>textEdit_QTIM_VAL</zorder>
+    <zorder>label_14</zorder>
+    <zorder>label_5</zorder>
+    <zorder>label_8</zorder>
+    <zorder>label_2</zorder>
    </widget>
    <widget class="QComboBox" name="comboBox_deviceName">
     <property name="geometry">
@@ -183,6 +229,9 @@
       <height>20</height>
      </rect>
     </property>
+    <property name="frameShape">
+     <enum>QFrame::WinPanel</enum>
+    </property>
     <property name="text">
      <string>Device Name</string>
     </property>
@@ -190,11 +239,14 @@
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>90</y>
+      <x>20</x>
+      <y>100</y>
       <width>101</width>
       <height>20</height>
      </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::WinPanel</enum>
     </property>
     <property name="text">
      <string>CONFIGURATION</string>
@@ -203,11 +255,14 @@
    <widget class="QLabel" name="label_7">
     <property name="geometry">
      <rect>
-      <x>210</x>
+      <x>300</x>
       <y>90</y>
       <width>101</width>
       <height>20</height>
      </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::WinPanel</enum>
     </property>
     <property name="text">
      <string>SAVING</string>
@@ -216,14 +271,14 @@
    <widget class="QFrame" name="frame_2">
     <property name="geometry">
      <rect>
-      <x>200</x>
+      <x>300</x>
       <y>110</y>
       <width>311</width>
       <height>101</height>
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
+     <enum>QFrame::Box</enum>
     </property>
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
@@ -238,7 +293,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>CSV path</string>
+      <string>TXT path</string>
      </property>
     </widget>
     <widget class="QCheckBox" name="checkBox">
@@ -268,11 +323,14 @@
    <widget class="QLabel" name="label_9">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>340</y>
-      <width>111</width>
+      <x>310</x>
+      <y>320</y>
+      <width>71</width>
       <height>20</height>
      </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
     </property>
     <property name="text">
      <string>Values</string>
@@ -281,11 +339,48 @@
    <widget class="QPushButton" name="stopButton">
     <property name="geometry">
      <rect>
-      <x>780</x>
-      <y>450</y>
-      <width>141</width>
-      <height>51</height>
+      <x>720</x>
+      <y>170</y>
+      <width>161</width>
+      <height>91</height>
      </rect>
+    </property>
+    <property name="palette">
+     <palette>
+      <active>
+       <colorrole role="LinkVisited">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>0</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </active>
+      <inactive>
+       <colorrole role="LinkVisited">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>0</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </inactive>
+      <disabled>
+       <colorrole role="LinkVisited">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>0</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </disabled>
+     </palette>
     </property>
     <property name="text">
      <string>STOP</string>
@@ -294,10 +389,10 @@
    <widget class="QPushButton" name="startButton">
     <property name="geometry">
      <rect>
-      <x>620</x>
-      <y>450</y>
-      <width>141</width>
-      <height>51</height>
+      <x>720</x>
+      <y>70</y>
+      <width>161</width>
+      <height>91</height>
      </rect>
     </property>
     <property name="text">
@@ -307,11 +402,14 @@
    <widget class="QLabel" name="label_10">
     <property name="geometry">
      <rect>
-      <x>230</x>
+      <x>310</x>
       <y>400</y>
       <width>81</width>
       <height>21</height>
      </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
     </property>
     <property name="text">
      <string>Information</string>
@@ -320,8 +418,8 @@
    <widget class="QLineEdit" name="lineEdit_Values">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>360</y>
+      <x>310</x>
+      <y>340</y>
       <width>91</width>
       <height>31</height>
      </rect>
@@ -330,7 +428,7 @@
    <widget class="QLineEdit" name="lineEdit_Time">
     <property name="geometry">
      <rect>
-      <x>210</x>
+      <x>310</x>
       <y>240</y>
       <width>111</width>
       <height>21</height>
@@ -340,11 +438,14 @@
    <widget class="QLabel" name="label_11">
     <property name="geometry">
      <rect>
-      <x>210</x>
+      <x>310</x>
       <y>220</y>
-      <width>41</width>
+      <width>51</width>
       <height>21</height>
      </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
     </property>
     <property name="text">
      <string>Time [s]</string>
@@ -353,8 +454,8 @@
    <widget class="QLineEdit" name="lineEdit_Values_2">
     <property name="geometry">
      <rect>
-      <x>330</x>
-      <y>360</y>
+      <x>410</x>
+      <y>340</y>
       <width>91</width>
       <height>31</height>
      </rect>
@@ -363,8 +464,8 @@
    <widget class="QLineEdit" name="lineEdit_Values_3">
     <property name="geometry">
      <rect>
-      <x>430</x>
-      <y>360</y>
+      <x>510</x>
+      <y>340</y>
       <width>91</width>
       <height>31</height>
      </rect>
@@ -373,8 +474,8 @@
    <widget class="QLineEdit" name="lineEdit_Values_4">
     <property name="geometry">
      <rect>
-      <x>530</x>
-      <y>360</y>
+      <x>610</x>
+      <y>340</y>
       <width>91</width>
       <height>31</height>
      </rect>
@@ -383,8 +484,8 @@
    <widget class="QLineEdit" name="lineEdit_Values_5">
     <property name="geometry">
      <rect>
-      <x>630</x>
-      <y>360</y>
+      <x>710</x>
+      <y>340</y>
       <width>91</width>
       <height>31</height>
      </rect>
@@ -393,8 +494,8 @@
    <widget class="QLineEdit" name="lineEdit_Values_6">
     <property name="geometry">
      <rect>
-      <x>730</x>
-      <y>360</y>
+      <x>810</x>
+      <y>340</y>
       <width>91</width>
       <height>31</height>
      </rect>
@@ -403,26 +504,52 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>210</x>
-      <y>280</y>
-      <width>341</width>
-      <height>21</height>
+      <x>310</x>
+      <y>270</y>
+      <width>361</width>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
     </property>
     <property name="text">
      <string>Samples per channel = QTimer Interval * Desired sample Rate</string>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
     </property>
    </widget>
    <widget class="QPlainTextEdit" name="lineEdit_Errors">
     <property name="geometry">
      <rect>
-      <x>220</x>
+      <x>310</x>
       <y>420</y>
       <width>361</width>
       <height>91</height>
      </rect>
     </property>
    </widget>
+   <zorder>frame</zorder>
+   <zorder>comboBox_deviceName</zorder>
+   <zorder>label_3</zorder>
+   <zorder>label_4</zorder>
+   <zorder>label_7</zorder>
+   <zorder>frame_2</zorder>
+   <zorder>label_9</zorder>
+   <zorder>stopButton</zorder>
+   <zorder>startButton</zorder>
+   <zorder>lineEdit_Values</zorder>
+   <zorder>lineEdit_Time</zorder>
+   <zorder>label_11</zorder>
+   <zorder>lineEdit_Values_2</zorder>
+   <zorder>lineEdit_Values_3</zorder>
+   <zorder>lineEdit_Values_4</zorder>
+   <zorder>lineEdit_Values_5</zorder>
+   <zorder>lineEdit_Values_6</zorder>
+   <zorder>label</zorder>
+   <zorder>lineEdit_Errors</zorder>
+   <zorder>label_10</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
