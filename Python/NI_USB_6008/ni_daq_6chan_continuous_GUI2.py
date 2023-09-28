@@ -93,6 +93,7 @@ class MainWindow(QtWidgets.QMainWindow):
         if self.checkBox.isChecked() == False:
             self.lineEdit_Errors.insertPlainText("Insert new log file name and check save box \n")
             self.saveDataFlag = False
+            self.header_flag = False
             self.write_path.close()
 
         else:
