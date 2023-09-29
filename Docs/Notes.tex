@@ -176,9 +176,11 @@ Notice that raw data looks like in \autoref{fig:unfiltered_data}:
 
 This forces and torques were obtained programming and ascending PWM value for 30 seconds each. No propellers were used and still noise was recorded. 
 
-For a quick example on how \textit{Fast Fourier Transforms} and basic filtering using MATLAB functions work, see this \hyperref{URL}{category}{name}{script}.
+For a quick example on how \textit{Fast Fourier Transforms} and basic filtering using MATLAB functions work, see this \hyperref{https://github.com/IrisDuMutel/ATIMini40_software/blob/master/MATLAB/Scripts/Examples/example_FFTandFilters.m}{category}{name}{script}.
 
-fft
+\textit{Fast Fourier Transforms} help us visualize the frequencies of the data that takes part of our signals. It can be our data itself that has a charcteristic freqeuncy, or the noise and vibrations surrounding your data collection process that get captured by your sensors. In any case identifyig the desired frequencies and ignoring the rest is an absolutely necessary step i the post-processing of any data.
+
+This is why filters are also a scope of this study. The F/T sensor we are currently using provides unfiltered analog data that is sampled through a DAQ, and therefore transformed into digital information. However, this digital data stream may contain noise from vibration, EM interferences...
 
 
 

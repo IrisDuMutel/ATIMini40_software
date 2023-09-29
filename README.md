@@ -8,7 +8,7 @@
 
 Refer to the **bold** text in the different subfolders to find the most updated scripts. Use **DAQ_acquire_Voltages_GUI.py** when using Keysight 34970A and **ni_daq_6chan_continuous_GUI2.py** when using a NI DAQ unit.
 
-Change data sampling parameters on the GUI that will come up when launching the scritps. For more information, check the [documentation file](Docs\Notes.pdf).
+Change data sampling parameters on the GUI that will come up when launching the scritps. For more information, check the [documentation file](Docs/Notes.pdf).
 
 
 # This repository contains code and/or documentation for the use of the following devices:
