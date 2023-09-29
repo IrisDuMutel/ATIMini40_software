@@ -161,6 +161,32 @@ scenarios:
 	\end{tabular}
 \end{table}
 
+\subsection{Filtering}
+
+The data collected in this work has been obtained using the NI-USB-6008 Data Acquisition Unit and a python software and interface (go to \autoref{sec:NiDAQ_PY}).
+
+Notice that raw data looks like in \autoref{fig:unfiltered_data}:
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=1\textwidth]{Images/unfiltered_20230915.eps}
+	\caption{Unfiltered data from ascending PWM test without propellers}
+	\label{fig:unfiltered_noprops}
+\end{figure}
+
+This forces and torques were obtained programming and ascending PWM value for 30 seconds each. No propellers were used and still noise was recorded. 
+
+For a quick example on how \textit{Fast Fourier Transforms} and basic filtering using MATLAB functions work, see this \hyperref{URL}{category}{name}{script}.
+
+fft
+
+
+
+
+Using MATLAB functions such as \textit{lowpass}, \textit{highpass}, \textit{bandpass} and others, one can obtain the following results:
+
+
+
 \subsection{Resolution}
 As specified in the ATI \hyperref{https://www.ati-ia.com/products/ft/ft_models.aspx?id=mini40}{category}{name}{site}, the resolution of the sensor for the calibration US-20-40 is the following defined as the average of the worst and best case
 scenarios:
@@ -330,7 +356,7 @@ Please, visit \hyperref{http://engredu.com/2023/07/29/ni-acquisition-strategies/
 Using \hyperref{https://pyvisa.readthedocs.io/en/latest/index.html}{name}{category}{PyVisa} python libraries.
 
 \subsection{NI USB 6008 DAQ}
-
+\label{sec:NiDAQ_PY}
 Using \hyperref{https://nidaqmx-python.readthedocs.io/en/latest/}{name}{cat}{NI-DAQmx} python libraries.
 
 \begin{figure}[h!]
@@ -377,6 +403,9 @@ The sampling frequency is chosen by the user. The default value is 150 Hz. In th
 In the case of this application, six channels are required. Using the default values, a total of 75 samples per channel is obtained.
 
 To log data into a \textit{.txt} file, write the name of the desired file in the textbox and then check the \textit{log data} checkbox (see \autoref{fig:NIUSB6008_GUI}).
+
+
+
 
 
 \section{SICK WLA16 Photoelectric sensors}

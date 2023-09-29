@@ -3,23 +3,24 @@
 \contentsline {section}{\numberline {2}Wiring and connecting to a DAQ}{2}{section.2}%
 \contentsline {subsection}{\numberline {2.1}Sampling}{2}{subsection.2.1}%
 \contentsline {subsection}{\numberline {2.2}Range}{4}{subsection.2.2}%
-\contentsline {subsection}{\numberline {2.3}Resolution}{4}{subsection.2.3}%
-\contentsline {subsection}{\numberline {2.4}Sensitivity and output range and resolution voltages}{5}{subsection.2.4}%
-\contentsline {section}{\numberline {3}Keysight 34970A connection to PC}{5}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Important commands}{5}{subsection.3.1}%
+\contentsline {subsection}{\numberline {2.3}Filtering}{4}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Resolution}{5}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}Sensitivity and output range and resolution voltages}{5}{subsection.2.5}%
+\contentsline {section}{\numberline {3}Keysight 34970A connection to PC}{6}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Important commands}{6}{subsection.3.1}%
 \contentsline {section}{\numberline {4}LabView}{7}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Keysight 34970A}{7}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}NI USB 6008}{7}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.1}Keysight 34970A}{8}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}NI USB 6008}{8}{subsection.4.2}%
 \contentsline {section}{\numberline {5}Python}{8}{section.5}%
-\contentsline {subsection}{\numberline {5.1}Keysight 34790A}{8}{subsection.5.1}%
-\contentsline {subsection}{\numberline {5.2}NI USB 6008 DAQ}{8}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.1}Keysight 34790A}{9}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}NI USB 6008 DAQ}{9}{subsection.5.2}%
 \contentsline {section}{\numberline {6}SICK WLA16 Photoelectric sensors}{10}{section.6}%
-\contentsline {subsubsection}{\numberline {6.0.1}Codes files}{11}{subsubsection.6.0.1}%
+\contentsline {subsubsection}{\numberline {6.0.1}Codes files}{12}{subsubsection.6.0.1}%
 \contentsline {subsection}{\numberline {6.1}Timers and interrupts}{12}{subsection.6.1}%
 \contentsline {subsection}{\numberline {6.2}Only interrupt based algorithms (FINAL CHOICE)}{14}{subsection.6.2}%
-\contentsline {section}{\numberline {7}Castle Phoenix Edge 50A ESC}{14}{section.7}%
+\contentsline {section}{\numberline {7}Castle Phoenix Edge 50A ESC}{15}{section.7}%
 \contentsline {section}{\numberline {8}The quadcopter}{15}{section.8}%
 \contentsline {section}{\numberline {9}Power supply}{16}{section.9}%
-\contentsline {section}{\numberline {10}The final architecture}{16}{section.10}%
+\contentsline {section}{\numberline {10}The final architecture}{17}{section.10}%
 \contentsline {subsection}{\numberline {10.1}Data collection procedure}{17}{subsection.10.1}%
 \contentsline {section}{\numberline {11}Resources}{17}{section.11}%

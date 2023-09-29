@@ -10,6 +10,7 @@ test1 = readtable(file1);
 Weight_series = -[0.01,0.02,0.05,0.1,0.2,0.5,1]'*9.798;
 time1 = [0:1/test1{1,1}:1/test1{1,1}*(length(test1{:,2})-2)];
 index = 0;
+
 Fx1 = (test1{2:end,index+1});% - test1{10,index+1});
 Fy1 = (test1{2:end,index+2});% - test1{10,index+2});
 Fz1 = (test1{2:end,index+3});% - test1{10,index+3});
@@ -48,14 +49,14 @@ fft_Mx1 = fft(Mx1);
 fft_My1 = fft(My1);
 fft_Mz1 = fft(Mz1);
 
-fs = 150;
-Ts = 1/fs;
-fx = (0:length(fft_Fx1)-1)*fs/length(fft_Fx1);
-fy = (0:length(fft_Fy1)-1)*fs/length(fft_Fy1);
-fz = (0:length(fft_Fz1)-1)*fs/length(fft_Fz1);
-mx = (0:length(fft_Mx1)-1)*fs/length(fft_Mx1);
-my = (0:length(fft_My1)-1)*fs/length(fft_My1);
-mz = (0:length(fft_Mz1)-1)*fs/length(fft_Mz1);
+sampl_f = 150; % Sampling frequency of the signal
+Ts = 1/sampl_f;
+fx = (0:length(fft_Fx1)-1)*sampl_f/length(fft_Fx1);
+fy = (0:length(fft_Fy1)-1)*sampl_f/length(fft_Fy1);
+fz = (0:length(fft_Fz1)-1)*sampl_f/length(fft_Fz1);
+mx = (0:length(fft_Mx1)-1)*sampl_f/length(fft_Mx1);
+my = (0:length(fft_My1)-1)*sampl_f/length(fft_My1);
+mz = (0:length(fft_Mz1)-1)*sampl_f/length(fft_Mz1);
 
 figure()
 subplot(3,1,1)
@@ -91,7 +92,7 @@ grid on
 
 wpass_fx = 0.5;%[2.5, 3.5];
 wpass_fy = 0.5;%[56, 60];
-wpass_fz = 0.5;%[0.1];
+wpass_fz = 0.2;%[0.1];
 wpass_mx = 0.5;%[2.5, 3.5];
 wpass_my = 0.5;%[56, 60];
 wpass_mz = 0.5;%[0.1];
@@ -153,9 +154,63 @@ xlabel('Time [s]')
 grid on
 
 
+filtered_Fz1_1 = lowpass(Fz1,0.5,150);
+filtered_Fz1_2 = highpass(Fz1,140,150);
+% filtered_Fz1_3 = bandpass(Fz1,[0.001,0.5],150);
+
+
+figure()
+hold on
+plot(time1,Fz1,'linewidth',2)
+plot(time1,filtered_Fz1_1,'linewidth',2)
+plot(time1,filtered_Fz1_2,'linewidth',2)
+% plot(time1,filtered_Fz1_3,'linewidth',2)
+legend('Fz','Fz filtered1','Fz filtered2')%,'Fz filtered3')
+grid on
+
+
+
+%% %% One example to understand fft and filters
+
+
+Ts = 0.001;
+Fs = 1/Ts;
+x = [0:Ts:2*pi];
+funt = 0.5 + sin(2*pi*50*x) + cos(2*pi*25*x) + cos(2*pi*120*x);
+
+fastFT = fft(funt);
+f_x = (0:length(fastFT)-1)*Fs/length(fastFT);
+
+
+
+filtered_signal = highpass(funt,119,Fs);
+fastFT_filt = fft(filtered_signal);
+filt_x = (0:length(fastFT_filt)-1)*Fs/length(fastFT_filt);
+
+
+figure()
+hold on 
+grid on
+plot(f_x,abs(fastFT),'linewidth',2);
+plot(filt_x,abs(fastFT_filt),'linewidth',2);
+xlabel("Frequency [Hz]")
+ylabel('FFT(y(x))')
+legend('Complete signal','Filtered signal')
+
+figure()
+hold on
+plot(x,funt,'LineWidth',2)
+plot(x,filtered_signal,'linewidth',2)
+legend('Complete signal','Filtered')
+xlabel('x')
+ylabel('y(x)')
+grid on
+
+
+
 %% Plots F/T
 
-
+%{
 figure()
 hold on;grid on;
 plot(time1,Fx1,'linewidth',2)
@@ -234,3 +289,4 @@ xlim([0 time1(end)])
 legend('Mz')
 ylabel('Torque Z [N·m]')
 xlabel('Time [s]')
+%}

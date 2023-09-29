@@ -154,7 +154,6 @@ class MainWindow(QtWidgets.QMainWindow):
             if self.saveDataFlag==True:
                 for i in range(0,self.SPC):
                     self.write_path.write(str(res_trans[i][0]*4.4482216152605)+","+str(res_trans[i][1]*4.4482216152605)+","+str(res_trans[i][2]*4.4482216152605)+","+str(res_trans[i][3]*0.1129848333)+","+str(res_trans[i][4]*0.1129848333)+","+str(res_trans[i][5]*0.1129848333)+"\n")
-                # self.write_path.write(str(res_trans[0])+"\n"+str(res_trans[1])+"\n"+str(res_trans[2])+"\n"+str(res_trans[3])+"\n"+str(res_trans[4])+"\n"+str(res_trans[5]))       
         else:
             self.lineEdit_Values.setText  ("{:.2f}".format(np.mean(res[0]))) 
             self.lineEdit_Values_2.setText("{:.2f}".format(np.mean(res[1]))) 
@@ -165,7 +164,6 @@ class MainWindow(QtWidgets.QMainWindow):
             if self.saveDataFlag==True:
                 for i in range(0,self.SPC):
                     self.write_path.write(str(res_trans[i][0])+","+str(res_trans[i][1])+","+str(res_trans[i][2])+","+str(res_trans[i][3])+","+str(res_trans[i][4])+","+str(res_trans[i][5])+"\n")
-                # self.write_path.write(str(res_trans[0])+"\n"+str(res_trans[1])+"\n"+str(res_trans[2])+"\n"+str(res_trans[3])+"\n"+str(res_trans[4])+"\n"+str(res_trans[5]))       
 
         self.lineEdit_Time.setText("{:.2f}".format(end-self.absolute_start))
         print("{:.2f}".format(end-self.absolute_start))
