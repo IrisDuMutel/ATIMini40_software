@@ -3,11 +3,17 @@ close all
 
 %%%% For extended files containing voltages and time vector
 folder = fileparts(pwd);
-file1 = '../LogFiles/20230916/log_20230916_2.csv';
-file2 = '../LogFiles/20231002/FT/log_20231002_10inch1R_test3.csv';
+filepath = '../LogFiles/';
+file1 = '20230916/log_20230916_2.csv';
+file2 = '20231002/FT/log_20231002_10inch1R_test3.csv';
+title_size = 6;
 
-test1 = readtable(file1);
-test2 = readtable(file2);
+filepath1 = strcat(filepath,file1);
+filepath2 = strcat(filepath,file2);
+
+
+test1 = readtable(filepath1);
+test2 = readtable(filepath2);
 
 
 Weight_series = -[0.01,0.02,0.05,0.1,0.2,0.5,1]'*9.798;
@@ -71,6 +77,7 @@ figure()
 subplot(3,1,1)
 plot(fx,abs(fft_Fx1))
 grid on
+title(strcat(file1,' ---vs--- ',file2),'FontSize',title_size,'Interpreter','none')
 ylabel('fft(Fx)')
 subplot(3,1,2)
 plot(fy,abs(fft_Fy1))
@@ -81,10 +88,14 @@ plot(fz,abs(fft_Fz1))
 ylabel('fft(Fz)')
 % title('FFT')
 xlabel('Frequency (Hz)')
+% t = annotation('textbox','String',strcat(file1,' VS ',file2),'FitBoxToText','on');
+% sz = t.FontSize;
+% t.FontSize = 8;
 grid on
 
 figure()
 subplot(3,1,1)
+title(strcat(file1,' ---vs--- ',file2),'FontSize',title_size,'Interpreter','none')
 plot(mx,abs(fft_Mx1))
 grid on
 ylabel('fft(Mx)')
@@ -147,6 +158,7 @@ filtered_Mz2 = lowpass(Mz2,wpass_mz,sampl_f);
 figure()
 subplot(3,1,1)
 hold on
+title(strcat(file1,' ---vs--- ',file2),'FontSize',title_size,'Interpreter','none')
 plot(time1,filtered_Fx1,'linewidth',1.5)
 plot(time2,filtered_Fx2,'linewidth',1.5)
 legend('Fx_{noWall}','Fx 1R')
@@ -199,6 +211,7 @@ grid on
 figure()
 subplot(3,1,1)
 hold on
+title(strcat(file1,' ---vs--- ',file2),'FontSize',title_size,'Interpreter','none')
 plot(time1,filtered_Mx1,'linewidth',1.5)
 plot(time2,filtered_Mx2,'linewidth',1.5)
 legend('Mx_{noWall}','Mx 1R')
@@ -232,6 +245,7 @@ filtered_Fz1_2 = highpass(Fz1,140,150);
 
 figure()
 hold on
+title(strcat(file1,' ---vs--- ',file2),'FontSize',title_size,'Interpreter','none')
 plot(time1,Fz1,'linewidth',2)
 plot(time1,filtered_Fz1_1,'linewidth',2)
 plot(time1,filtered_Fz1_2,'linewidth',2)

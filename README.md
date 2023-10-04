@@ -135,7 +135,10 @@ The GUI currently looks like this:
 <br>
 - ATImatrices.m: Script containing the conversion matrices from voltages to lbf/lbf-in. This is the matrix to be used. An additional conversion is needed to obtain forces and torques in N and N-m. 
 - readCSV_n_plot2.m: reads CSV file and plots forces and torques
-- **readCSV_n_plot3.m**: reads CSV file and plots forces and torques fromatted by DAQ_acquire_Voltages_GUI2.py. Be careful when setting the value for QTimer, If chosen too small, the GUI may crash or a delay may be noticed on the display.
+- **readCSV_n_plot3.m**: reads CSV file and plots forces and torques fromatted by DAQ_acquire_Voltages_GUI2.py. Only valid for two logfiles. Has low pass filters implemented and plots are for comparison of two data files.
+- Wall_effect_H0.m: Script copied from March 2023 test session. Automatically compares 6 logfiles. Used as inspiration for more recent scripts.
+- **ReadRPM.m**: Simple script for the reading and plotting of 4 tachometer data coming from one logfile.
+ 
 </details>
 
 <details close>
