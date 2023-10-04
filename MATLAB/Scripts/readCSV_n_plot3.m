@@ -4,6 +4,8 @@ close all
 %%%% For extended files containing voltages and time vector
 folder = fileparts(pwd);
 file1 = '../LogFiles/20230916/log_20230916_2.csv';
+file1 = '../LogFiles/20231003/FT/find_PWM10_2.csv';
+
 test1 = readtable(file1);
 
 
@@ -20,24 +22,24 @@ Mz1 = (test1{2:end,index+6});% - test1{10,index+6});
 
 
 
-figure()
-hold on;grid on;
-plot(time1,Fx1,'linewidth',2)
-plot(time1,Fy1,'linewidth',2)
-plot(time1,Fz1,'linewidth',2)
-plot(time1,Mx1,'linewidth',2)
-plot(time1,My1,'linewidth',2)
-plot(time1,Mz1,'linewidth',2)
-plot(time1,ones(1,length(time1))*Weight_series(1))
-plot(time1,ones(1,length(time1))*Weight_series(2))
-plot(time1,ones(1,length(time1))*Weight_series(3))
-plot(time1,ones(1,length(time1))*Weight_series(4))
-plot(time1,ones(1,length(time1))*Weight_series(5))
-plot(time1,ones(1,length(time1))*Weight_series(6))
-plot(time1,ones(1,length(time1))*Weight_series(7))
-legend('Fx','Fy','Fz','Mx','My','Mz')
-xlabel('Time [s]')
-ylabel('Force-Torque [N, N-m]')
+% figure()
+% hold on;grid on;
+% plot(time1,Fx1,'linewidth',2)
+% plot(time1,Fy1,'linewidth',2)
+% plot(time1,Fz1,'linewidth',2)
+% plot(time1,Mx1,'linewidth',2)
+% plot(time1,My1,'linewidth',2)
+% plot(time1,Mz1,'linewidth',2)
+% plot(time1,ones(1,length(time1))*Weight_series(1))
+% plot(time1,ones(1,length(time1))*Weight_series(2))
+% plot(time1,ones(1,length(time1))*Weight_series(3))
+% plot(time1,ones(1,length(time1))*Weight_series(4))
+% plot(time1,ones(1,length(time1))*Weight_series(5))
+% plot(time1,ones(1,length(time1))*Weight_series(6))
+% plot(time1,ones(1,length(time1))*Weight_series(7))
+% legend('Fx','Fy','Fz','Mx','My','Mz')
+% xlabel('Time [s]')
+% ylabel('Force-Torque [N, N-m]')
 
 
 %% FFT and filtering
@@ -170,123 +172,3 @@ grid on
 
 
 
-%% %% One example to understand fft and filters
-
-
-Ts = 0.001;
-Fs = 1/Ts;
-x = [0:Ts:2*pi];
-funt = 0.5 + sin(2*pi*50*x) + cos(2*pi*25*x) + cos(2*pi*120*x);
-
-fastFT = fft(funt);
-f_x = (0:length(fastFT)-1)*Fs/length(fastFT);
-
-
-
-filtered_signal = highpass(funt,119,Fs);
-fastFT_filt = fft(filtered_signal);
-filt_x = (0:length(fastFT_filt)-1)*Fs/length(fastFT_filt);
-
-
-figure()
-hold on 
-grid on
-plot(f_x,abs(fastFT),'linewidth',2);
-plot(filt_x,abs(fastFT_filt),'linewidth',2);
-xlabel("Frequency [Hz]")
-ylabel('FFT(y(x))')
-legend('Complete signal','Filtered signal')
-
-figure()
-hold on
-plot(x,funt,'LineWidth',2)
-plot(x,filtered_signal,'linewidth',2)
-legend('Complete signal','Filtered')
-xlabel('x')
-ylabel('y(x)')
-grid on
-
-
-
-%% Plots F/T
-
-%{
-figure()
-hold on;grid on;
-plot(time1,Fx1,'linewidth',2)
-plot(time1,Fy1,'linewidth',2)
-plot(time1,Fz1,'linewidth',2)
-legend('Fx','Fy','Fz')
-xlabel('Time [s]')
-ylabel('Force [N]')
-
-
-figure()
-hold on;grid on;
-plot(time1,Mx1,'linewidth',2)
-plot(time1,My1,'linewidth',2)
-plot(time1,Mz1,'linewidth',2)
-legend('Mx','My','Mz')
-xlabel('Time [s]')
-ylabel('Torque [N-m]')
-
-figure()
-subplot(2,1,1)
-hold on;grid on;
-plot(time1,Fx1,'linewidth',2)
-plot(time1,Fy1,'linewidth',2)
-plot(time1,Fz1,'linewidth',2)
-legend('Fx','Fy','Fz')
-ylabel('Forces [N]')
-subplot(2,1,2)
-hold on;grid on;
-plot(time1,Mx1,'linewidth',2)
-plot(time1,My1,'linewidth',2)
-plot(time1,Mz1,'linewidth',2)
-legend('Mx','My','Mz')
-ylabel('Torques [N-m]')
-xlabel('Time [s]')
-
-
-figure()
-subplot(3,1,1)
-hold on;grid on;
-plot(time1,Fx1,'linewidth',2)
-xlim([0 time1(end)])
-legend('Fx')
-ylabel('Force X [N]')
-subplot(3,1,2)
-hold on;grid on;
-plot(time1,Fy1,'linewidth',2,'Color', "#D95319")
-xlim([0 time1(end)])
-legend('Fy')
-ylabel('Force Y [N]')
-subplot(3,1,3)
-hold on;grid on;
-plot(time1,Fz1,'linewidth',2,'Color',"#EDB120")
-xlim([0 time1(end)])
-legend('Fz')
-ylabel('Force Z [N]')
-xlabel('Time [s]')
-
-figure()
-subplot(3,1,1)
-hold on;grid on;
-plot(time1,Mx1,'linewidth',2)
-xlim([0 time1(end)])
-legend('Mx')
-ylabel('Torque X [N·m]')
-subplot(3,1,2)
-hold on;grid on;
-plot(time1,My1,'linewidth',2)
-xlim([0 time1(end)])
-legend('My')
-ylabel('Torque Y [N·m]')
-subplot(3,1,3)
-hold on;grid on;
-plot(time1,Mz1,'linewidth',2)
-xlim([0 time1(end)])
-legend('Mz')
-ylabel('Torque Z [N·m]')
-xlabel('Time [s]')
-%}

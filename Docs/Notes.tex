@@ -180,14 +180,39 @@ For a quick example on how \textit{Fast Fourier Transforms} and basic filtering 
 
 \textit{Fast Fourier Transforms} help us visualize the frequencies of the data that takes part of our signals. It can be our data itself that has a charcteristic freqeuncy, or the noise and vibrations surrounding your data collection process that get captured by your sensors. In any case identifyig the desired frequencies and ignoring the rest is an absolutely necessary step i the post-processing of any data.
 
-This is why filters are also a scope of this study. The F/T sensor we are currently using provides unfiltered analog data that is sampled through a DAQ, and therefore transformed into digital information. However, this digital data stream may contain noise from vibration, EM interferences...
+This is why filters are also a scope of this study. The F/T sensor currently in use provides unfiltered analog data that is sampled through a DAQ, and therefore transformed into digital information. However, this digital data stream may contain noise from vibration, EM interferences...
+
+Using MATLAB functions such as \textit{lowpass}, \textit{highpass}, \textit{bandpass} and others, one can obtain first approaches to the final results. 
+This is a generic way of approaching the filtering problem. However, there are different types of low-pass filters:
+
+\begin{itemize}
+	\item Butterworth filter
+	\item Chebyshev filter
+	\item Elliptic (or Cauer) filter
+	\item Bessel filter
+\end{itemize}
+
+\subsubsection{Butterworth filters}
+
+In \autoref{fig:butter} the differences in magnitude of the different filter orders can be appreciated:
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.9\textwidth]{Images/butter_filters.eps}
+	\label{fig:butter}
+	\caption{Butterworth filters of order 1 to 5}
+\end{figure}
+
+CHECK THIS FIGURE ABOVE BECAUSE I DONT KNOW IF ITS CORRECT!
+
+A cutoff frequency of 1 Hz was imposed and the sample frequency is supposed to be 150 Hz. 
 
 
+The gain of the butterworth filter is as in:
 
-
-Using MATLAB functions such as \textit{lowpass}, \textit{highpass}, \textit{bandpass} and others, one can obtain the following results:
-
-
+\begin{equation}
+	H(j\omega) = \frac{1}{\sqrt(1 + \epsilon^2(\frac{\omega}{\omega_p})^{2n})}
+\end{equation}
 
 \subsection{Resolution}
 As specified in the ATI \hyperref{https://www.ati-ia.com/products/ft/ft_models.aspx?id=mini40}{category}{name}{site}, the resolution of the sensor for the calibration US-20-40 is the following defined as the average of the worst and best case
@@ -657,8 +682,23 @@ The ESC connection to the arduino is shown in \autoref{fig:arduino_ESC}:
 
 The rest of the cables are connected to a potentiometer that acts as radio controller.
 
+\section{Pressure and temperature sensor}
+
+In this works, the barometer bmp280 has been used. It can widely measure pressure ranging from 300 mbar to 1200 mbar, with a super high accuracy of 0.01 mbar(0.1m) in ultra-high resolution mode.
+
+In \autoref{fig:ardu_bmp280}, we can see the connection necessary to obtain the data from this sensor:
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.8\textwidth]{Images/bmp280.png}
+	\caption{Connection between arduino UNO and bmp280 sensor}
+	\label{fig:ardu_bmp280}
+\end{figure}
 
 
+In the case of the arduino Mega, the SCK pin from the sensor must be connceter to pin SCL (pin 21) and the SDI pin from the sensor to the SDA pin from the arduino (pin 20).
+
+\textcolor{red}{ADVICE}: If "Could not find a valid BMP280 sensor,  check wiring!" error is encountered, switch from 3.3V to 5V or viceversa in the VCC of the sensor and reload script.
 
 \section{The quadcopter}
 
@@ -700,6 +740,37 @@ The quadcopter is powered with two Astec DS550-3 power supplies connected in par
 
 \subsection{Data collection procedure}
 
+\begin{itemize}
+	\item Open excel file and write test characteristics
+	\item Start logging FT data
+	\item Start logging RPM data
+	\item Start test script in serial terminal from arduino UNO
+	\item Power motors
+	\item Write temperature and pressure in excel file and wait for tect cycle to complete
+	\item Stop all logging and make sure that everything has been saved properly
+\end{itemize}
+
+The test matrix:
+
+\begin{table}[h!]
+	\centering
+	\caption{Test matrix of PWM values for each parameter and propeller size \label{tab:testMat}}
+	\begin{tabular}{||c | c | c | c | c ||} 
+		\hline
+		Parameter & 10" & 12" & 13" & 15"\\ [0.5ex] 
+		\hline
+		Fzmax$_{10"}$ & & & &  \\ 
+		\hline
+		Fzmax$_{10"}$/2 & & & &  \\
+		\hline
+		RPMmax$_{15"}$ & & & &  \\
+		\hline
+		RPMmax$_{15"}$/2 & & & &  \\
+		\hline
+		anything else? & & & &  \\
+		\hline
+	\end{tabular}
+\end{table}
 
 
 

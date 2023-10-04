@@ -2,39 +2,26 @@ clear variables
 close all
 
 %%%% For extended files containing voltages and time vector
-file1 = '../LogFiles/RPM/putty.csv';
-file2 = '../LogFiles/RPM/putty.csv';
+file2 = '../LogFiles/20231002/RPM/rpm20231002_10inch1R.csv';
+file1 = '../LogFiles/20231002/RPM/rpm20231002_10inch1R_test3.csv';
 
 test1 = readtable(file1);
 test2 = readtable(file2);
 
-time1  = (test1{1:end,1});% - test1{10,index+1});
-White1 = (test1{1:end,2});% - test1{10,index+2});
-Black1 = (test1{1:end,3});% - test1{10,index+2});
-time2  = (test2{1:end,1});% - test1{10,index+1});
-White2 = (test2{1:end,2});% - test1{10,index+2});
-Black2 = (test2{1:end,3});% - test1{10,index+2});
+sample_freq = 1;
+num_blades = 2;
+
+time1  = 0:1/sample_freq:length(test1{1:end,1})-1;% - test1{10,index+1});
+rpm1 = test1{1:end,1}/num_blades;
+rpm2 = test1{1:end,2}/num_blades;
+rpm3 = test1{1:end,3}/num_blades;
+rpm4 = test1{1:end,4}/num_blades;
 
 figure()
 hold on;grid on;
-plot(time1/1000, White1/1023,'lineWidth',1.5)
-plot(time1/1000, Black1/1023,'lineWidth',1.5)
-legend('White','Black')
-
-figure()
-hold on;grid on;
-plot(time2/1000, White2/1023,'lineWidth',1.5)
-plot(time2/1000, Black2/1023,'lineWidth',1.5)
-legend('White','Black')
+plot(time1,rpm1,'linewidth',2)
+plot(time1,rpm2,'linewidth',2)
+plot(time1,rpm3,'linewidth',2)
+plot(time1,rpm4,'linewidth',2)
 xlabel('Time [s]')
-
-
-figure()
-hold on;grid on;
-plot(time1./1000, White1/1023,'lineWidth',1.5)
-plot(time2./1000, White2/1023,'lineWidth',1.5)
-
-figure()
-hold on;grid on;
-plot(time1./1000, Black1/1023,'lineWidth',1.5)
-plot(time2./1000, Black2/1023,'lineWidth',1.5)
+ylabel('RPM [rev/s]')

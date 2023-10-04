@@ -1,6 +1,9 @@
+#include"SPI.h"
 
 #include <Time.h>
+#include <Adafruit_BMP280.h>
 
+Adafruit_BMP280 bmp; // I2C Interface
 const int IR_PIN1 = 2;  // IR sensor input pin
 const int IR_PIN2 = 3;  // IR sensor input pin
 const int IR_PIN3 = 18;  // IR sensor input pin
@@ -25,18 +28,20 @@ float rpm4;
 
 void setup() {
   Serial.begin(115200);
-//  TCCR1A = 0; // Setting timer 1 control registers A and B to 0
-//  TCCR1B = 0;
-//  TCCR3A = 0;
-//  TCCR3B = 0;
-//  TCCR4A = 0;
-//  TCCR4B = 0;
-//  TCCR5A = 0;
-//  TCCR5B = 0;
-//  TCCR1B |= (1 << CS12); //Prescaler 256
-//  TCCR3B |= (1 << CS32); //Prescaler 256
-//  TCCR4B |= (1 << CS42); //Prescaler 256
-//  TCCR5B |= (1 << CS52); //Prescaler 256
+//  Serial.println(F("BMP280 test"));
+//  if  (!bmp.begin()) {
+//    Serial.println(F("Could not find a valid BMP280 sensor,  check wiring!"));
+//    while (1);
+//  }
+//
+//  /* Default settings from datasheet.  */
+//  bmp.setSampling(Adafruit_BMP280::MODE_NORMAL,     /* Operating Mode. */
+//                  Adafruit_BMP280::SAMPLING_X2,     /* Temp. oversampling */
+//                  Adafruit_BMP280::SAMPLING_X16,    /* Pressure oversampling */
+//                  Adafruit_BMP280::FILTER_X16,      /* Filtering. */
+//                  Adafruit_BMP280::STANDBY_MS_500);  /* Standby time. */
+
+
 
   pinMode(IR_PIN1, INPUT);
   pinMode(IR_PIN2, INPUT);
@@ -63,13 +68,7 @@ void loop() {
   rpmfloat3 = 60000 * (rpmtime3/timeee);
   rpm3 = rpmfloat3;
   rpmfloat4 = 60000 * (rpmtime4/timeee);
-  rpm3 = rpmfloat4;
-  rpmtime1 = 0;
-  rpmtime2 = 0;
-  rpmtime3 = 0;
-  rpmtime4 = 0;
-//  Serial.print(timeee, 5);
-//  Serial.print("RPM: ");
+  rpm4 = rpmfloat4;
   Serial.print(rpm1);
   Serial.print(", ");
   Serial.print(rpm2);
@@ -77,6 +76,17 @@ void loop() {
   Serial.print(rpm3);
   Serial.print(", ");
   Serial.println(rpm4);
+//  Serial.print(", ");
+//  Serial.print(bmp.readTemperature());
+//  Serial.print(", ");
+//  Serial.println(bmp.readPressure()/100); // In hPa
+  rpmtime1 = 0;
+  rpmtime2 = 0;
+  rpmtime3 = 0;
+  rpmtime4 = 0;
+//  Serial.print(timeee, 5);
+//  Serial.print("RPM: ");
+
   previousMillis = actualMillis;
   interrupts();
 

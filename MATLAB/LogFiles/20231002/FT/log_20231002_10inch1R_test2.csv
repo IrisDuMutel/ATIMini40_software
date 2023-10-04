@@ -1,0 +1,3 @@
+First line indicates sampling freq [Hz], samples per channel, QTimer [ms] 
+Fx, Fy, Fz, Mz, My, Mz 
+150,75,500,0,0
