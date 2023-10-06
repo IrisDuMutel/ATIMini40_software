@@ -2,14 +2,14 @@ clear variables
 close all
 
 %%%% For extended files containing voltages and time vector
-file2 = '../LogFiles/20231002/RPM/rpm20231002_10inch1R.csv';
-file1 = '../LogFiles/20231002/RPM/rpm20231002_10inch1R_test3.csv';
+file2 = '../LogFiles/20231004/RPM/log_20231004_10inch_matrixmaking_1.csv';
+file1 = '../LogFiles/20231004/RPM/log_20231004_10inch_matrixmaking_1.csv';
 
 test1 = readtable(file1);
 test2 = readtable(file2);
 
 sample_freq = 1;
-num_blades = 2;
+num_blades  = 2;
 
 time1  = 0:1/sample_freq:length(test1{1:end,1})-1;% - test1{10,index+1});
 rpm1 = test1{1:end,1}/num_blades;

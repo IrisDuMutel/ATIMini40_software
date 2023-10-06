@@ -161,58 +161,7 @@ scenarios:
 	\end{tabular}
 \end{table}
 
-\subsection{Filtering}
 
-The data collected in this work has been obtained using the NI-USB-6008 Data Acquisition Unit and a python software and interface (go to \autoref{sec:NiDAQ_PY}).
-
-Notice that raw data looks like in \autoref{fig:unfiltered_data}:
-
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=1\textwidth]{Images/unfiltered_20230915.eps}
-	\caption{Unfiltered data from ascending PWM test without propellers}
-	\label{fig:unfiltered_noprops}
-\end{figure}
-
-This forces and torques were obtained programming and ascending PWM value for 30 seconds each. No propellers were used and still noise was recorded. 
-
-For a quick example on how \textit{Fast Fourier Transforms} and basic filtering using MATLAB functions work, see this \hyperref{https://github.com/IrisDuMutel/ATIMini40_software/blob/master/MATLAB/Scripts/Examples/example_FFTandFilters.m}{category}{name}{script}.
-
-\textit{Fast Fourier Transforms} help us visualize the frequencies of the data that takes part of our signals. It can be our data itself that has a charcteristic freqeuncy, or the noise and vibrations surrounding your data collection process that get captured by your sensors. In any case identifyig the desired frequencies and ignoring the rest is an absolutely necessary step i the post-processing of any data.
-
-This is why filters are also a scope of this study. The F/T sensor currently in use provides unfiltered analog data that is sampled through a DAQ, and therefore transformed into digital information. However, this digital data stream may contain noise from vibration, EM interferences...
-
-Using MATLAB functions such as \textit{lowpass}, \textit{highpass}, \textit{bandpass} and others, one can obtain first approaches to the final results. 
-This is a generic way of approaching the filtering problem. However, there are different types of low-pass filters:
-
-\begin{itemize}
-	\item Butterworth filter
-	\item Chebyshev filter
-	\item Elliptic (or Cauer) filter
-	\item Bessel filter
-\end{itemize}
-
-\subsubsection{Butterworth filters}
-
-In \autoref{fig:butter} the differences in magnitude of the different filter orders can be appreciated:
-
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=0.9\textwidth]{Images/butter_filters.eps}
-	\label{fig:butter}
-	\caption{Butterworth filters of order 1 to 5}
-\end{figure}
-
-CHECK THIS FIGURE ABOVE BECAUSE I DONT KNOW IF ITS CORRECT!
-
-A cutoff frequency of 1 Hz was imposed and the sample frequency is supposed to be 150 Hz. 
-
-
-The gain of the butterworth filter is as in:
-
-\begin{equation}
-	H(j\omega) = \frac{1}{\sqrt(1 + \epsilon^2(\frac{\omega}{\omega_p})^{2n})}
-\end{equation}
 
 \subsection{Resolution}
 As specified in the ATI \hyperref{https://www.ati-ia.com/products/ft/ft_models.aspx?id=mini40}{category}{name}{site}, the resolution of the sensor for the calibration US-20-40 is the following defined as the average of the worst and best case
@@ -372,11 +321,12 @@ Please, visit \hyperref{http://engredu.com/2023/07/29/ni-acquisition-strategies/
 
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=0.7\textwidth]{NIUSB6008_GUI.png}
+	\includegraphics[width=0.8\textwidth]{NIUSB6008_GUI.png}
 	\caption{Qt interface for NI USB 6008 Data Acquisition Unit}
 	\label{fig:NIUSB6008_GUI}
 \end{figure}
 
+Temperature and pressure must be an input from the user. Otherwise, the default values will be saved.
 
 \subsection{Keysight 34790A}
 
@@ -682,6 +632,8 @@ The ESC connection to the arduino is shown in \autoref{fig:arduino_ESC}:
 
 The rest of the cables are connected to a potentiometer that acts as radio controller.
 
+The \textbf3{calibration} is supposed to be automatic as stated by the manufacturer in the \hyperref{https://www.castlecreations.com/en/phoenix-edge-50-esc-010-0102-00}{category}{name}{product's site}.
+
 \section{Pressure and temperature sensor}
 
 In this works, the barometer bmp280 has been used. It can widely measure pressure ranging from 300 mbar to 1200 mbar, with a super high accuracy of 0.01 mbar(0.1m) in ultra-high resolution mode.
@@ -772,8 +724,82 @@ The test matrix:
 	\end{tabular}
 \end{table}
 
+\section{Post-processing}
+
+The post-processing steps are the following:
+
+\begin{itemize}
+	\item Filtering
+	\item Automatic detection of steps
+	\item Offset removal
+	\item Averaging of equivalent test data
+	
+\end{itemize}
+
+\subsection{Filtering}
+
+The data collected in this work has been obtained using the NI-USB-6008 Data Acquisition Unit and a python software and interface (go to \autoref{sec:NiDAQ_PY}).
+
+Notice that raw data looks like in \autoref{fig:unfiltered_data}:
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=1\textwidth]{Images/unfiltered_20230915.eps}
+	\caption{Unfiltered data from ascending PWM test without propellers}
+	\label{fig:unfiltered_noprops}
+\end{figure}
+
+This forces and torques were obtained programming and ascending PWM value for 30 seconds each. No propellers were used and still noise was recorded. 
+
+For a quick example on how \textit{Fast Fourier Transforms} and basic filtering using MATLAB functions work, see this \hyperref{https://github.com/IrisDuMutel/ATIMini40_software/blob/master/MATLAB/Scripts/Examples/example_FFTandFilters.m}{category}{name}{script}.
+
+\textit{Fast Fourier Transforms} help us visualize the frequencies of the data that takes part of our signals. It can be our data itself that has a charcteristic freqeuncy, or the noise and vibrations surrounding your data collection process that get captured by your sensors. In any case identifyig the desired frequencies and ignoring the rest is an absolutely necessary step i the post-processing of any data.
+
+This is why filters are also a scope of this study. The F/T sensor currently in use provides unfiltered analog data that is sampled through a DAQ, and therefore transformed into digital information. However, this digital data stream may contain noise from vibration, EM interferences...
+
+Using MATLAB functions such as \textit{lowpass}, \textit{highpass}, \textit{bandpass} and others, one can obtain first approaches to the final results. 
+This is a generic way of approaching the filtering problem. However, there are different types of low-pass filters:
+
+\begin{itemize}
+	\item Butterworth filter
+	\item Chebyshev filter
+	\item Elliptic (or Cauer) filter
+	\item Bessel filter
+\end{itemize}
+
+\subsubsection{Butterworth filters}
+
+In \autoref{fig:butter} the differences in magnitude of the different filter orders can be appreciated:
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.9\textwidth]{Images/butter_filters.eps}
+	\label{fig:butter}
+	\caption{Butterworth filters of order 1 to 5}
+\end{figure}
+
+CHECK THIS FIGURE ABOVE BECAUSE I DONT KNOW IF ITS CORRECT!
+
+A cutoff frequency of 1 Hz was imposed and the sample frequency is supposed to be 150 Hz. 
 
 
+The gain of the butterworth filter is as in:
+
+\begin{equation}
+	H(j\omega) = \frac{1}{\sqrt{1 + \epsilon^2(\frac{\omega}{\omega_p})^{2n})}}
+\end{equation}
+
+
+\subsubsection{Chebyshev filters}
+
+\subsection{Automatic detection of steps}
+
+
+\subsection{Offset removal}
+
+This part of the process is in charge of finding offsets in all datafiles and removing it. 
+
+In every test step where Fz is supposed to be 0, an offset must be removed so that the following steps are as accurate as possible. 
 
 
 \section{Resources}

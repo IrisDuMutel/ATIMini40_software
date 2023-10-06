@@ -3,26 +3,30 @@
 \contentsline {section}{\numberline {2}Wiring and connecting to a DAQ}{2}{section.2}%
 \contentsline {subsection}{\numberline {2.1}Sampling}{2}{subsection.2.1}%
 \contentsline {subsection}{\numberline {2.2}Range}{4}{subsection.2.2}%
-\contentsline {subsection}{\numberline {2.3}Filtering}{5}{subsection.2.3}%
-\contentsline {subsubsection}{\numberline {2.3.1}Butterworth filters}{6}{subsubsection.2.3.1}%
-\contentsline {subsection}{\numberline {2.4}Resolution}{6}{subsection.2.4}%
-\contentsline {subsection}{\numberline {2.5}Sensitivity and output range and resolution voltages}{7}{subsection.2.5}%
-\contentsline {section}{\numberline {3}Keysight 34970A connection to PC}{7}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Important commands}{7}{subsection.3.1}%
-\contentsline {section}{\numberline {4}LabView}{9}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Keysight 34970A}{9}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}NI USB 6008}{9}{subsection.4.2}%
-\contentsline {section}{\numberline {5}Python}{10}{section.5}%
-\contentsline {subsection}{\numberline {5.1}Keysight 34790A}{10}{subsection.5.1}%
-\contentsline {subsection}{\numberline {5.2}NI USB 6008 DAQ}{10}{subsection.5.2}%
-\contentsline {section}{\numberline {6}SICK WLA16 Photoelectric sensors}{11}{section.6}%
-\contentsline {subsubsection}{\numberline {6.0.1}Code files}{13}{subsubsection.6.0.1}%
-\contentsline {subsection}{\numberline {6.1}Timers and interrupts}{13}{subsection.6.1}%
-\contentsline {subsection}{\numberline {6.2}Only interrupt based algorithms (FINAL CHOICE)}{15}{subsection.6.2}%
-\contentsline {section}{\numberline {7}Castle Phoenix Edge 50A ESC}{15}{section.7}%
-\contentsline {section}{\numberline {8}Pressure and temperature sensor}{17}{section.8}%
-\contentsline {section}{\numberline {9}The quadcopter}{18}{section.9}%
-\contentsline {section}{\numberline {10}Power supply}{18}{section.10}%
-\contentsline {section}{\numberline {11}The final architecture}{18}{section.11}%
-\contentsline {subsection}{\numberline {11.1}Data collection procedure}{18}{subsection.11.1}%
-\contentsline {section}{\numberline {12}Resources}{18}{section.12}%
+\contentsline {subsection}{\numberline {2.3}Resolution}{5}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Sensitivity and output range and resolution voltages}{5}{subsection.2.4}%
+\contentsline {section}{\numberline {3}Keysight 34970A connection to PC}{5}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Important commands}{6}{subsection.3.1}%
+\contentsline {section}{\numberline {4}LabView}{7}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Keysight 34970A}{7}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}NI USB 6008}{8}{subsection.4.2}%
+\contentsline {section}{\numberline {5}Python}{8}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Keysight 34790A}{8}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}NI USB 6008 DAQ}{8}{subsection.5.2}%
+\contentsline {section}{\numberline {6}SICK WLA16 Photoelectric sensors}{10}{section.6}%
+\contentsline {subsubsection}{\numberline {6.0.1}Code files}{11}{subsubsection.6.0.1}%
+\contentsline {subsection}{\numberline {6.1}Timers and interrupts}{12}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Only interrupt based algorithms (FINAL CHOICE)}{14}{subsection.6.2}%
+\contentsline {section}{\numberline {7}Castle Phoenix Edge 50A ESC}{14}{section.7}%
+\contentsline {section}{\numberline {8}Pressure and temperature sensor}{16}{section.8}%
+\contentsline {section}{\numberline {9}The quadcopter}{16}{section.9}%
+\contentsline {section}{\numberline {10}Power supply}{16}{section.10}%
+\contentsline {section}{\numberline {11}The final architecture}{17}{section.11}%
+\contentsline {subsection}{\numberline {11.1}Data collection procedure}{17}{subsection.11.1}%
+\contentsline {section}{\numberline {12}Post-processing}{18}{section.12}%
+\contentsline {subsection}{\numberline {12.1}Filtering}{18}{subsection.12.1}%
+\contentsline {subsubsection}{\numberline {12.1.1}Butterworth filters}{19}{subsubsection.12.1.1}%
+\contentsline {subsubsection}{\numberline {12.1.2}Chebyshev filters}{19}{subsubsection.12.1.2}%
+\contentsline {subsection}{\numberline {12.2}Automatic detection of steps}{19}{subsection.12.2}%
+\contentsline {subsection}{\numberline {12.3}Offset removal}{19}{subsection.12.3}%
+\contentsline {section}{\numberline {13}Resources}{20}{section.13}%

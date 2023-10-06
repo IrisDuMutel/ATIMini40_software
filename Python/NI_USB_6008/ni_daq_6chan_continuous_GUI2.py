@@ -23,6 +23,8 @@ RANGE = "10"
 RESOLUTION = "0.001"
 CHANNEL_LIST = "Dev3/ai0,Dev3/ai1,Dev3/ai2,Dev3/ai3,Dev3/ai4,Dev3/ai5"
 FILE_PATH = "TestData/log_today.txt"
+TEMP = "25"
+PRES = "800"
 
 QTIM_VAL = '500' # In ms
 absolute_start = timer()
@@ -60,6 +62,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.textEdit_FS.setText(FS)
         self.textEdit_QTIM_VAL.setText(QTIM_VAL)
         self.textEdit_FilePath.setText(FILE_PATH)
+        self.textEdit_Temp.setText(TEMP)
+        self.textEdit_Pres.setText(PRES)
         
 
         # Variable initialiation
@@ -104,7 +108,7 @@ class MainWindow(QtWidgets.QMainWindow):
             if self.header_flag==False:
                 self.write_path.write("First line indicates sampling freq [Hz], samples per channel, QTimer [ms] \n")
                 self.write_path.write("Fx, Fy, Fz, Mz, My, Mz \n")
-                self.write_path.write((self.textEdit_FS.text()) + "," +  str(self.SPC) +","+ str(self.textEdit_QTIM_VAL.text()) + ",0"+ ",0" +"\n")
+                self.write_path.write((self.textEdit_FS.text()) + "," +  str(self.SPC) +","+ str(self.textEdit_QTIM_VAL.text()) + "," + (self.textEdit_Temp.text()) + "," + (self.textEdit_Pres.text()) + "," + "0" +"\n")
                 self.header_flag = True
 
     # Pressing start

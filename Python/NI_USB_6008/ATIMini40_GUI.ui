@@ -530,6 +530,58 @@
      </rect>
     </property>
    </widget>
+   <widget class="QLineEdit" name="textEdit_Temp">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>420</y>
+      <width>121</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_15">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>400</y>
+      <width>121</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="text">
+     <string>Temperature [ºC]</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_16">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>460</y>
+      <width>121</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="text">
+     <string>Pressure [hPa]</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="textEdit_Pres">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>480</y>
+      <width>121</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
    <zorder>frame</zorder>
    <zorder>comboBox_deviceName</zorder>
    <zorder>label_3</zorder>
@@ -550,6 +602,10 @@
    <zorder>label</zorder>
    <zorder>lineEdit_Errors</zorder>
    <zorder>label_10</zorder>
+   <zorder>textEdit_Temp</zorder>
+   <zorder>label_15</zorder>
+   <zorder>label_16</zorder>
+   <zorder>textEdit_Pres</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

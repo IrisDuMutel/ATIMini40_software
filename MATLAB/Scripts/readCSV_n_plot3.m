@@ -1,159 +1,114 @@
 clear variables
 close all
 
+
+% Problem parameters
+% L          = 0.20;     %m
+% numBlades  = 2;
+% Radius     = 0.2032/2; %m (diameter if 0.2 is used
+% R_constant = 287.04; % m^2 /°Ksec^2
+% toKelvin   = 273.15;
+% rpm12 = [4,7,9,12];  %%% Levels to be taken for equal RPM comparison
+% 
+% step_duration = 1500;
+% segment_points = 1350;           %100 8 inches           % how many points do we select
+% offset_points  = 100;            % 80 8 inches
+% steps_per_stair = 4;
+
 %%%% For extended files containing voltages and time vector
 folder = fileparts(pwd);
-filepath = '../LogFiles/';
-file1 = '20230916/log_20230916_2.csv';
-file2 = '20231002/FT/log_20231002_10inch1R_test3.csv';
+ft_path  = '../LogFiles/20231004/FT/';
+rpm_path = '../LogFiles/20231004/RPM/';
+file1 = 'log_20231004_10inch_matrixmaking_1.csv';
+file2 = 'log_20231004_10inch_matrixmaking_1.csv';
+
 title_size = 6;
 
-filepath1 = strcat(filepath,file1);
-filepath2 = strcat(filepath,file2);
-
+filepath1 = strcat(ft_path,file1);
+filepath2 = strcat(ft_path,file2);
+filepath1_rpm = strcat(rpm_path,file1);
+filepath2_rpm = strcat(rpm_path,file2);
 
 test1 = readtable(filepath1);
 test2 = readtable(filepath2);
+rpm1  = readtable(filepath1_rpm);
+rpm2  = readtable(filepath2_rpm);
 
+sampl_f1 = test1{1,1}; % Sampling frequency of the signal
+sampl_f2 = test2{1,1}; % Sampling frequency of the signal
+Ts1 = 1/sampl_f1;
+Ts2 = 1/sampl_f2;
 
-Weight_series = -[0.01,0.02,0.05,0.1,0.2,0.5,1]'*9.798;
-time1 = [0:1/test1{1,1}:1/test1{1,1}*(length(test1{:,2})-2)];
-time2 = [0:1/test2{1,1}:1/test2{1,1}*(length(test2{:,2})-2)];
-index = 0;
-offset = 20;
+temp1 = test1(1,4);
+temp2 = test2(1,4);
+pres1 = test1(1,5);
+pres2 = test2(1,5);
 
-Fx1 = (test1{2:end,index+1});% - test1{offset,index+1});
-Fy1 = (test1{2:end,index+2});% - test1{offset,index+2});
-Fz1 = (test1{2:end,index+3});% - test1{offset,index+3});
-Mx1 = (test1{2:end,index+4});% - test1{offset,index+4});
-My1 = (test1{2:end,index+5});% - test1{offset,index+5});
-Mz1 = (test1{2:end,index+6});% - test1{offset,index+6});
-Fx2 = (test2{2:end,index+1});% - test2{offset,index+1});
-Fy2 = (test2{2:end,index+2});% - test2{offset,index+2});
-Fz2 = (test2{2:end,index+3});% - test2{offset,index+3});
-Mx2 = (test2{2:end,index+4});% - test2{offset,index+4});
-My2 = (test2{2:end,index+5});% - test2{offset,index+5});
-Mz2 = (test2{2:end,index+6});% - test2{offset,index+6});
+offset    = 1;  % 3000 is 20s (offset*Ts = seconds)
+fx_column = 1;
+fy_column = 2;
+fz_column = 3;
+mx_column = 4;
+my_column = 5;
+mz_column = 6;
 
-% figure()
-% hold on;grid on;
-% plot(time1,Fx1,'linewidth',2)
-% plot(time1,Fy1,'linewidth',2)
-% plot(time1,Fz1,'linewidth',2)
-% plot(time1,Mx1,'linewidth',2)
-% plot(time1,My1,'linewidth',2)
-% plot(time1,Mz1,'linewidth',2)
-% plot(time1,ones(1,length(time1))*Weight_series(1))
-% plot(time1,ones(1,length(time1))*Weight_series(2))
-% plot(time1,ones(1,length(time1))*Weight_series(3))
-% plot(time1,ones(1,length(time1))*Weight_series(4))
-% plot(time1,ones(1,length(time1))*Weight_series(5))
-% plot(time1,ones(1,length(time1))*Weight_series(6))
-% plot(time1,ones(1,length(time1))*Weight_series(7))
-% legend('Fx','Fy','Fz','Mx','My','Mz')
-% xlabel('Time [s]')
-% ylabel('Force-Torque [N, N-m]')
+time1 = [offset*Ts1:Ts1:Ts1*(length(test1{:,2})-1)];
+time2 = [offset*Ts2:Ts2:Ts2*(length(test2{:,2})-1)];
+
+Fx1 = (test1{2:end,fx_column});
+Fy1 = (test1{2:end,fy_column});
+Fz1 = (test1{2:end,fz_column});
+Mx1 = (test1{2:end,mx_column});
+My1 = (test1{2:end,my_column});
+Mz1 = (test1{2:end,mz_column});
+Fx2 = (test2{2:end,fx_column});
+Fy2 = (test2{2:end,fy_column});
+Fz2 = (test2{2:end,fz_column});
+Mx2 = (test2{2:end,mx_column});
+My2 = (test2{2:end,my_column});
+Mz2 = (test2{2:end,mz_column});
+
 
 
 %% FFT and filtering
 
-fft_Fx1 = fft(Fx1);
-fft_Fy1 = fft(Fy1);
-fft_Fz1 = fft(Fz1);
-fft_Mx1 = fft(Mx1);
-fft_My1 = fft(My1);
-fft_Mz1 = fft(Mz1);
+wpass_fx = 0.5;
+wpass_fy = 0.5;
+wpass_fz = 0.2;
+wpass_mx = 0.5;
+wpass_my = 0.5;
+wpass_mz = 0.5;
 
-sampl_f = 150; % Sampling frequency of the signal
-Ts = 1/sampl_f;
-fx = (0:length(fft_Fx1)-1)*sampl_f/length(fft_Fx1);
-fy = (0:length(fft_Fy1)-1)*sampl_f/length(fft_Fy1);
-fz = (0:length(fft_Fz1)-1)*sampl_f/length(fft_Fz1);
-mx = (0:length(fft_Mx1)-1)*sampl_f/length(fft_Mx1);
-my = (0:length(fft_My1)-1)*sampl_f/length(fft_My1);
-mz = (0:length(fft_Mz1)-1)*sampl_f/length(fft_Mz1);
+%%% Filtering
+filtered_Fx1 = lowpass(Fx1,wpass_fx,sampl_f1);
+filtered_Fy1 = lowpass(Fy1,wpass_fy,sampl_f1);
+filtered_Fz1 = lowpass(Fz1,wpass_fz,sampl_f1);
+filtered_Mx1 = lowpass(Mx1,wpass_mx,sampl_f1);
+filtered_My1 = lowpass(My1,wpass_my,sampl_f1);
+filtered_Mz1 = lowpass(Mz1,wpass_mz,sampl_f1);
 
-figure()
-subplot(3,1,1)
-plot(fx,abs(fft_Fx1))
-grid on
-title(strcat(file1,' ---vs--- ',file2),'FontSize',title_size,'Interpreter','none')
-ylabel('fft(Fx)')
-subplot(3,1,2)
-plot(fy,abs(fft_Fy1))
-grid on
-ylabel('fft(Fy)')
-subplot(3,1,3)
-plot(fz,abs(fft_Fz1))
-ylabel('fft(Fz)')
-% title('FFT')
-xlabel('Frequency (Hz)')
-% t = annotation('textbox','String',strcat(file1,' VS ',file2),'FitBoxToText','on');
-% sz = t.FontSize;
-% t.FontSize = 8;
-grid on
+filtered_Fx2 = lowpass(Fx2,wpass_fx,sampl_f1);
+filtered_Fy2 = lowpass(Fy2,wpass_fy,sampl_f1);
+filtered_Fz2 = lowpass(Fz2,wpass_fz,sampl_f1);
+filtered_Mx2 = lowpass(Mx2,wpass_mx,sampl_f1);
+filtered_My2 = lowpass(My2,wpass_my,sampl_f1);
+filtered_Mz2 = lowpass(Mz2,wpass_mz,sampl_f1);
 
-figure()
-subplot(3,1,1)
-title(strcat(file1,' ---vs--- ',file2),'FontSize',title_size,'Interpreter','none')
-plot(mx,abs(fft_Mx1))
-grid on
-ylabel('fft(Mx)')
-subplot(3,1,2)
-plot(my,abs(fft_My1))
-grid on
-ylabel('fft(My)')
-subplot(3,1,3)
-plot(mz,abs(fft_Mz1))
-ylabel('fft(Mz)')
-% title('FFT')
-xlabel('Frequency (Hz)')
-grid on
+%%% Offset removal
+filtered_Fx1 = filtered_Fx1(offset:end) - filtered_Fx1(offset);
+filtered_Fy1 = filtered_Fy1(offset:end) - filtered_Fy1(offset);
+filtered_Fz1 = filtered_Fz1(offset:end) - filtered_Fz1(offset);
+filtered_Mx1 = filtered_Mx1(offset:end) - filtered_Mx1(offset);
+filtered_My1 = filtered_My1(offset:end) - filtered_My1(offset);
+filtered_Mz1 = filtered_Mz1(offset:end) - filtered_Mz1(offset);
 
-wpass_fx = 0.5;%[2.5, 3.5];
-wpass_fy = 0.5;%[56, 60];
-wpass_fz = 0.2;%[0.1];
-wpass_mx = 0.5;%[2.5, 3.5];
-wpass_my = 0.5;%[56, 60];
-wpass_mz = 0.5;%[0.1];
-filtered_Fx1 = lowpass(Fx1,wpass_fx,sampl_f);
-filtered_Fy1 = lowpass(Fy1,wpass_fy,sampl_f);
-filtered_Fz1 = lowpass(Fz1,wpass_fz,sampl_f);
-filtered_Mx1 = lowpass(Mx1,wpass_mx,sampl_f);
-filtered_My1 = lowpass(My1,wpass_my,sampl_f);
-filtered_Mz1 = lowpass(Mz1,wpass_mz,sampl_f);
+filtered_Fx2 = filtered_Fx2(offset:end) - filtered_Fx2(offset);
+filtered_Fy2 = filtered_Fy2(offset:end) - filtered_Fy2(offset);
+filtered_Fz2 = filtered_Fz2(offset:end) - filtered_Fz2(offset);
+filtered_Mx2 = filtered_Mx2(offset:end) - filtered_Mx2(offset);
+filtered_My2 = filtered_My2(offset:end) - filtered_My2(offset);
+filtered_Mz2 = filtered_Mz2(offset:end) - filtered_Mz2(offset);
 
-filtered_Fx2 = lowpass(Fx2,wpass_fx,sampl_f);
-filtered_Fy2 = lowpass(Fy2,wpass_fy,sampl_f);
-filtered_Fz2 = lowpass(Fz2,wpass_fz,sampl_f);
-filtered_Mx2 = lowpass(Mx2,wpass_mx,sampl_f);
-filtered_My2 = lowpass(My2,wpass_my,sampl_f);
-filtered_Mz2 = lowpass(Mz2,wpass_mz,sampl_f);
-
-% figure()
-% subplot(3,1,1)
-% hold on
-% plot(time1,Fx1,'linewidth',2)
-% plot(time1,filtered_Fx1,'linewidth',2)
-% legend('Fx','Fx filtered')
-% grid on
-% ylabel('Fx [N]')
-% subplot(3,1,2)
-% hold on
-% plot(time1,Fy1,'linewidth',2)
-% plot(time1,filtered_Fy1,'linewidth',2)
-% legend('Fy','Fy filtered')
-% grid on
-% ylabel('Fy [N]')
-% subplot(3,1,3)
-% hold on
-% plot(time1,Fz1,'linewidth',2)
-% plot(time1,filtered_Fz1,'linewidth',2)
-% legend('Fz','Fz filtered')
-% grid on
-% ylabel('Fz [N]')
-% xlabel('Time [s]')
-% grid on
 
 figure()
 subplot(3,1,1)
@@ -183,30 +138,6 @@ ylabel('Fz [N]')
 xlabel('Time [s]')
 grid on
 
-% figure()
-% subplot(3,1,1)
-% hold on
-% plot(time1,Mx1,'linewidth',2)
-% plot(time1,filtered_Mx1,'linewidth',2)
-% legend('Mx','Mx filtered')
-% grid on
-% ylabel('Mx [N·m]')
-% subplot(3,1,2)
-% hold on
-% plot(time1,My1,'linewidth',2)
-% plot(time1,filtered_My1,'linewidth',2)
-% legend('My','My filtered')
-% grid on
-% ylabel('My [N·m]')
-% subplot(3,1,3)
-% hold on
-% plot(time1,Mz1,'linewidth',2)
-% plot(time1,filtered_Mz1,'linewidth',2)
-% legend('Mz','Mz filtered')
-% grid on
-% ylabel('Mz [N·m]')
-% xlabel('Time [s]')
-% grid on
 
 figure()
 subplot(3,1,1)
@@ -236,22 +167,3 @@ grid on
 ylabel('Mz [N·m]')
 xlabel('Time [s]')
 grid on
-
-
-filtered_Fz1_1 = lowpass(Fz1,0.5,150);
-filtered_Fz1_2 = highpass(Fz1,140,150);
-% filtered_Fz1_3 = bandpass(Fz1,[0.001,0.5],150);
-
-
-figure()
-hold on
-title(strcat(file1,' ---vs--- ',file2),'FontSize',title_size,'Interpreter','none')
-plot(time1,Fz1,'linewidth',2)
-plot(time1,filtered_Fz1_1,'linewidth',2)
-plot(time1,filtered_Fz1_2,'linewidth',2)
-% plot(time1,filtered_Fz1_3,'linewidth',2)
-legend('Fz','Fz filtered1','Fz filtered2')%,'Fz filtered3')
-grid on
-
-
-
