@@ -597,7 +597,48 @@ The Arduino counters have been defined as \textit{volatile}\cite{volatiles} floa
 Declaring a variable \textit{volatile} is a directive to the compiler.
 
 
-\section{Castle Phoenix Edge 50A ESC}
+
+
+\section{Pressure and temperature sensor}
+
+In this works, the barometer bmp280 has been used. It can widely measure pressure ranging from 300 mbar to 1100 hPa, with an accuracy of $\pm$1 hPa \cite{bmp280}. The temperature accuracy is $\pm$1.0\textdegree C.
+
+In \autoref{fig:ardu_bmp280}, we can see the connection necessary to obtain the data from this sensor using the I2C wiring:
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.8\textwidth]{Images/bmp280.png}
+	\caption{I2C connection between arduino UNO and bmp280 sensor}
+	\label{fig:ardu_bmp280}
+\end{figure}
+
+ In the case of the arduino Mega, the SCK pin from the sensor must be conncted to pin SCL (pin 21) and the SDI pin from the sensor to the SDA pin from the arduino (pin 20). The SPI interface is also available for this sensor.
+ 
+\textcolor{red}{ADVICE}: If "Could not find a valid BMP280 sensor,  check wiring!" error is encountered, switch from 3.3V to 5V or viceversa in the VCC of the sensor and reload script.
+
+\section{The quadcopter}
+
+The quadcopter used in the ground/ceiling/wall effect tests is depicted in figure \autoref{fig:quad} and is constituted by a metallic frame that enables different distancing between the motors. The ESC are the ones discussed in \autoref{sec:ESC}, which can be powered by a 2s LiPo battery (7.4 V) up to an 8s (33.6 V). These controllers draw a maximum of 50 A.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.8\textwidth]{Images/quad.jpg}
+	\caption{Quadcopter fram and motors with 10"x4.5" propellers}
+	\label{fig:quad}
+\end{figure}
+
+More than one motor type is used since different propeller sizes are tested trying to stay close to a ratio of 2 between the diameter and the pitch. The proposed propellers are the following:
+
+\begin{itemize}
+	%\item 9" x 4.7" (Ratio = 1.92)
+	\item 10" x 4.5" (Ratio = 2.22)
+	\item 12" x 6" (Ratio = 2)
+	\item 13" x 6.5" (Ratio = 2)
+	\item 15" x 5.5" (Ratio = 2.72)
+\end{itemize}
+
+
+\subsection{Castle Phoenix Edge 50A ESC}
 \label{sec:ESC}
 The manual of these ESC is in the following \hyperref{https://dzf8vqv24eqhg.cloudfront.net/userfiles/4671/6540/ckfinder/files/Product%20Manuals/Aircraft%20Helis/Phoenix%20Edge%20Series/edge_guide.pdf?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9kemY4dnF2MjRlcWhnLmNsb3VkZnJvbnQubmV0L3VzZXJmaWxlcy80NjcxLzY1NDAvY2tmaW5kZXIvZmlsZXMvUHJvZHVjdCUyME1hbnVhbHMvQWlyY3JhZnQlMjBIZWxpcy9QaG9lbml4JTIwRWRnZSUyMFNlcmllcy9lZGdlX2d1aWRlLnBkZiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTY5MjExNDY5OX19fV19&Signature=Ttin0Hxd-W1Av7ACk8UNA7CYOoaI9~KpY5-N3fKi5dI-KHRJRYZSGEDBNtASKJYoFXJGzLuWZmpiy5EDsTr-ZWxcN2yKQiWBwiXAG5Ntc3~4cLVdHm6XacfGUEBSlxb20EiOOYZ8MGA5RKDY~8~ws85YxoU8X4pa79NiWuHGlPQ4phsYztgbzeIrGpJSADMONCXLsvYziu1AHUeHOdPgZNyapAdTpVS85KuHCU7op72VtraeqWH9zaRxO6dwdQxqBsx3qs18JsE3f4ET3khM7HGiHr6H9p5j-l0ij8cLhZET0bTB7Hqlwe95accVxRQzJJ4EjaYpaK0CzYUycD~RwA__&Key-Pair-Id=K2TK3EG287XSFC}{category}{name}{link}.
 
@@ -630,52 +671,58 @@ The ESC connection to the arduino is shown in \autoref{fig:arduino_ESC}:
 	\label{fig:arduino_ESC}
 \end{figure}
 
-The rest of the cables are connected to a potentiometer that acts as radio controller.
+The rest of the cables are connected to a potentiometer that acts as radio controller. The \textbf{calibration} is supposed to be automatic as stated by the manufacturer in the \hyperref{https://www.castlecreations.com/en/phoenix-edge-50-esc-010-0102-00}{category}{name}{product's site}.
 
-The \textbf3{calibration} is supposed to be automatic as stated by the manufacturer in the \hyperref{https://www.castlecreations.com/en/phoenix-edge-50-esc-010-0102-00}{category}{name}{product's site}.
+\subsection{Motors}
 
-\section{Pressure and temperature sensor}
-
-In this works, the barometer bmp280 has been used. It can widely measure pressure ranging from 300 mbar to 1200 mbar, with a super high accuracy of 0.01 mbar(0.1m) in ultra-high resolution mode.
-
-In \autoref{fig:ardu_bmp280}, we can see the connection necessary to obtain the data from this sensor:
-
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=0.8\textwidth]{Images/bmp280.png}
-	\caption{Connection between arduino UNO and bmp280 sensor}
-	\label{fig:ardu_bmp280}
-\end{figure}
-
-
-In the case of the arduino Mega, the SCK pin from the sensor must be connceter to pin SCL (pin 21) and the SDI pin from the sensor to the SDA pin from the arduino (pin 20).
-
-\textcolor{red}{ADVICE}: If "Could not find a valid BMP280 sensor,  check wiring!" error is encountered, switch from 3.3V to 5V or viceversa in the VCC of the sensor and reload script.
-
-\section{The quadcopter}
-
-The quadcopter used in the ground/ceiling/wall effect tests is depicted in figure ??? and is constituted by a metallic frame that enables different distancing between the motors. The ESC are the ones discussed in \autoref{sec:ESC}, which can be powered by a 2s LiPo battery (7.4 V) up to an 8s (33.6 V). These controllers draw a maximum of 50 A at full throttle.
-
-More than one motor type is used since different propeller sizes are tested trying to stay close to a ratio of 2 between the diameter and the pitch. The propsed propellers are the following:
+The three motors chosen for testing are the following:
 
 \begin{itemize}
-	\item 9" x 4.7" (Ratio = 1.92)
-	\item 10" x 4.5" (Ratio = 2.22)
-	\item 12" x 6" (Ratio = 2)
-	\item 13" x 6.5" (Ratio = 2)
-	\item 15" x 5.5" (Ratio = 2.72)
+	\item \hyperref{https://www.altitudehobbies.com/products/leopard-2830-12t-980kv-brushless-airplane-motor}{category}{name}{Leopard 2830-12T 980Kv} Brushless Airplane Motor. Used for the 10"x4.5" propellers (see \autoref{fig:table_980kv}).
+	\item \hyperref{https://www.altitudehobbies.com/collections/leopard-airplane-motors/products/leopard-2835-12t-690kv-brushless-airplane-motor}{category}{name}{Leopard 2835-12T 690kv} Brushless Airplane Motor. For the intermediate sized propellers  (see \autoref{fig:table_690kv}).
+	\item \hyperref{https://store.tmotor.com/goods-334-MN3110.html}{category}{name}{T-motor MN3110 470Kv} brushless motors. For the bigger propellers (see \autoref{fig:table_470kv}).
 \end{itemize}
 
 
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.9\textwidth]{Images/chart980Kv_all.png}
+	\caption{Leopard 2830-12T 980Kv Brushless Airplane Motor specifications}
+		\label{fig:table_980kv}
+	\end{figure}
 
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.9\textwidth]{Images/chart690Kv_all.png}
+	\caption{Leopard 2835-12T 690kv Brushless Airplane Motor specifications}
+	\label{fig:table_690kv}
+\end{figure}
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.9\textwidth]{Images/chart470Kv_all.png}
+	\caption{T-motor MN3110 470Kv specifications}
+	\label{fig:table_470kv}
+	\end{figure}
+
+Given the 12V and 90A limitation of the power supply, we are going to stay in a safe temperature and current range when it comes to the bigger motors (470Kv) which would require a higher voltage that would then draw lower values of current.
 
 \section{Power supply}
 
-The system needs more than one source of power to feed the boards and the sensors. 
+The system needs more than one source of power to feed all boards, sensors and the motors. 
 
 The Arduinos are powered with a PC, while the sensors require a higher voltage and current.
 
-The tachometers are powered by a switching adapter that provides 12 V and a maximum of 500 mA which is a suitable option since the current draw of these devices is not very high.
+%The tachometers are powered by a switching adapter that provides 12 V and a maximum of 500 mA which is a suitable option since the current draw of these devices is not very high.
+The tachometers are powered by a Keysight triple output DC power supply (see \autoref{fig:tach_power}). A constant voltage of 10V is supplied to the sensors leaving the current bounded. 
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.5\textwidth]{Images/tach_power.jpeg}
+	\caption{Keysight Triple Output DC Power Supply}
+	\label{fig:tach_power}
+\end{figure}
 
 The force/torque sensor is powered by its own black box. Please, refer to page 13 from the \hyperref{https://www.ati-ia.com/app_content/documents/9620-05-DAQ.pdf}{category}{name}{manual} for more information regarding powering this component.
 

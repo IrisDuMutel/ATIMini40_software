@@ -1,25 +1,20 @@
 clear variables
 close all
 
-
-% Problem parameters
-L          = 0.20;     %m
-numBlades  = 2;
-Radius     = 0.2032/2; %m (diameter if 0.2 is used
-R_constant = 287.04; % m^2 /°Ksec^2
-toKelvin   = 273.15;
-rpm12 = [4,7,9,12];  %%% Levels to be taken for equal RPM comparison
-
-
+% This file averages TWO equivalent data logs
 
 %%%% For extended files containing voltages and time vector
-folder = fileparts(pwd);
 ft_path = '../LogFiles/20231002/FT/';
 rpm_path = '../LogFiles/20231002/RPM/';
 file1 = 'log_20231002_10inch1R_test4.csv';
 file2 = 'log_20231002_10inch1R_test3.csv';
 
+filename = "log_20231002_10inch1R_average.mat";
+
+save_file = strcat(ft_path,filename);
 title_size = 6;
+points_to_avg = 100;
+
 
 filepath1 = strcat(ft_path,file1);
 filepath2 = strcat(ft_path,file2);
@@ -31,17 +26,22 @@ test2 = readtable(filepath2);
 rpm1  = readtable(filepath1_rpm);
 rpm2  = readtable(filepath2_rpm);
 
-sampl_f1 = test1{1,1}; % Sampling frequency of the signal
-sampl_f2 = test2{1,1}; % Sampling frequency of the signal
+sampl_f1 = test1{1,1};                                                      % Sampling frequency of the signal
+sampl_f2 = test2{1,1};                                                      % Sampling frequency of the signal
 Ts1 = 1/sampl_f1;
 Ts2 = 1/sampl_f2;
+temp1 = test1{1,4};                                                         % Temperature
+temp2 = test2{1,4};
+pres1 = test1{1,5};                                                         % Pressure
+pres2 = test1{1,5};
 
-step_dur_insecs = 10;
-aver_points = 0.7;                              % Percentage of each step to be taken for average
-step_duration = step_dur_insecs/Ts1;
-segment_points = aver_points*step_duration;     % Number of points used for aveaging
-offset_points  = 250;                           % points to be ignored from last step backward
-steps_per_stair = 5;                            % How many steps is each stair
+
+step_dur_insecs = 10;                                                       % Step duration in seconds (as specified in the arduino file)
+aver_points = 0.7;                                                          % Percentage of each step to be taken for average
+step_duration = step_dur_insecs/Ts1;                                        % Actual number of data points that make a step
+segment_points = aver_points*step_duration;                                 % Number of points used for aveaging
+offset_points  = 250;                                                       % points to be ignored from last step backward
+steps_per_stair = 5;                                                        % How many steps is each stair
 
 
 temp1 = test1(1,4);
@@ -49,7 +49,7 @@ temp2 = test2(1,4);
 pres1 = test1(1,5);
 pres2 = test2(1,5);
 
-offset    = 1;  % 3000 is 20s (offset*Ts = seconds)
+offset    = 1000;  % 3000 is 20s (offset*Ts = seconds)
 fx_column = 1;
 fy_column = 2;
 fz_column = 3;
@@ -57,8 +57,8 @@ mx_column = 4;
 my_column = 5;
 mz_column = 6;
 
-time1 = [offset*Ts1:Ts1:Ts1*(length(test1{:,2})-1)];
-time2 = [offset*Ts2:Ts2:Ts2*(length(test2{:,2})-1)];
+time1 = [0*Ts1:Ts1:Ts1*(length(test1{:,2})-2)];
+time2 = [0*Ts2:Ts2:Ts2*(length(test2{:,2})-2)];
 
 Fx1 = (test1{2:end,fx_column});
 Fy1 = (test1{2:end,fy_column});
@@ -100,21 +100,23 @@ filtered_My2 = lowpass(My2,wpass_my,sampl_f1);
 filtered_Mz2 = lowpass(Mz2,wpass_mz,sampl_f1);
 
 %%% Offset removal
-filtered_Fx1 = filtered_Fx1(offset:end) - filtered_Fx1(offset);
-filtered_Fy1 = filtered_Fy1(offset:end) - filtered_Fy1(offset);
-filtered_Fz1 = filtered_Fz1(offset:end) - filtered_Fz1(offset);
-filtered_Mx1 = filtered_Mx1(offset:end) - filtered_Mx1(offset);
-filtered_My1 = filtered_My1(offset:end) - filtered_My1(offset);
-filtered_Mz1 = filtered_Mz1(offset:end) - filtered_Mz1(offset);
+filtered_Fx1 = filtered_Fx1(1:end) - filtered_Fx1(offset);
+filtered_Fy1 = filtered_Fy1(1:end) - filtered_Fy1(offset);
+filtered_Fz1 = filtered_Fz1(1:end) - filtered_Fz1(offset);
+filtered_Mx1 = filtered_Mx1(1:end) - filtered_Mx1(offset);
+filtered_My1 = filtered_My1(1:end) - filtered_My1(offset);
+filtered_Mz1 = filtered_Mz1(1:end) - filtered_Mz1(offset);
 
-filtered_Fx2 = filtered_Fx2(offset:end) - filtered_Fx2(offset);
-filtered_Fy2 = filtered_Fy2(offset:end) - filtered_Fy2(offset);
-filtered_Fz2 = filtered_Fz2(offset:end) - filtered_Fz2(offset);
-filtered_Mx2 = filtered_Mx2(offset:end) - filtered_Mx2(offset);
-filtered_My2 = filtered_My2(offset:end) - filtered_My2(offset);
-filtered_Mz2 = filtered_Mz2(offset:end) - filtered_Mz2(offset);
+filtered_Fx2 = filtered_Fx2(1:end) - filtered_Fx2(offset);
+filtered_Fy2 = filtered_Fy2(1:end) - filtered_Fy2(offset);
+filtered_Fz2 = filtered_Fz2(1:end) - filtered_Fz2(offset);
+filtered_Mx2 = filtered_Mx2(1:end) - filtered_Mx2(offset);
+filtered_My2 = filtered_My2(1:end) - filtered_My2(offset);
+filtered_Mz2 = filtered_Mz2(1:end) - filtered_Mz2(offset);
 
 
+%%%% Data without base offsets (Check point that everything is fine)
+% FORCES
 figure()
 subplot(3,1,1)
 hold on
@@ -143,7 +145,7 @@ ylabel('Fz [N]')
 xlabel('Time [s]')
 grid on
 
-
+% TORQUES
 figure()
 subplot(3,1,1)
 hold on
@@ -229,13 +231,18 @@ for i=length(time_stamp2):-1:1                                              % Cr
     timestamp2 = [timestamp2;time_stamp2(i);ending];
 end
 
-% Finding the average value of each segment and it's position in time
-for i = 1:2:length(timestamp1)-1              % Compute average of force in such timestamp
-    Force_z1 = [Force_z1;mean(Fz1(abs(timestamp1(i:i+1))))];
-    timing1  = [timing1;abs(mean(timestamp1(i:i+1)))];     % Place average of force at average of time
+
+
+% Finding the average position in time
+for i = 1:2:length(timestamp1)-1              
+    timing1  = [timing1;abs(mean(timestamp1(i:i+1)))];    
+end
+% Compute the average of the force of points_to_avg centered in timing(i)
+for i=1:length(timing1)
+    Force_z1 = [Force_z1; mean(Fz1(timing1(i)-points_to_avg/2:timing1(i)+points_to_avg/2))] ;
 end
 % Finding offsets and removing them
-D1 = find(Force_z1==Force_z1(end-steps_per_stair+1));
+D1 = find(Force_z1==Force_z1(end-steps_per_stair+1));                      
 D1 = max(D1);
 E1 = [D1:-steps_per_stair:1];
 positions1 = sort(E1);
@@ -245,16 +252,18 @@ for i = 1:length(positions1)-1
 end
 F_z_1 = [F_z_1;Fz1(timing1(positions1(end))+1:end)-Force_z1(positions1(end))];
 % We compute again the average values of the segments
-Fz1_off = F_z_1;
-for i = 1:2:length(timestamp1)-1             % Compute average of force in such timestamp
-    Force_z1_off = [Force_z1_off;mean(Fz1_off(abs(timestamp1(i:i+1))))];
+for i = 1:length(timing1)             % Compute average of force in such timestamp
+    Force_z1_off = [Force_z1_off;mean(F_z_1(timing1(i)-points_to_avg/2:timing1(i)+points_to_avg/2))];
 end
 
 
-% Finding the average value of each segment and it's position in time
-for i = 1:2:length(timestamp2)-1              % Compute average of force in such timestamp
-    Force_z2 = [Force_z2;mean(Fz2(abs(timestamp2(i:i+1))))];
-    timing2  = [timing2;abs(mean(timestamp2(i:i+1)))];     % Place average of force at average of time
+% Finding the average position in time
+for i = 1:2:length(timestamp2)-1              
+    timing2  = [timing2;abs(mean(timestamp2(i:i+1)))];    
+end
+% Compute the average of the force of points_to_avg centered in timing(i)
+for i=1:length(timing2)
+    Force_z2 = [Force_z2; mean(Fz2(timing2(i)-points_to_avg/2:timing2(i)+points_to_avg/2))] ;
 end
 % Finding offsets and removing them
 D2 = find(Force_z2==Force_z2(end-steps_per_stair+1));
@@ -267,9 +276,8 @@ for i = 1:length(positions2)-1
 end
 F_z_2 = [F_z_2;Fz2(timing2(positions2(end))+1:end)-Force_z2(positions2(end))];
 % We compute again the average values of the segments
-Fz2_off = F_z_2;
-for i = 1:2:length(timestamp2)-1             % Compute average of force in such timestamp
-    Force_z2_off = [Force_z2_off;mean(Fz2_off(abs(timestamp2(i:i+1))))];
+for i = 1:length(timing2)             % Compute average of force in such timestamp
+    Force_z2_off = [Force_z2_off;mean(F_z_2(timing2(i)-points_to_avg/2:timing2(i)+points_to_avg/2))];
 end
 
 
@@ -282,28 +290,20 @@ while length(Force_z2_off)<=11
     timing2  = [1;timing2];
 end
 
-F_z1_off_12inches = Force_z1_off;
-F_z2_off_12inches = Force_z2_off;
-Force_z1_off_12inches = Force_z1_off;
-Force_z2_off_12inches = Force_z2_off;
-
+F_z1_off = Force_z1_off;
+F_z2_off = Force_z2_off;
 
 i=1;
-while length(F_z1_off_12inches)>12
-    F_z1_off_12inches(1) = [];
+while length(F_z1_off)>12
+    F_z1_off(1) = [];
     i = i + 1;
 end
 i=1;
-while length(F_z2_off_12inches)>12
-    F_z2_off_12inches(1) = [];
+while length(F_z2_off)>12
+    F_z2_off(1) = [];
     i = i + 1;
 end
 
-timing1_12inches = timing1;
-timing2_12inches = timing2;
-
-ti1_12inches = ti1;
-ti2_12inches = ti2;
 
 
 %%%%% H. Force %%%%%
@@ -315,6 +315,9 @@ Force_2_off = [];
 for i = 1:2:length(timestamp1)-1
     Force_1 = [Force_1; mean(Fhtal1(abs(timestamp1(i:i+1))))];
 end
+for i=1:length(timing1)
+    Force_1 = [Force_1; mean(Fhtal1(timing1(i)-points_to_avg/2:timing1(i)+points_to_avg/2))] ;
+end
 F_1 =[Fhtal1(1:timing1(positions1(1)))-Force_1(positions1(1))];
 for i = 1:length(positions1)-1
     F_1 = [F_1;Fhtal1(timing1(positions1(i))+1:timing1(positions1(i+1)))-Force_1(positions1(i))];
@@ -322,13 +325,18 @@ end
 F_1 = [F_1;Fhtal1(timing1(positions1(end))+1:end)-Force_1(positions1(end))];
 % We compute again the average values of the segments
 Fhtal1_off = F_1;
-for i = 1:2:length(timestamp1)-1             % Compute average of force in such timestamp
-    Force_1_off = [Force_1_off;mean(Fhtal1_off(abs(timestamp1(i:i+1))))];
+% for i = 1:2:length(timestamp1)-1             % Compute average of force in such timestamp
+%     Force_1_off = [Force_1_off;mean(Fhtal1_off(abs(timestamp1(i:i+1))))];
+% end
+for i = 1:length(timing1)             % Compute average of force in such timestamp
+    Force_1_off = [Force_1_off;mean(Fhtal1_off(timing1(i)-points_to_avg/2:timing1(i)+points_to_avg/2))];
 end
 
-
-for i = 1:2:length(timestamp2)-1
-    Force_2 = [Force_2; mean(Fhtal2(abs(timestamp2(i:i+1))))];
+% for i = 1:2:length(timestamp2)-1
+%     Force_2 = [Force_2; mean(Fhtal2(abs(timestamp2(i:i+1))))];
+% end
+for i=1:length(timing2)
+    Force_2 = [Force_2; mean(Fhtal2(timing2(i)-points_to_avg/2:timing2(i)+points_to_avg/2))] ;
 end
 F_2 =[Fhtal2(1:timing2(positions2(1)))-Force_2(positions2(1))];
 for i = 1:length(positions2)-1
@@ -337,10 +345,12 @@ end
 F_2 = [F_2;Fhtal2(timing2(positions2(end))+1:end)-Force_2(positions2(end))];
 % We compute again the average values of the segments
 Fhtal2_off = F_2;
-for i = 1:2:length(timestamp2)-1             % Compute average of force in such timestamp
-    Force_2_off = [Force_2_off;mean(Fhtal2_off(abs(timestamp2(i:i+1))))];
+% for i = 1:2:length(timestamp2)-1             % Compute average of force in such timestamp
+%     Force_2_off = [Force_2_off;mean(Fhtal2_off(abs(timestamp2(i:i+1))))];
+% end
+for i = 1:length(timing2)             % Compute average of force in such timestamp
+    Force_2_off = [Force_2_off;mean(Fhtal2_off(timing2(i)-points_to_avg/2:timing2(i)+points_to_avg/2))];
 end
-
 
 
 while length(Force_1_off)<=11
@@ -352,61 +362,69 @@ end
 
 
 %%%%% Torque %%%%%
-M_htal1 = [];
-M_htal2 = [];
-M_htal1_off = [];
-M_htal2_off = [];
+Torque1 = [];
+Torque2 = [];
+Torque_1_off = [];
+Torque_2_off = [];
 
 
-for i = 1:2:length(timestamp1)-1
-    M_htal1 = [M_htal1; mean(Mhtal1(abs(timestamp1(i:i+1))))];
+for i = 1:length(timing1)
+    Torque1 = [Torque1; mean(Mhtal1(timing1(i)-points_to_avg/2:timing1(i)+points_to_avg/2))];
 end
-M_x_1 =[Mhtal1(1:timing1(positions1(1)))-M_htal1(positions1(1))];
+M_x_1 =[Mhtal1(1:timing1(positions1(1)))-Torque1(positions1(1))];
 for i = 1:length(positions1)-1
-    M_x_1 = [M_x_1;Mhtal1(timing1(positions1(i))+1:timing1(positions1(i+1)))-M_htal1(positions1(i))];
+    M_x_1 = [M_x_1;Mhtal1(timing1(positions1(i))+1:timing1(positions1(i+1)))-Torque1(positions1(i))];
 end
-M_x_1 = [M_x_1;Mhtal1(timing1(positions1(end))+1:end)-M_htal1(positions1(end))];
+M_x_1 = [M_x_1;Mhtal1(timing1(positions1(end))+1:end)-Torque1(positions1(end))];
 % We compute again the average values of the segments
 Mhtal1_off = M_x_1;
-for i = 1:2:length(timestamp1)-1             % Compute average of force in such timestamp
-    M_htal1_off = [M_htal1_off;mean(Mhtal1_off(abs(timestamp1(i:i+1))))];
+% for i = 1:2:length(timestamp1)-1             % Compute average of force in such timestamp
+%     Torque_1_off = [Torque_1_off;mean(Mhtal1_off(abs(timestamp1(i:i+1))))];
+% end
+for i = 1:length(timing1)             % Compute average of force in such timestamp
+    Torque_1_off = [Torque_1_off;mean(Mhtal1_off(timing1(i)-points_to_avg/2:timing1(i)+points_to_avg/2))];
 end
 
-
-for i = 1:2:length(timestamp2)-1
-    M_htal2 = [M_htal2; mean(Mhtal2(abs(timestamp2(i:i+1))))];
+for i = 1:length(timing2)
+    Torque2 = [Torque2; mean(Mhtal2(timing2(i)-points_to_avg/2:timing2(i)+points_to_avg/2))];
 end
-M_x_2 =[Mhtal2(1:timing2(positions2(1)))-M_htal2(positions2(1))];
+M_x_2 =[Mhtal2(1:timing2(positions2(1)))-Torque2(positions2(1))];
 for i = 1:length(positions2)-1
-    M_x_2 = [M_x_2;Mhtal2(timing2(positions2(i))+1:timing2(positions2(i+1)))-M_htal2(positions2(i))];
+    M_x_2 = [M_x_2;Mhtal2(timing2(positions2(i))+1:timing2(positions2(i+1)))-Torque2(positions2(i))];
 end
-M_x_2 = [M_x_2;Mhtal2(timing2(positions2(end))+1:end)-M_htal2(positions2(end))];
+M_x_2 = [M_x_2;Mhtal2(timing2(positions2(end))+1:end)-Torque2(positions2(end))];
 % We compute again the average values of the segments
 Mhtal2_off = M_x_2;
-for i = 1:2:length(timestamp2)-1             % Compute average of force in such timestamp
-    M_htal2_off = [M_htal2_off;mean(Mhtal2_off(abs(timestamp2(i:i+1))))];
+% for i = 1:2:length(timestamp2)-1             % Compute average of force in such timestamp
+%     Torque_2_off = [Torque_2_off;mean(Mhtal2_off(abs(timestamp2(i:i+1))))];
+% end
+for i = 1:length(timing2)             % Compute average of force in such timestamp
+    Torque_2_off = [Torque_2_off;mean(Mhtal2_off(timing2(i)-points_to_avg/2:timing2(i)+points_to_avg/2))];
 end
 
-
-while length(M_htal1_off)<=11
-    M_htal1_off = [0;M_htal1_off];
+while length(Torque_1_off)<=11
+    Torque_1_off = [0;Torque_1_off];
 end
-while length(M_htal2_off)<=11
-    M_htal2_off = [0;M_htal2_off];
+while length(Torque_2_off)<=11
+    Torque_2_off = [0;Torque_2_off];
 end
 
+auto.timestamp{1} = timestamp1;
+auto.timestamp{2} = timestamp2;
+auto.timing{1} = timing1;
+auto.timing{2} = timing2;
 
 myvars.Fy{1} = Fhtal1_off;
 myvars.Fy{2} = Fhtal2_off;
 
-myvars.Fz{1} = Fz1_off;
-myvars.Fz{2} = Fz2_off;
+myvars.Fz{1} = F_z_1;
+myvars.Fz{2} = F_z_2;
 
 myvars.Mx{1} = Mhtal1_off;
 myvars.Mx{2} = Mhtal2_off;
 
-myvars.t{1} = ti1_12inches';
-myvars.t{2} = ti2_12inches';
+myvars.t{1} = ti1';
+myvars.t{2} = ti2';
 
 
 %%% WE HAVE THO FOLLOWING VARIABLES AVAILABLE: %%%
@@ -417,34 +435,57 @@ myvars.t{2} = ti2_12inches';
 %%% These stucts contain the variables of each datafile
 
 
-% Plot of Fz removing offsets and marking RPM12 levels
+% Plot of Fz removing offsets and marking all levels average
 figure()
 hold on
 plot(time1,diff1);
 plot(time2,diff2);
-plot(ti1_12inches,filtered_Fz1,'lineWidth',1.5)
-plot(ti2_12inches,filtered_Fz2,'lineWidth',1.5)
+plot(ti1,filtered_Fz1,'lineWidth',1.5)
+plot(ti2,filtered_Fz2,'lineWidth',1.5)
 plot(timestamp1*Ts1,ones(length(timestamp1),1),'x','lineWidth',2,'MarkerSize',8)
 plot(timestamp2*Ts2,ones(length(timestamp2),1),'x','lineWidth',2,'MarkerSize',8)
 grid on
-plot(timing1_12inches*Ts1,Force_z1_off_12inches,'x','color','k','lineWidth',2,'MarkerSize',6)
-plot(timing2_12inches*Ts1,Force_z2_off_12inches,'x','color','b','lineWidth',2,'MarkerSize',6)
-ylabel('Fz no offsets [N] 12"x5"')
+plot(timing1*Ts1,Force_z1_off,'x','color','k','lineWidth',2,'MarkerSize',6)
+plot(timing2*Ts1,Force_z2_off,'x','color','b','lineWidth',2,'MarkerSize',6)
+ylabel('Fz no offsets [N] ')
 legend("Data 1", "Data 2")
 title("Interval selection and averaging")
 xlabel('Time [s]')
 hold off
 
+figure()
+hold on; grid on;
+plot(ti1,filtered_Fy1,'lineWidth',1.5)
+plot(ti2,filtered_Fy2,'lineWidth',1.5)
+plot(timing1*Ts1,Force_1_off,'x','color','k','lineWidth',2,'MarkerSize',6)
+plot(timing2*Ts1,Force_2_off,'x','color','b','lineWidth',2,'MarkerSize',6)
+ylabel('Fy no offsets [N]')
+legend("Data 1", "Data 2")
+title("Interval selection and averaging")
+xlabel('Time [s]')
+hold off
+
+figure()
+hold on; grid on;
+plot(ti1,filtered_Mx1,'lineWidth',1.5)
+plot(ti2,filtered_Mx2,'lineWidth',1.5)
+plot(timing1*Ts1,Torque_1_off,'x','color','k','lineWidth',2,'MarkerSize',6)
+plot(timing2*Ts1,Torque_2_off,'x','color','b','lineWidth',2,'MarkerSize',6)
+ylabel('Mx no offsets [Nm]')
+legend("Data 1", "Data 2")
+title("Interval selection and averaging")
+xlabel('Time [s]')
+hold off
 
 %% Alignment of the tests
 
 timestamps = [timestamp1(end); timestamp2(end)];                            % Store all timestamp ends on one vector
 
-[~,KK] = mink(timestamps,1);                                                % Find the minimum of the ends, which is coing to be the reference for the rest of the tests
-[~,KJ] = mink([length(time1),length(time2)],1);                                                % Find the minimum of the ends, which is coing to be the reference for the rest of the tests
+[~,KK] = mink(timestamps,1);                                                % Find the minimum of the ends, which is going to be the reference for the rest of the tests
+[~,KJ] = mink([length(time1),length(time2)],1);                             % Find the minimum of the ends, which is going to be the reference for the rest of the tests
 
 reference_point = timestamps(KK);
-reference_length = length(myvars.t{KJ})
+reference_length = length(myvars.t{KJ});
 for i=1:length(timestamps)                                                  % Obtain how many points need to be cut from the rest of the data, except for the reference
     timestamps(i) = timestamps(i)-reference_point;
     if timestamps(i) == 0
@@ -481,14 +522,27 @@ end
 
 % Check alignment
 figure()
+subplot(3,1,1)
+title("Alignment check")
+hold on; grid on;
+plot(myvars.t{1},myvars.Mx{1},'lineWidth',1.5)
+plot(myvars.t{2},myvars.Mx{2},'lineWidth',1.5)
+ylabel("M_x [N]")
+subplot(3,1,2)
+hold on; grid on;
+plot(myvars.t{1},myvars.Fy{1},'lineWidth',1.5)
+plot(myvars.t{2},myvars.Fy{2},'lineWidth',1.5)
+ylabel("F_y [N]")
+subplot(3,1,3)
 hold on; grid on;
 plot(myvars.t{1},myvars.Fz{1},'lineWidth',1.5)
 plot(myvars.t{2},myvars.Fz{2},'lineWidth',1.5)
 xlabel("Time [s]")
 ylabel("F_z [N]")
-title("Alignment check")
 
-%% Averaging
+
+%% Averaging the final result
+
 
 myvars.tot_Fy = zeros(vector_lengths(KL),1);
  for i = 1:length(timestamps)
@@ -508,14 +562,64 @@ myvars.tot_Fy = zeros(vector_lengths(KL),1);
  end
  myvars.tot_Fz = myvars.tot_Fz/i;
 
+
+%  %%% Find maximum points
+F = myvars.tot_Fy;
+M = myvars.tot_Mx;
+ti = myvars.t{KJ};
+Fz = myvars.tot_Fz;
+
+Force_z_avg  = [];
+Force_y_avg  = [];
+Torque_x_avg = [];
+
+timing    = auto.timing{KJ};
+% Finding the average value of each segment and it's position in time
+for i = 1:length(timing)              % Compute average of force in such timestamp
+    Force_z_avg = [Force_z_avg;mean(Fz(timing(i)-points_to_avg/2:timing(i)+points_to_avg/2))];
+end
+for i = 1:length(timing)              % Compute average of force in such timestamp
+    Force_y_avg = [Force_y_avg;mean(F(timing(i)-points_to_avg/2:timing(i)+points_to_avg/2))];
+end
+for i = 1:length(timing)              % Compute average of force in such timestamp
+    Torque_x_avg = [Torque_x_avg;mean(M(timing(i)-points_to_avg/2:timing(i)+points_to_avg/2))];
+end
+
+
  % Display mean
 figure()
-hold on; grid on;
-plot(myvars.t{1},myvars.Fz{1},'lineWidth',1.5)
-plot(myvars.t{2},myvars.Fz{2},'lineWidth',1.5)
-plot(myvars.t{1},myvars.tot_Fz,'lineWidth',1.5)
-xlabel("Time [s]")
-ylabel("F_z [N]")
+subplot(3,1,1)
 title("Result of average")
+hold on; grid on;
+plot(myvars.t{KJ},myvars.tot_Mx,'lineWidth',1.5)
+plot(timing*Ts1, Torque_x_avg, 'x', 'LineWidth',2,'MarkerSize',7)
+ylabel("M_x avg [N]")
+subplot(3,1,2)
+hold on; grid on;
+plot(myvars.t{KJ},myvars.tot_Fy,'lineWidth',1.5)
+plot(timing*Ts1, Force_y_avg, 'x', 'LineWidth',2,'MarkerSize',7)
+ylabel("F_y avg [N]")
+subplot(3,1,3)
+hold on; grid on;
+plot(myvars.t{KJ},myvars.tot_Fz,'lineWidth',1.5)
+plot(timing*Ts1, Force_z_avg, 'x', 'LineWidth',2,'MarkerSize',7)
+xlabel("Time [s]")
+ylabel("F_z avg [N]")
+hold off
 
 %% Saving the data into a csv file that can be later on used
+
+result.files{1} = file1;
+result.files{2} = file2;
+
+result.time = myvars.t{KJ};
+result.Fy = myvars.tot_Fy;
+result.Fz = myvars.tot_Fz;
+result.Mx = myvars.tot_Mx;
+
+result.timing    = timing;
+result.Fy_points = Force_y_avg;
+result.Fz_points = Force_z_avg;
+result.Mx_points = Torque_x_avg;
+
+save(save_file, 'result');
