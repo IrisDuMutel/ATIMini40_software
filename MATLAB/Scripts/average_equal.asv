@@ -237,12 +237,12 @@ end
 for i = 1:2:length(timestamp1)-1              
     timing1  = [timing1;abs(mean(timestamp1(i:i+1)))];    
 end
-% Comupte
+% Compute the average of the force of points_to_avg centered in timing(i)
 for i=1:length(timing1)
     Force_z1 = [Force_z1; mean(Fz1(timing1(i)-points_to_avg/2:timing1(i)+points_to_avg/2))] ;
 end
 % Finding offsets and removing them
-D1 = find(Force_z1==Force_z1(end-steps_per_stair+1));
+D1 = find(Force_z1==Force_z1(end-steps_per_stair+1));                      
 D1 = max(D1);
 E1 = [D1:-steps_per_stair:1];
 positions1 = sort(E1);
@@ -252,16 +252,16 @@ for i = 1:length(positions1)-1
 end
 F_z_1 = [F_z_1;Fz1(timing1(positions1(end))+1:end)-Force_z1(positions1(end))];
 % We compute again the average values of the segments
-Fz1_off = F_z_1;
 for i = 1:length(timing1)             % Compute average of force in such timestamp
-    Force_z1_off = [Force_z1_off;mean(Fz1_off(timing1(i)-points_to_avg/2:timing1(i)+points_to_avg/2))];
+    Force_z1_off = [Force_z1_off;mean(F_z_1(timing1(i)-points_to_avg/2:timing1(i)+points_to_avg/2))];
 end
 
 
-% Finding the average value of each segment and it's position in time
-for i = 1:2:length(timestamp2)-1              % Compute average of force in such timestamp
-    timing2  = [timing2;abs(mean(timestamp2(i:i+1)))];     % Place average of force at average of time
+% Finding the average position in time
+for i = 1:2:length(timestamp2)-1              
+    timing2  = [timing2;abs(mean(timestamp2(i:i+1)))];    
 end
+% Compute the average of the force of points_to_avg centered in timing(i)
 for i=1:length(timing2)
     Force_z2 = [Force_z2; mean(Fz2(timing2(i)-points_to_avg/2:timing2(i)+points_to_avg/2))] ;
 end
@@ -276,12 +276,8 @@ for i = 1:length(positions2)-1
 end
 F_z_2 = [F_z_2;Fz2(timing2(positions2(end))+1:end)-Force_z2(positions2(end))];
 % We compute again the average values of the segments
-Fz2_off = F_z_2;
-% for i = 1:2:length(timestamp2)-1             % Compute average of force in such timestamp
-%     Force_z2_off = [Force_z2_off;mean(Fz2_off(abs(timestamp2(i:i+1))))];
-% end
 for i = 1:length(timing2)             % Compute average of force in such timestamp
-    Force_z2_off = [Force_z2_off;mean(Fz2_off(timing2(i)-points_to_avg/2:timing2(i)+points_to_avg/2))];
+    Force_z2_off = [Force_z2_off;mean(F_z_2(timing2(i)-points_to_avg/2:timing2(i)+points_to_avg/2))];
 end
 
 
@@ -296,8 +292,6 @@ end
 
 F_z1_off = Force_z1_off;
 F_z2_off = Force_z2_off;
-
-
 
 i=1;
 while length(F_z1_off)>12
@@ -318,29 +312,21 @@ Force_2 = [];
 Force_1_off = [];
 Force_2_off = [];
 
-for i = 1:2:length(timestamp1)-1
-    Force_1 = [Force_1; mean(Fhtal1(abs(timestamp1(i:i+1))))];
-end
 for i=1:length(timing1)
     Force_1 = [Force_1; mean(Fhtal1(timing1(i)-points_to_avg/2:timing1(i)+points_to_avg/2))] ;
 end
-F_1 =[Fhtal1(1:timing1(positions1(1)))-Force_1(positions1(1))];
+F_1 = [Fhtal1(1:timing1(positions1(1)))-Force_1(positions1(1))];
 for i = 1:length(positions1)-1
     F_1 = [F_1;Fhtal1(timing1(positions1(i))+1:timing1(positions1(i+1)))-Force_1(positions1(i))];
 end
 F_1 = [F_1;Fhtal1(timing1(positions1(end))+1:end)-Force_1(positions1(end))];
 % We compute again the average values of the segments
 Fhtal1_off = F_1;
-% for i = 1:2:length(timestamp1)-1             % Compute average of force in such timestamp
-%     Force_1_off = [Force_1_off;mean(Fhtal1_off(abs(timestamp1(i:i+1))))];
-% end
 for i = 1:length(timing1)             % Compute average of force in such timestamp
     Force_1_off = [Force_1_off;mean(Fhtal1_off(timing1(i)-points_to_avg/2:timing1(i)+points_to_avg/2))];
 end
 
-% for i = 1:2:length(timestamp2)-1
-%     Force_2 = [Force_2; mean(Fhtal2(abs(timestamp2(i:i+1))))];
-% end
+
 for i=1:length(timing2)
     Force_2 = [Force_2; mean(Fhtal2(timing2(i)-points_to_avg/2:timing2(i)+points_to_avg/2))] ;
 end
@@ -423,8 +409,8 @@ auto.timing{2} = timing2;
 myvars.Fy{1} = Fhtal1_off;
 myvars.Fy{2} = Fhtal2_off;
 
-myvars.Fz{1} = Fz1_off;
-myvars.Fz{2} = Fz2_off;
+myvars.Fz{1} = F_z_1;
+myvars.Fz{2} = F_z_2;
 
 myvars.Mx{1} = Mhtal1_off;
 myvars.Mx{2} = Mhtal2_off;
