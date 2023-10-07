@@ -735,13 +735,20 @@ hold off
 %% Alignment of the tests
 
 timestamps = zeros(1,length(auto.timestamp));
+KJ = 1;
+timelength = length(myvars.t{1});
 for i = 1:length(auto.timestamp)
     timestamps(i) = auto.timestamp{i}(end);                                % Store all timestamp ends on one vector
+    if length(myvars.t{i}) < timelength
+        timelength = length(myvars.t{i});
+        KJ = i;
+    end
 end
 
 [~,KK] = mink(timestamps,1);                                                % Find the minimum of the ends, which is going to be the reference for the rest of the tests
 
 reference_point = timestamps(KK);
+reference_length = length(myvars.t{KJ});
 for i=1:length(timestamps)                                                  % Obtain how many points need to be cut from the rest of the data, except for the reference
     timestamps(i) = timestamps(i)-reference_point;
     if timestamps(i) == 0
@@ -767,7 +774,7 @@ end
 reference_length = length(myvars.t{KJ});
 for k=1:numel(fn)
     for i = 1:length(timestamps)
-        myvars.(fn{k}){i} = myvars.(fn{k}){i}(1:reference_length,:);
+        myvars.(fn{k}){i} = myvars.(fn{k}){i}(1:end,:);
     end
 end
 
