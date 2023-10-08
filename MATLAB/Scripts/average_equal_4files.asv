@@ -303,7 +303,7 @@ time_stamp4 = maxk(C4,1):-step_duration:1;                                  % ad
 
 
 timestamp1 = [];
-for i=length(time_stamp1):-1:1                                              % Create timestamp vector of smaller segments
+for i=1:1:length(time_stamp1)                                              % Create timestamp vector of smaller segments
     time_stamp1(i) = time_stamp1(i)-offset_points;
     ending = time_stamp1(i)-segment_points;
     timestamp1 = [timestamp1;time_stamp1(i);ending];
@@ -311,14 +311,14 @@ end
 
 
 timestamp2 = [];
-for i=length(time_stamp2):-1:1                                              % Create timestamp vector of smaller segments
+for i=1:1:length(time_stamp2)                                              % Create timestamp vector of smaller segments
     time_stamp2(i) = time_stamp2(i)-offset_points;
     ending = time_stamp2(i)-segment_points;
     timestamp2 = [timestamp2;time_stamp2(i);ending];
 end
 
 timestamp3 = [];
-for i=length(time_stamp3):-1:1                                              % Create timestamp vector of smaller segments
+for i=1:1:length(time_stamp3)                                              % Create timestamp vector of smaller segments
     time_stamp3(i) = time_stamp3(i)-offset_points;
     ending = time_stamp3(i)-segment_points;
     timestamp3 = [timestamp3;time_stamp3(i);ending];
@@ -735,20 +735,13 @@ hold off
 %% Alignment of the tests
 
 timestamps = zeros(1,length(auto.timestamp));
-KJ = 1;
-timelength = length(myvars.t{1});
 for i = 1:length(auto.timestamp)
     timestamps(i) = auto.timestamp{i}(end);                                % Store all timestamp ends on one vector
-    if length(myvars.t{i}) < timelength
-        timelength = length(myvars.t{i});
-        KJ = i;
-    end
 end
 
 [~,KK] = mink(timestamps,1);                                                % Find the minimum of the ends, which is going to be the reference for the rest of the tests
 
 reference_point = timestamps(KK);
-reference_length = length(myvars.t{KJ});
 for i=1:length(timestamps)                                                  % Obtain how many points need to be cut from the rest of the data, except for the reference
     timestamps(i) = timestamps(i)-reference_point;
     if timestamps(i) == 0
@@ -774,7 +767,7 @@ end
 reference_length = length(myvars.t{KJ});
 for k=1:numel(fn)
     for i = 1:length(timestamps)
-        myvars.(fn{k}){i} = myvars.(fn{k}){i}(1:end,:);
+        myvars.(fn{k}){i} = myvars.(fn{k}){i}(1:reference_length,:);
     end
 end
 

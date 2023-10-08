@@ -217,7 +217,7 @@ time_stamp2 = maxk(C2,1):-step_duration:1;                                  % ad
 
 
 timestamp1 = [];
-for i=length(time_stamp1):-1:1                                              % Create timestamp vector of smaller segments
+for i=1:1:length(time_stamp1)                                              % Create timestamp vector of smaller segments
     time_stamp1(i) = time_stamp1(i)-offset_points;
     ending = time_stamp1(i)-segment_points;
     timestamp1 = [timestamp1;time_stamp1(i);ending];
@@ -225,11 +225,15 @@ end
 
 
 timestamp2 = [];
-for i=length(time_stamp2):-1:1                                              % Create timestamp vector of smaller segments
+for i=1:1:length(time_stamp2)                                              % Create timestamp vector of smaller segments
     time_stamp2(i) = time_stamp2(i)-offset_points;
     ending = time_stamp2(i)-segment_points;
     timestamp2 = [timestamp2;time_stamp2(i);ending];
 end
+
+
+timestamp1 = sort(timestamp1);
+timestamp2 = sort(timestamp2);
 
 
 
@@ -494,7 +498,7 @@ for k=1:numel(fn)
 end
 
 for j = 1:length(timestamps)
-    myvars.t{i} = myvars.t{i} - myvars.t{i}(1);
+    myvars.t{j} = myvars.t{j} - myvars.t{j}(1,1);
 end
 
 % Finding shortest data vector
