@@ -4,10 +4,10 @@ close all
 % This file averages TWO equivalent data logs
 
 %%%% For extended files containing voltages and time vector
-ft_path = '../LogFiles/20231002/FT/';
-rpm_path = '../LogFiles/20231002/RPM/';
-file1 = 'log_20231002_10inch1R_test4.csv';
-file2 = 'log_20231002_10inch1R_test3.csv';
+ft_path  = '../LogFiles/20231008/FT/';
+rpm_path = '../LogFiles/20231008/RPM/';
+file1 = 'log_20231008_13inch_auto7.csv';
+file2 = 'log_20231008_13inch_auto7.csv';
 
 filename = "log_20231002_10inch1R_average.mat";
 
@@ -41,7 +41,7 @@ aver_points = 0.7;                                                          % Pe
 step_duration = step_dur_insecs/Ts1;                                        % Actual number of data points that make a step
 segment_points = aver_points*step_duration;                                 % Number of points used for aveaging
 offset_points  = 250;                                                       % points to be ignored from last step backward
-steps_per_stair = 5;                                                        % How many steps is each stair
+steps_per_stair = 6;                                                        % How many steps is each stair
 
 
 temp1 = test1(1,4);
@@ -239,7 +239,7 @@ timestamp2 = sort(timestamp2);
 
 % Finding the average position in time
 for i = 1:2:length(timestamp1)-1              
-    timing1  = [timing1;abs(mean(timestamp1(i:i+1)))];    
+    timing1  = [timing1;mean(abs(timestamp1(i:i+1)))];    
 end
 % Compute the average of the force of points_to_avg centered in timing(i)
 for i=1:length(timing1)
@@ -263,7 +263,7 @@ end
 
 % Finding the average position in time
 for i = 1:2:length(timestamp2)-1              
-    timing2  = [timing2;abs(mean(timestamp2(i:i+1)))];    
+    timing2  = [timing2;mean(abs(timestamp2(i:i+1)))];    
 end
 % Compute the average of the force of points_to_avg centered in timing(i)
 for i=1:length(timing2)

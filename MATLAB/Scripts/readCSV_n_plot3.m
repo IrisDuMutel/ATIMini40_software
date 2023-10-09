@@ -17,10 +17,10 @@ close all
 
 %%%% For extended files containing voltages and time vector
 folder = fileparts(pwd);
-ft_path  = '../LogFiles/20231004/FT/';
-rpm_path = '../LogFiles/20231004/RPM/';
-file1 = 'log_20231004_10inch_matrixmaking_1.csv';
-file2 = 'log_20231004_10inch_matrixmaking_1.csv';
+ft_path  = '../LogFiles/20231008/FT/';
+rpm_path = '../LogFiles/20231008/RPM/';
+file1 = 'log_20231008_13inch_auto7.csv';
+file2 = 'log_20231008_13inch_auto7.csv';
 
 title_size = 6;
 
@@ -52,8 +52,8 @@ mx_column = 4;
 my_column = 5;
 mz_column = 6;
 
-time1 = [offset*Ts1:Ts1:Ts1*(length(test1{:,2})-1)];
-time2 = [offset*Ts2:Ts2:Ts2*(length(test2{:,2})-1)];
+time1 = [0*Ts1:Ts1:Ts1*(length(test1{:,2})-2)];
+time2 = [0*Ts2:Ts2:Ts2*(length(test2{:,2})-2)];
 
 Fx1 = (test1{2:end,fx_column});
 Fy1 = (test1{2:end,fy_column});
@@ -167,3 +167,10 @@ grid on
 ylabel('Mz [N·m]')
 xlabel('Time [s]')
 grid on
+
+figure()
+hold on; grid on;
+plot([0:1:length(rpm1{:,1})-1],rpm1{:,1}/2,'lineWidth',2)
+plot([0:1:length(rpm1{:,2})-1],rpm1{:,2}/2,'lineWidth',2)
+plot([0:1:length(rpm1{:,3})-1],rpm1{:,3}/2,'lineWidth',2)
+plot([0:1:length(rpm1{:,4})-1],rpm1{:,4}/2,'lineWidth',2)
