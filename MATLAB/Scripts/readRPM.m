@@ -2,8 +2,8 @@ clear variables
 close all
 
 %%%% For extended files containing voltages and time vector
-file2 = '../LogFiles/20231004/RPM/log_20231004_10inch_matrixmaking_1.csv';
-file1 = '../LogFiles/20231004/RPM/log_20231004_10inch_matrixmaking_1.csv';
+file2 = '../LogFiles/20231010/RPM/log_20231010_10inch_matrixmaking_3.csv';
+file1 = '../LogFiles/20231010/RPM/log_20231010_10inch_matrixmaking_3.csv';
 
 test1 = readtable(file1);
 test2 = readtable(file2);

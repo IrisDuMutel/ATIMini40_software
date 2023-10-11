@@ -4,10 +4,10 @@ close all
 % This file averages TWO equivalent data logs
 
 %%%% For extended files containing voltages and time vector
-ft_path  = '../LogFiles/20231008/FT/';
-rpm_path = '../LogFiles/20231008/RPM/';
-file1 = 'log_20231008_13inch_auto7.csv';
-file2 = 'log_20231008_13inch_auto7.csv';
+ft_path  = '../LogFiles/20231009/FT/';
+rpm_path = '../LogFiles/20231009/RPM/';
+file1 = 'log_20231009_13inch_matrixmaking_9.csv';
+file2 = 'log_20231009_13inch_matrixmaking_9.csv';
 
 filename = "log_20231002_10inch1R_average.mat";
 
@@ -18,13 +18,13 @@ points_to_avg = 100;
 
 filepath1 = strcat(ft_path,file1);
 filepath2 = strcat(ft_path,file2);
-filepath1_rpm = strcat(rpm_path,file1);
-filepath2_rpm = strcat(rpm_path,file2);
+% filepath1_rpm = strcat(rpm_path,file1);
+% filepath2_rpm = strcat(rpm_path,file2);
 
 test1 = readtable(filepath1);
 test2 = readtable(filepath2);
-rpm1  = readtable(filepath1_rpm);
-rpm2  = readtable(filepath2_rpm);
+% rpm1  = readtable(filepath1_rpm);
+% rpm2  = readtable(filepath2_rpm);
 
 sampl_f1 = test1{1,1};                                                      % Sampling frequency of the signal
 sampl_f2 = test2{1,1};                                                      % Sampling frequency of the signal
@@ -36,7 +36,7 @@ pres1 = test1{1,5};                                                         % Pr
 pres2 = test1{1,5};
 
 
-step_dur_insecs = 10;                                                       % Step duration in seconds (as specified in the arduino file)
+step_dur_insecs = 15;                                                       % Step duration in seconds (as specified in the arduino file)
 aver_points = 0.7;                                                          % Percentage of each step to be taken for average
 step_duration = step_dur_insecs/Ts1;                                        % Actual number of data points that make a step
 segment_points = aver_points*step_duration;                                 % Number of points used for aveaging
@@ -84,20 +84,40 @@ wpass_mx = 0.5;
 wpass_my = 0.5;
 wpass_mz = 0.5;
 
-%%% Filtering
-filtered_Fx1 = lowpass(Fx1,wpass_fx,sampl_f1);
-filtered_Fy1 = lowpass(Fy1,wpass_fy,sampl_f1);
-filtered_Fz1 = lowpass(Fz1,wpass_fz,sampl_f1);
-filtered_Mx1 = lowpass(Mx1,wpass_mx,sampl_f1);
-filtered_My1 = lowpass(My1,wpass_my,sampl_f1);
-filtered_Mz1 = lowpass(Mz1,wpass_mz,sampl_f1);
+f_cutoff = 0.5;
+f_sampling = sampl_f1;
+w_n = f_cutoff/(f_sampling/2);  % Cutoff frequency
 
-filtered_Fx2 = lowpass(Fx2,wpass_fx,sampl_f1);
-filtered_Fy2 = lowpass(Fy2,wpass_fy,sampl_f1);
-filtered_Fz2 = lowpass(Fz2,wpass_fz,sampl_f1);
-filtered_Mx2 = lowpass(Mx2,wpass_mx,sampl_f1);
-filtered_My2 = lowpass(My2,wpass_my,sampl_f1);
-filtered_Mz2 = lowpass(Mz2,wpass_mz,sampl_f1);
+[b_5,a_5] = butter(5,w_n,'low');   % Create Butterworth filter of order 5
+% [b_5,a_5] = cheby1(5,10,w_n);
+
+%%% Filtering
+% filtered_Fx1 = lowpass(Fx1,wpass_fx,sampl_f1);
+% filtered_Fy1 = lowpass(Fy1,wpass_fy,sampl_f1);
+% filtered_Fz1 = lowpass(Fz1,wpass_fz,sampl_f1);
+% filtered_Mx1 = lowpass(Mx1,wpass_mx,sampl_f1);
+% filtered_My1 = lowpass(My1,wpass_my,sampl_f1);
+% filtered_Mz1 = lowpass(Mz1,wpass_mz,sampl_f1);
+filtered_Fx1 = filter(b_5, a_5,Fx1);
+filtered_Fy1 = filter(b_5, a_5,Fy1);
+filtered_Fz1 = filter(b_5, a_5,Fz1);
+filtered_Mx1 = filter(b_5, a_5,Mx1);
+filtered_My1 = filter(b_5, a_5,My1);
+filtered_Mz1 = filter(b_5, a_5,Mz1);
+
+% filtered_Fx2 = lowpass(Fx2,wpass_fx,sampl_f1);
+% filtered_Fy2 = lowpass(Fy2,wpass_fy,sampl_f1);
+% filtered_Fz2 = lowpass(Fz2,wpass_fz,sampl_f1);
+% filtered_Mx2 = lowpass(Mx2,wpass_mx,sampl_f1);
+% filtered_My2 = lowpass(My2,wpass_my,sampl_f1);
+% filtered_Mz2 = lowpass(Mz2,wpass_mz,sampl_f1);
+
+filtered_Fx2 = filter(b_5, a_5,Fx2);
+filtered_Fy2 = filter(b_5, a_5,Fy2);
+filtered_Fz2 = filter(b_5, a_5,Fz2);
+filtered_Mx2 = filter(b_5, a_5,Mx2);
+filtered_My2 = filter(b_5, a_5,My2);
+filtered_Mz2 = filter(b_5, a_5,Mz2);
 
 %%% Offset removal
 filtered_Fx1 = filtered_Fx1(1:end) - filtered_Fx1(offset);
@@ -144,6 +164,17 @@ grid on
 ylabel('Fz [N]')
 xlabel('Time [s]')
 grid on
+
+figure()
+hold on
+plot(time1,filtered_Fz1,'linewidth',1.5)
+plot(time2,filtered_Fz2,'linewidth',1.5)
+legend('Fz_{noWall}','Fz 1R')
+grid on
+ylabel('Fz [N]')
+xlabel('Time [s]')
+grid on
+
 
 % TORQUES
 figure()
@@ -209,11 +240,23 @@ for i=1:1:length(Fz2)-1
 end  
 
 
-[~,C1] = maxk(abs(diff1),10);                                               % get the 10 maximum values in the gradient
-[~,C2] = maxk(abs(diff2),10);
+figure()
+title('Check that derivative selection is right')
+hold on;grid on;
+plot(time1/Ts1, filtered_Fz1,'linewidth',2)
+plot(time1/Ts1, diff1)
+legend('Filtered data', 'Derivative')
+xlabel('Datapoints')
+ylabel('Data value')
 
-time_stamp1 = maxk(C1,1):-step_duration:1;                                  % adjust timestamp depending on step duration
-time_stamp2 = maxk(C2,1):-step_duration:1;                                  % adjust timestamp depending on step duration
+% [~,C1] = maxk(abs(diff1),10);                                               % get the 10 maximum values in the gradient
+% [~,C2] = maxk(abs(diff2),10);
+
+[A1,C1] = find(abs(diff1)>9);                                               % get the 10 maximum values in the gradient
+[A2,C2] = find(abs(diff2)>9);
+
+time_stamp1 = maxk(A1,1):-step_duration:1;                                  % adjust timestamp depending on step duration
+time_stamp2 = maxk(A2,1):-step_duration:1;                                  % adjust timestamp depending on step duration
 
 
 timestamp1 = [];

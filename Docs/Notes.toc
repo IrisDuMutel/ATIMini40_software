@@ -27,7 +27,7 @@
 \contentsline {section}{\numberline {11}Post-processing}{19}{section.11}%
 \contentsline {subsection}{\numberline {11.1}Filtering}{20}{subsection.11.1}%
 \contentsline {subsubsection}{\numberline {11.1.1}Butterworth filters}{21}{subsubsection.11.1.1}%
-\contentsline {subsubsection}{\numberline {11.1.2}Chebyshev filters}{22}{subsubsection.11.1.2}%
-\contentsline {subsection}{\numberline {11.2}Automatic detection of steps}{22}{subsection.11.2}%
-\contentsline {subsection}{\numberline {11.3}Offset removal}{22}{subsection.11.3}%
-\contentsline {section}{\numberline {12}Resources}{22}{section.12}%
+\contentsline {subsubsection}{\numberline {11.1.2}Chebyshev filters (type I)}{23}{subsubsection.11.1.2}%
+\contentsline {subsection}{\numberline {11.2}Automatic detection of steps}{23}{subsection.11.2}%
+\contentsline {subsection}{\numberline {11.3}Offset removal}{23}{subsection.11.3}%
+\contentsline {section}{\numberline {12}Resources}{24}{section.12}%

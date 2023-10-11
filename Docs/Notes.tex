@@ -785,9 +785,10 @@ The post-processing steps are the following:
 
 \subsection{Filtering}
 
+
 The data collected in this work has been obtained using the NI-USB-6008 Data Acquisition Unit and a python software and interface (go to \autoref{sec:NiDAQ_PY}).
 
-Notice that raw data looks like in \autoref{fig:unfiltered_data}:
+Notice that raw data looks like in \autoref{fig:unfiltered_noprops}:
 
 \begin{figure}[h!]
 	\centering
@@ -802,9 +803,11 @@ For a quick example on how \textit{Fast Fourier Transforms} and basic filtering 
 
 \textit{Fast Fourier Transforms} help us visualize the frequencies of the data that takes part of our signals. It can be our data itself that has a charcteristic freqeuncy, or the noise and vibrations surrounding your data collection process that get captured by your sensors. In any case identifyig the desired frequencies and ignoring the rest is an absolutely necessary step i the post-processing of any data.
 
-This is why filters are also a scope of this study. The F/T sensor currently in use provides unfiltered analog data that is sampled through a DAQ, and therefore transformed into digital information. However, this digital data stream may contain noise from vibration, EM interferences...
+This is why filters are also a scope of this study\footnote{For a MATLAB example on filters described in this section, look at \hyperref{https://github.com/IrisDuMutel/ATIMini40_software/blob/master/MATLAB/Scripts/Examples/example_FFTandFilters.m}{category}{name}{the example script}}. The F/T sensor currently in use provides unfiltered analog data that is sampled through a DAQ, and therefore transformed into digital information. However, this digital data stream may contain noise from vibration, EM interferences... In \cite{Conyers2019}, an averaging filter is implemented. The tests were all performed using a sampling rate of 1 kHz, and an averaging size of 250 samples. This resulted in an effective sampling rate of 40 Hz.
 
-Using MATLAB functions such as \textit{lowpass}, \textit{highpass}, \textit{bandpass} and others, one can obtain first approaches to the final results. 
+In the current work, a different approach is used. Data is sampled at 150 Hz from all 6 channels. The data is directly logged into a text file that is later or processed on MATLAB.
+
+Using MATLAB functions such as \textit{lowpass}, \textit{highpass}, \textit{bandpass} and others, one can obtain first approaches to a good filtered solution. 
 This is a generic way of approaching the filtering problem. However, there are different types of low-pass filters:
 
 \begin{itemize}
@@ -820,14 +823,12 @@ In \autoref{fig:butter} the differences in magnitude of the different filter ord
 
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=0.9\textwidth]{Images/butter_filters.eps}
+	\includegraphics[width=0.7\textwidth]{Images/butter_filters_2.eps}
+	\caption{Butterworth filters of orders 1 to 6}
 	\label{fig:butter}
-	\caption{Butterworth filters of order 1 to 5}
 \end{figure}
 
-CHECK THIS FIGURE ABOVE BECAUSE I DONT KNOW IF ITS CORRECT!
-
-A cutoff frequency of 1 Hz was imposed and the sample frequency is supposed to be 150 Hz. 
+A cutoff frequency of 1 Hz was imposed and the sample frequency is supposed to be 200 Hz. 
 
 
 The gain of the butterworth filter is as in:
@@ -836,8 +837,36 @@ The gain of the butterworth filter is as in:
 	H(j\omega) = \frac{1}{\sqrt{1 + \epsilon^2(\frac{\omega}{\omega_p})^{2n})}}
 \end{equation}
 
+When applied to a force vector coming from the F/T sensor, we can see the comparison between a generic low pass filter (cutoff 0.5Hz) from MATLAB and a Butterworth 5$_{th}$ order filter in \autoref{fig:butter_vs_lowpass}:
 
-\subsubsection{Chebyshev filters}
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\textwidth]{Images/butter5_vs_lowpass.eps}
+	\caption{Butterworth filter compared to lowpass filter in MATLAB}
+	\label{fig:butter_vs_lowpass}
+\end{figure}
+
+As noticed in the picture, noise is removed successfully while a little delay is added.
+
+
+\subsubsection{Chebyshev filters (type I)}
+
+Using Chebyshev filters 
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\textwidth]{Images/cheby1.eps}
+	\caption{Chebyshev filters of orders 2 to 6}
+	\label{fig:cheby1}
+\end{figure}
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\textwidth]{Images/cheby5_vs_lowpass.eps}
+	\caption{Chebyshev (type I) filter compared to lowpass filter in MATLAB}
+	\label{fig:cheby_vs_lowpass}
+\end{figure}
+
 
 \subsection{Automatic detection of steps}
 

@@ -49,11 +49,11 @@ void setup() {
 void loop() {
 
   int P1 = 800; // No rotation or force
-  int P2 = 1250; //
-  int P3 = 1450;//
-  int P4 = 1475;//
-  int P5 = 1620;//
-  int P6 = 1680;//
+  int P2 = 1365; //
+  int P3 = 1420;//
+  int P4 = 1480;//
+  int P5 = 1520;//
+  int P6 = 1545;//
   int PWM_val[] = {P1, P2, P3, P4, P5, P6};
   int delay_val = 1000;
   int num_steps = 0;
@@ -87,7 +87,7 @@ void loop() {
     Serial.println();
     timelapse = currentMilis - startMilis;
     
-    if (timelapse>10000) {
+    if (timelapse>15000) {
       startMilis = millis();
       num_steps = num_steps + 1;
       val = PWM_val[num_steps];

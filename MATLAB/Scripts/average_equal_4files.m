@@ -111,34 +111,69 @@ wpass_mx = 0.5;
 wpass_my = 0.5;
 wpass_mz = 0.5;
 
+f_cutoff = 0.5;
+f_sampling = sampl_f1;
+w_n = f_cutoff/(f_sampling/2);  % Cutoff frequency
+
+[b_5,a_5] = butter(5,w_n,'low');   % Create Butterworth filter of order 5
+
 %%% Filtering
-filtered_Fx1 = lowpass(Fx1,wpass_fx,sampl_f1);
-filtered_Fy1 = lowpass(Fy1,wpass_fy,sampl_f1);
-filtered_Fz1 = lowpass(Fz1,wpass_fz,sampl_f1);
-filtered_Mx1 = lowpass(Mx1,wpass_mx,sampl_f1);
-filtered_My1 = lowpass(My1,wpass_my,sampl_f1);
-filtered_Mz1 = lowpass(Mz1,wpass_mz,sampl_f1);
+% filtered_Fx1 = lowpass(Fx1,wpass_fx,sampl_f1);
+% filtered_Fy1 = lowpass(Fy1,wpass_fy,sampl_f1);
+% filtered_Fz1 = lowpass(Fz1,wpass_fz,sampl_f1);
+% filtered_Mx1 = lowpass(Mx1,wpass_mx,sampl_f1);
+% filtered_My1 = lowpass(My1,wpass_my,sampl_f1);
+% filtered_Mz1 = lowpass(Mz1,wpass_mz,sampl_f1);
+% 
+% filtered_Fx2 = lowpass(Fx2,wpass_fx,sampl_f1);
+% filtered_Fy2 = lowpass(Fy2,wpass_fy,sampl_f1);
+% filtered_Fz2 = lowpass(Fz2,wpass_fz,sampl_f1);
+% filtered_Mx2 = lowpass(Mx2,wpass_mx,sampl_f1);
+% filtered_My2 = lowpass(My2,wpass_my,sampl_f1);
+% filtered_Mz2 = lowpass(Mz2,wpass_mz,sampl_f1);
+% 
+% filtered_Fx3 = lowpass(Fx3,wpass_fx,sampl_f1);
+% filtered_Fy3 = lowpass(Fy3,wpass_fy,sampl_f1);
+% filtered_Fz3 = lowpass(Fz3,wpass_fz,sampl_f1);
+% filtered_Mx3 = lowpass(Mx3,wpass_mx,sampl_f1);
+% filtered_My3 = lowpass(My3,wpass_my,sampl_f1);
+% filtered_Mz3 = lowpass(Mz3,wpass_mz,sampl_f1);
+% 
+% filtered_Fx4 = lowpass(Fx4,wpass_fx,sampl_f1);
+% filtered_Fy4 = lowpass(Fy4,wpass_fy,sampl_f1);
+% filtered_Fz4 = lowpass(Fz4,wpass_fz,sampl_f1);
+% filtered_Mx4 = lowpass(Mx4,wpass_mx,sampl_f1);
+% filtered_My4 = lowpass(My4,wpass_my,sampl_f1);
+% filtered_Mz4 = lowpass(Mz4,wpass_mz,sampl_f1);
 
-filtered_Fx2 = lowpass(Fx2,wpass_fx,sampl_f1);
-filtered_Fy2 = lowpass(Fy2,wpass_fy,sampl_f1);
-filtered_Fz2 = lowpass(Fz2,wpass_fz,sampl_f1);
-filtered_Mx2 = lowpass(Mx2,wpass_mx,sampl_f1);
-filtered_My2 = lowpass(My2,wpass_my,sampl_f1);
-filtered_Mz2 = lowpass(Mz2,wpass_mz,sampl_f1);
+filtered_Fx1 = filter(b_5, a_5,Fx1);
+filtered_Fy1 = filter(b_5, a_5,Fy1);
+filtered_Fz1 = filter(b_5, a_5,Fz1);
+filtered_Mx1 = filter(b_5, a_5,Mx1);
+filtered_My1 = filter(b_5, a_5,My1);
+filtered_Mz1 = filter(b_5, a_5,Mz1);
 
-filtered_Fx3 = lowpass(Fx3,wpass_fx,sampl_f1);
-filtered_Fy3 = lowpass(Fy3,wpass_fy,sampl_f1);
-filtered_Fz3 = lowpass(Fz3,wpass_fz,sampl_f1);
-filtered_Mx3 = lowpass(Mx3,wpass_mx,sampl_f1);
-filtered_My3 = lowpass(My3,wpass_my,sampl_f1);
-filtered_Mz3 = lowpass(Mz3,wpass_mz,sampl_f1);
+filtered_Fx2 = filter(b_5, a_5,Fx2);
+filtered_Fy2 = filter(b_5, a_5,Fy2);
+filtered_Fz2 = filter(b_5, a_5,Fz2);
+filtered_Mx2 = filter(b_5, a_5,Mx2);
+filtered_My2 = filter(b_5, a_5,My2);
+filtered_Mz2 = filter(b_5, a_5,Mz2);
 
-filtered_Fx4 = lowpass(Fx4,wpass_fx,sampl_f1);
-filtered_Fy4 = lowpass(Fy4,wpass_fy,sampl_f1);
-filtered_Fz4 = lowpass(Fz4,wpass_fz,sampl_f1);
-filtered_Mx4 = lowpass(Mx4,wpass_mx,sampl_f1);
-filtered_My4 = lowpass(My4,wpass_my,sampl_f1);
-filtered_Mz4 = lowpass(Mz4,wpass_mz,sampl_f1);
+filtered_Fx3 = filter(b_5, a_5,Fx3);
+filtered_Fy3 = filter(b_5, a_5,Fy3);
+filtered_Fz3 = filter(b_5, a_5,Fz3);
+filtered_Mx3 = filter(b_5, a_5,Mx3);
+filtered_My3 = filter(b_5, a_5,My3);
+filtered_Mz3 = filter(b_5, a_5,Mz3);
+
+filtered_Fx4 = filter(b_5, a_5,Fx4);
+filtered_Fy4 = filter(b_5, a_5,Fy4);
+filtered_Fz4 = filter(b_5, a_5,Fz4);
+filtered_Mx4 = filter(b_5, a_5,Mx4);
+filtered_My4 = filter(b_5, a_5,My4);
+filtered_Mz4 = filter(b_5, a_5,Mz4);
+
 
 %%% Offset removal
 filtered_Fx1 = filtered_Fx1(1:end) - filtered_Fx1(offset);
@@ -290,16 +325,28 @@ for i=1:1:length(Fz4)-1
     diff4 = [diff4; (Fz4(i)-Fz4(i+1))/Ts4];                                 % compute the gradient at Ts2
 end
 
+figure()
+title('Check that derivative selection is rigth')
+hold on;grid on;
+plot(time1/Ts1, filtered_Fz1,'linewidth',2)
+plot(time1/Ts1, diff1)
+legend('Filtered data', 'Derivative')
+xlabel('Datapoints')
+ylabel('Data value')
 
-[~,C1] = maxk(abs(diff1),10);                                               % get the 10 maximum values in the gradient
-[~,C2] = maxk(abs(diff2),10);
-[~,C3] = maxk(abs(diff3),10);
-[~,C4] = maxk(abs(diff4),10);
+% [~,C1] = maxk(abs(diff1),10);                                               % get the 10 maximum values in the gradient
+% [~,C2] = maxk(abs(diff2),10);
+% [~,C3] = maxk(abs(diff3),10);
+% [~,C4] = maxk(abs(diff4),10);
+[A1,C1] = find(abs(diff1)>8);                                               % get the 10 maximum values in the gradient
+[A2,C2] = find(abs(diff2)>8);
+[A3,C3] = find(abs(diff3)>8);
+[A4,C4] = find(abs(diff4)>8);
 
-time_stamp1 = maxk(C1,1):-step_duration:1;                                  % adjust timestamp depending on step duration
-time_stamp2 = maxk(C2,1):-step_duration:1;                                  % adjust timestamp depending on step duration
-time_stamp3 = maxk(C3,1):-step_duration:1;                                  % adjust timestamp depending on step duration
-time_stamp4 = maxk(C4,1):-step_duration:1;                                  % adjust timestamp depending on step duration
+time_stamp1 = maxk(A1,1):-step_duration:1;                                  % adjust timestamp depending on step duration
+time_stamp2 = maxk(A2,1):-step_duration:1;                                  % adjust timestamp depending on step duration
+time_stamp3 = maxk(A3,1):-step_duration:1;                                  % adjust timestamp depending on step duration
+time_stamp4 = maxk(A4,1):-step_duration:1;                                  % adjust timestamp depending on step duration
 
 
 timestamp1 = [];
