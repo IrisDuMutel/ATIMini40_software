@@ -4,10 +4,10 @@ close all
 % This file averages TWO equivalent data logs
 
 %%%% For extended files containing voltages and time vector
-ft_path  = '../LogFiles/20231009/FT/';
-rpm_path = '../LogFiles/20231009/RPM/';
-file1 = 'log_20231009_13inch_matrixmaking_9.csv';
-file2 = 'log_20231009_13inch_matrixmaking_9.csv';
+ft_path  = '../LogFiles/20231011/FT/';
+rpm_path = '../LogFiles/20231011/RPM/';
+file1 = 'log_20231011_10inch_Rinf_test6.csv';
+file2 = 'log_20231011_10inch_Rinf_test6.csv';
 
 filename = "log_20231002_10inch1R_average.mat";
 
@@ -143,7 +143,7 @@ hold on
 title(strcat(file1,' ---vs--- ',file2),'FontSize',title_size,'Interpreter','none')
 plot(time1,filtered_Fx1,'linewidth',1.5)
 plot(time2,filtered_Fx2,'linewidth',1.5)
-legend('Fx_{noWall}','Fx 1R')
+legend('Fx$_{noWall}$','Fx 1R')
 ylim([-3 3])
 grid on
 ylabel('Fx [N]')
@@ -151,7 +151,7 @@ subplot(3,1,2)
 hold on
 plot(time1,filtered_Fy1,'linewidth',1.5)
 plot(time2,filtered_Fy2,'linewidth',1.5)
-legend('Fy_{noWall}','Fy 1R')
+legend('Fy$_{noWall}$','Fy 1R')
 ylim([-3 3])
 grid on
 ylabel('Fy [N]')
@@ -159,7 +159,7 @@ subplot(3,1,3)
 hold on
 plot(time1,filtered_Fz1,'linewidth',1.5)
 plot(time2,filtered_Fz2,'linewidth',1.5)
-legend('Fz_{noWall}','Fz 1R')
+legend('Fz$_{noWall}$','Fz 1R')
 grid on
 ylabel('Fz [N]')
 xlabel('Time [s]')
@@ -183,7 +183,7 @@ hold on
 title(strcat(file1,' ---vs--- ',file2),'FontSize',title_size,'Interpreter','none')
 plot(time1,filtered_Mx1,'linewidth',1.5)
 plot(time2,filtered_Mx2,'linewidth',1.5)
-legend('Mx_{noWall}','Mx 1R')
+legend('Mx$_{noWall}$','Mx 1R')
 ylim([-0.1 0.15])
 grid on
 ylabel('Mx [N·m]')
@@ -191,7 +191,7 @@ subplot(3,1,2)
 hold on
 plot(time1,filtered_My1,'linewidth',1.5)
 plot(time2,filtered_My2,'linewidth',1.5)
-legend('My_{noWall}','My 1R')
+legend('My$_{noWall}$','My 1R')
 ylim([-0.1 0.15])
 grid on
 ylabel('My [N·m]')
@@ -199,7 +199,7 @@ subplot(3,1,3)
 hold on
 plot(time1,filtered_Mz1,'linewidth',1.5)
 plot(time2,filtered_Mz2,'linewidth',1.5)
-legend('Mz_{noWall}','Mz 1R')
+legend('Mz$_{noWall}$','Mz 1R')
 ylim([-0.1 0.15])
 grid on
 ylabel('Mz [N·m]')
@@ -510,6 +510,8 @@ hold off
 
 %% Alignment of the tests
 
+%% Alignment of the tests
+
 timestamps = zeros(1,length(auto.timestamp));
 KJ = 1;
 timelength = length(myvars.t{1});
@@ -524,7 +526,6 @@ end
 [~,KK] = mink(timestamps,1);                                                % Find the minimum of the ends, which is going to be the reference for the rest of the tests
 
 reference_point = timestamps(KK);
-reference_length = length(myvars.t{KJ});
 for i=1:length(timestamps)                                                  % Obtain how many points need to be cut from the rest of the data, except for the reference
     timestamps(i) = timestamps(i)-reference_point;
     if timestamps(i) == 0
@@ -534,10 +535,14 @@ end
 
 
 fn = fieldnames(myvars);
-for k=1:numel(fn)
+for k=1:numel(fn)-1
     for i = 1:length(timestamps)
-        myvars.(fn{k}){i} = myvars.(fn{k}){i}(timestamps(i):reference_length,:);
+        myvars.(fn{k}){i} = myvars.(fn{k}){i}(timestamps(i):end,:);
     end
+end
+
+for i = 1:length(timestamps)
+    myvars.t{i} = myvars.t{i}(timestamps(i):end-1,:);
 end
 
 for j = 1:length(timestamps)
@@ -549,14 +554,26 @@ vector_lengths = zeros(1,length(timestamps));
 for i =1:length(timestamps)
     vector_lengths(1,i) = length(myvars.Fy{i});
 end
-[~,KL] = mink(vector_lengths,1);
+[~,KL] = maxk(vector_lengths,1);
+
+% figure()
+% hold on; grid on;
+% plot(myvars.t{1},myvars.Fz{1},'linewidth',2)
+% plot(myvars.t{2},myvars.Fz{2},'linewidth',2)
+% plot(myvars.t{3},myvars.Fz{3},'linewidth',2)
+% plot(myvars.t{4},myvars.Fz{4},'linewidth',2)
+
 
 % Forcing equal lengths
-for k=1:numel(fn)
+for k=1:numel(fn)-1
     for i = 1:length(timestamps)
-        myvars.(fn{k}){i} = myvars.(fn{k}){i}(1:vector_lengths(KL),:);
+        myvars.(fn{k}){i} = [myvars.(fn{k}){i};zeros(vector_lengths(KL)-vector_lengths(i),1)];
     end
 end 
+
+for i = 1:length(timestamps)
+    myvars.t{i} = [0:Ts1:(vector_lengths(KL)-1)*Ts1];
+end
 
 
 % Check alignment

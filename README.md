@@ -133,12 +133,26 @@ The GUI currently looks like this:
 <details close>
 <summary><a href="MATLAB/Scripts/">Scripts</a></summary>
 <br>
+
 - ATImatrices.m: Script containing the conversion matrices from voltages to lbf/lbf-in. This is the matrix to be used. An additional conversion is needed to obtain forces and torques in N and N-m. 
+
 - readCSV_n_plot2.m: reads CSV file and plots forces and torques
+
 - **readCSV_n_plot3.m**: reads CSV file and plots forces and torques fromatted by DAQ_acquire_Voltages_GUI2.py. Only valid for two logfiles. Has low pass filters implemented and plots are for comparison of two data files.
 - Ceiling_effect_H0.m: Script copied from March 2023 test session. Automatically compares 6 logfiles. Used as inspiration for more recent scripts for its **automatic peak detection and analysis**.
+
 - **ReadRPM.m**: Simple script for the reading and plotting of 4 tachometer data coming from one logfile.
+
 - average_equal.m. Averages equal tests. Same propellers, test structure and orientation
+
+- **average_equal_4files.m**: Averages 4 equivalent tests in .csv format and creates a mat file containing this result. This script is intended for averaging the 4 repetitions of the same identical test.
+
+- compare_2matfiles.m: plots the averages saved into two mat files coming from an average_equal script
+
+- **average_equal_4matfiles.m**: Averages 4 equivalent tests in .mat format and creates a mat file containing this result. This script is intended for averaging the four orientations of equivalent tests. Uses the result from an average_equal script.
+
+
+
 
 </details>
 
