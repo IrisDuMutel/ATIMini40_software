@@ -49,7 +49,7 @@ void setup() {
 void loop() {
 
   int P1 = 800; // No rotation or force
-  int P2 = 1360; //
+  int P2 = 1370; //
   int P3 = 1500;//
   int P4 = 1572;//
   int P5 = 1637;//
