@@ -5,10 +5,10 @@ close all
 %%%% average_equal_4files.m
 
 ft_path1  = '../LogFiles/20231017/FT/';
-ft_path2  = '../LogFiles/20231017/FT/';
+ft_path2  = '../LogFiles/20231023/FT/';
 
-file1 = 'log_20231017_10inch_Rinf_ave.mat';
-file2 = 'log_20231017_10inch_R1_avgAll.mat';
+file1 = 'log_20231017_10inch_R1_0deg.mat';
+file2 = 'log_20231023_13inch_R1_0deg.mat';
 
 Ts1 = 1/150;
 

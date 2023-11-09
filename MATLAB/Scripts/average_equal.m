@@ -4,12 +4,12 @@ close all
 % This file averages TWO equivalent data logs
 
 %%%% For extended files containing voltages and time vector
-ft_path  = '../LogFiles/20231017/FT/';
-rpm_path = '../LogFiles/20231017/RPM/';
-file1 = 'log_20231017_10inch_R1_test1_90deg.csv';
-file2 = 'log_20231017_10inch_R1_test1_90deg.csv';
+ft_path  = '../LogFiles/20231027/FT/';
+rpm_path = '../LogFiles/20231027/RPM/';
+file1 = 'log_20231027_10inch_R125_test5_90deg.csv';
+file2 = 'log_20231027_10inch_R125_test5_90deg.csv';
 
-filename = "log_20231017_10inch1R_average.mat";
+filename = "aaaa.mat";
 
 save_file = strcat(ft_path,filename);
 title_size = 6;
@@ -144,7 +144,7 @@ title(strcat(file1,' ---vs--- ',file2),'FontSize',title_size,'Interpreter','none
 plot(time1,filtered_Fx1,'linewidth',1.5)
 plot(time2,filtered_Fx2,'linewidth',1.5)
 legend('Fx$_{noWall}$','Fx 1R')
-ylim([-3 3])
+% ylim([-3 3])
 grid on
 ylabel('Fx [N]')
 subplot(3,1,2)
@@ -152,7 +152,7 @@ hold on
 plot(time1,filtered_Fy1,'linewidth',1.5)
 plot(time2,filtered_Fy2,'linewidth',1.5)
 legend('Fy$_{noWall}$','Fy 1R')
-ylim([-3 3])
+% ylim([-3 3])
 grid on
 ylabel('Fy [N]')
 subplot(3,1,3)
@@ -184,7 +184,7 @@ title(strcat(file1,' ---vs--- ',file2),'FontSize',title_size,'Interpreter','none
 plot(time1,filtered_Mx1,'linewidth',1.5)
 plot(time2,filtered_Mx2,'linewidth',1.5)
 legend('Mx$_{noWall}$','Mx 1R')
-ylim([-0.1 0.15])
+% ylim([-0.1 0.15])
 grid on
 ylabel('Mx [N·m]')
 subplot(3,1,2)
@@ -192,7 +192,7 @@ hold on
 plot(time1,filtered_My1,'linewidth',1.5)
 plot(time2,filtered_My2,'linewidth',1.5)
 legend('My$_{noWall}$','My 1R')
-ylim([-0.1 0.15])
+% ylim([-0.1 0.15])
 grid on
 ylabel('My [N·m]')
 subplot(3,1,3)
@@ -200,7 +200,7 @@ hold on
 plot(time1,filtered_Mz1,'linewidth',1.5)
 plot(time2,filtered_Mz2,'linewidth',1.5)
 legend('Mz$_{noWall}$','Mz 1R')
-ylim([-0.1 0.15])
+% ylim([-0.1 0.15])
 grid on
 ylabel('Mz [N·m]')
 xlabel('Time [s]')
@@ -360,7 +360,7 @@ Force_x1_off = [];
 Force_x2_off = [];
 
 for i=1:length(timing1)
-    Force_x1 = [Force_x1; mean(Fy1(timing1(i)-points_to_avg/2:timing1(i)+points_to_avg/2))] ;
+    Force_x1 = [Force_x1; mean(Fx1(timing1(i)-points_to_avg/2:timing1(i)+points_to_avg/2))] ;
 end
 F_x1 = Fx1(1:timing1(positions1(1)))-Force_x1(positions1(1));
 for i = 1:length(positions1)-1
@@ -374,7 +374,7 @@ end
 
 
 for i=1:length(timing2)
-    Force_x2 = [Force_x2; mean(Fy2(timing2(i)-points_to_avg/2:timing2(i)+points_to_avg/2))] ;
+    Force_x2 = [Force_x2; mean(Fx2(timing2(i)-points_to_avg/2:timing2(i)+points_to_avg/2))] ;
 end
 F_x2 =Fx2(1:timing2(positions2(1)))-Force_x2(positions2(1));
 for i = 1:length(positions2)-1
@@ -400,10 +400,8 @@ end
 %%%%% Fy. Force %%%%%
 Force_y1 = [];
 Force_y2 = [];
-
 Force_y1_off = [];
 Force_y2_off = [];
-
 
 for i=1:length(timing1)
     Force_y1 = [Force_y1; mean(Fy1(timing1(i)-points_to_avg/2:timing1(i)+points_to_avg/2))] ;
@@ -442,11 +440,9 @@ while length(Force_y2_off)<=11
 end
 
 
-
 %%%%% Torque x %%%%%
 Torquex1 = [];
 Torquex2 = [];
-
 Torque_x1_off = [];
 Torque_x2_off = [];
 
@@ -480,8 +476,6 @@ end
 
 
 
-
-
 while length(Torque_x1_off)<=11
     Torque_x1_off = [0;Torque_x1_off];
 end
@@ -489,18 +483,15 @@ while length(Torque_x2_off)<=11
     Torque_x2_off = [0;Torque_x2_off];
 end
 
-
 %%%%% Torque y %%%%%
 Torquey1 = [];
 Torquey2 = [];
-
 Torque_y1_off = [];
 Torque_y2_off = [];
 
 
-
 for i = 1:length(timing1)
-    Torquey1 = [Torquex1; mean(My1(timing1(i)-points_to_avg/2:timing1(i)+points_to_avg/2))];
+    Torquey1 = [Torquey1; mean(My1(timing1(i)-points_to_avg/2:timing1(i)+points_to_avg/2))];
 end
 M_y_1 = My1(1:timing1(positions1(1)))-Torquey1(positions1(1));
 for i = 1:length(positions1)-1
@@ -514,7 +505,7 @@ end
 
 
 for i = 1:length(timing2)
-    Torquey2 = [Torquey2; mean(Mx2(timing2(i)-points_to_avg/2:timing2(i)+points_to_avg/2))];
+    Torquey2 = [Torquey2; mean(My2(timing2(i)-points_to_avg/2:timing2(i)+points_to_avg/2))];
 end
 M_y_2 = My2(1:timing2(positions2(1)))-Torquey2(positions2(1));
 for i = 1:length(positions2)-1
@@ -527,13 +518,13 @@ for i = 1:length(timing2)             % Compute average of force in such timesta
 end
 
 
-
 while length(Torque_y1_off)<=11
     Torque_y1_off = [0;Torque_y1_off];
 end
 while length(Torque_y2_off)<=11
     Torque_y2_off = [0;Torque_y2_off];
 end
+
 
 
 auto.timestamp{1} = timestamp1;
@@ -620,7 +611,7 @@ title("Interval selection and averaging")
 xlabel('Time [s]')
 hold off
 
-%% Alignment of the tests
+
 
 %% Alignment of the tests
 
@@ -681,7 +672,7 @@ for k=1:numel(fn)-1
     for i = 1:length(timestamps)
         myvars.(fn{k}){i} = [myvars.(fn{k}){i};zeros(vector_lengths(KL)-vector_lengths(i),1)];
     end
-end 
+end
 
 for i = 1:length(timestamps)
     myvars.t{i} = [0:Ts1:(vector_lengths(KL)-1)*Ts1];
@@ -742,12 +733,13 @@ end
 myvars.tot_Fz = myvars.tot_Fz/i;
 
 
+
 %  %%% Find maximum points
 Fx = myvars.tot_Fx;
 Fy = myvars.tot_Fy;
 Mx = myvars.tot_Mx;
 My = myvars.tot_My;
-ti = myvars.t{KJ};
+ti = myvars.t{KK};
 Fz = myvars.tot_Fz;
 
 Force_z_avg  = [];
@@ -756,7 +748,7 @@ Force_y_avg  = [];
 Torque_x_avg = [];
 Torque_y_avg = [];
 
-timing    = auto.timing{KJ};
+timing    = auto.timing{KK};
 % Finding the average value of each segment and it's position in time
 for i = 1:length(timing)              % Compute average of force in such timestamp
     Force_z_avg = [Force_z_avg;mean(Fz(timing(i)-points_to_avg/2:timing(i)+points_to_avg/2))];
@@ -779,17 +771,17 @@ figure()
 subplot(3,1,1)
 title("Result of average")
 hold on; grid on;
-plot(myvars.t{KJ},myvars.tot_Mx,'lineWidth',1.5)
+plot(myvars.t{KK},myvars.tot_Mx,'lineWidth',1.5)
 plot(timing*Ts1, Torque_x_avg, 'x', 'LineWidth',2,'MarkerSize',7)
 ylabel("M_x avg [N]")
 subplot(3,1,2)
 hold on; grid on;
-plot(myvars.t{KJ},myvars.tot_Fy,'lineWidth',1.5)
+plot(myvars.t{KK},myvars.tot_Fy,'lineWidth',1.5)
 plot(timing*Ts1, Force_y_avg, 'x', 'LineWidth',2,'MarkerSize',7)
 ylabel("F_y avg [N]")
 subplot(3,1,3)
 hold on; grid on;
-plot(myvars.t{KJ},myvars.tot_Fz,'lineWidth',1.5)
+plot(myvars.t{KK},myvars.tot_Fz,'lineWidth',1.5)
 plot(timing*Ts1, Force_z_avg, 'x', 'LineWidth',2,'MarkerSize',7)
 xlabel("Time [s]")
 ylabel("F_z avg [N]")
@@ -800,7 +792,7 @@ hold off
 result.files{1} = file1;
 result.files{2} = file2;
 
-result.time = myvars.t{KJ};
+result.time = myvars.t{KK};
 result.Fx = myvars.tot_Fx;
 result.Fy = myvars.tot_Fy;
 result.Fz = myvars.tot_Fz;
@@ -821,7 +813,7 @@ save(save_file, 'result');
 result.files{1} = file1;
 result.files{2} = file2;
 
-result.time = myvars.t{KJ};
+result.time = myvars.t{KK};
 result.Fy = myvars.tot_Fy;
 result.Fz = myvars.tot_Fz;
 result.Mx = myvars.tot_Mx;

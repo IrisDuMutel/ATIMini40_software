@@ -1,22 +1,20 @@
 clear variables
 close all
 
+%%%% This script reads the data from two test files organized in the following
+%%%% format. Then a comparison is between the data from both tests is
+%%%% plotted
+%%%% Columns of the file:
+%%%% Fx  Fy  Fz  Mx  My  Mz
 
-% Problem parameters
-% L          = 0.20;     %m
-% numBlades  = 2;
-% Radius     = 0.2032/2; %m (diameter if 0.2 is used
-% R_constant = 287.04; % m^2 /°Ksec^2
-% toKelvin   = 273.15;
-% rpm12 = [4,7,9,12];  %%% Levels to be taken for equal RPM comparison
-% 
-% step_duration = 1500;
-% segment_points = 1350;           %100 8 inches           % how many points do we select
-% offset_points  = 100;            % 80 8 inches
-% steps_per_stair = 4;
+%%%% RPM values can also be read from the corrisponding csv files in which the values are
+%%%% structured in four columns:
+%%%% T1  T2  T3  T4
 
-%%%% For extended files containing voltages and time vector
-folder = fileparts(pwd);
+%%%% IT IS VERY IMPORTANT THAT THE NAMES OF THESE FILES ARE THE SAME FOR
+%%%% THE FT AND RPM FOR THIS SCRIPT TO WORK. IF NO RPM DATA IS DESIRED,
+%%%% COMMENT LINES 30 THROUGH 34 AND 169 THROUGH 174
+
 ft_path  = '../LogFiles/20231008/FT/';
 rpm_path = '../LogFiles/20231008/RPM/';
 file1 = 'log_20231008_13inch_auto7.csv';
@@ -26,25 +24,25 @@ title_size = 6;
 
 filepath1 = strcat(ft_path,file1);
 filepath2 = strcat(ft_path,file2);
-filepath1_rpm = strcat(rpm_path,file1);
-filepath2_rpm = strcat(rpm_path,file2);
-
 test1 = readtable(filepath1);
 test2 = readtable(filepath2);
+
+filepath1_rpm = strcat(rpm_path,file1);
+filepath2_rpm = strcat(rpm_path,file2);
 rpm1  = readtable(filepath1_rpm);
 rpm2  = readtable(filepath2_rpm);
 
-sampl_f1 = test1{1,1}; % Sampling frequency of the signal
-sampl_f2 = test2{1,1}; % Sampling frequency of the signal
+sampl_f1 = test1{1,1}; % Sampling frequency of the signal 1
+sampl_f2 = test2{1,1}; % Sampling frequency of the signal 2
 Ts1 = 1/sampl_f1;
 Ts2 = 1/sampl_f2;
 
-temp1 = test1(1,4);
-temp2 = test2(1,4);
-pres1 = test1(1,5);
-pres2 = test2(1,5);
+% temp1 = test1(1,4);   %%% Temperature and pressure values of the test
+% temp2 = test2(1,4);   %%% Temperature and pressure values of the test
+% pres1 = test1(1,5);   %%% Temperature and pressure values of the test
+% pres2 = test2(1,5);   %%% Temperature and pressure values of the test
 
-offset    = 1;  % 3000 is 20s (offset*Ts = seconds)
+offset    = 1;  % 3000 is 20s when SampFreq = 150Hz (offset*Ts = seconds)
 fx_column = 1;
 fy_column = 2;
 fz_column = 3;

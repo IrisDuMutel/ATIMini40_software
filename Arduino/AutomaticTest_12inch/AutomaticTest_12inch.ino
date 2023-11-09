@@ -49,11 +49,11 @@ void setup() {
 void loop() {
 
   int P1 = 800; // No rotation or force
-  int P2 = 1330; //
-  int P3 = 1430;//
-  int P4 = 1530;//
-  int P5 = 1620;//
-  int P6 = 1690;//
+  int P2 = 1430; //
+  int P3 = 1529;//
+  int P4 = 1586;//
+  int P5 = 1636;//
+  int P6 = 1681;//
   int PWM_val[] = {P1, P2, P3, P4, P5, P6};
   int delay_val = 1000;
   int num_steps = 0;
