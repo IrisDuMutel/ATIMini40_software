@@ -56,6 +56,8 @@ file6_10 = load(filepath6_10);
 file7_10 = load(filepath7_10);
 file8_10 = load(filepath8_10);
 
+file11 = load('../LogFiles/txcWall_coeffs.mat');
+
 filepath1_12 = strcat(ft_path,file1_12);
 filepath2_12 = strcat(ft_path,file2_12);
 filepath3_12 = strcat(ft_path,file3_12);
@@ -2005,128 +2007,6 @@ legend('10"x4.5" F$_z$ = 14 N','','','','','','','','12"x6" F$_z$ = 14 N','','',
 ylim([-1*0 mxlim])
 xlabel('D/R [-]','fontsize',15)
 
-figure()
-subplot(4,1,1)
-hold on;grid on;
-plot(distances_vec(1),Fy_points1_10(4),'o','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(2),Fy_points2_10(4),'o','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(3),Fy_points3_10(4),'o','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(4),Fy_points4_10(4),'o','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(5),Fy_points5_10(4),'o','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(6),Fy_points6_10(4),'o','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(7),Fy_points7_10(4),'o','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(8),Fy_points8_10(4),'o','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(1),Fy_points1_12(4),'o','color','b','linewidth',2)%,'markersize',8)
-plot(distances_vec(2),Fy_points2_12(4),'o','color','b','linewidth',2)%,'markersize',8)
-plot(distances_vec(3),Fy_points3_12(4),'o','color','b','linewidth',2)%,'markersize',8)
-plot(distances_vec(4),Fy_points4_12(4),'o','color','b','linewidth',2)%,'markersize',8)
-plot(distances_vec(5),Fy_points5_12(4),'o','color','b','linewidth',2)%,'markersize',8)
-plot(distances_vec(6),Fy_points6_12(4),'o','color','b','linewidth',2)%,'markersize',8)
-plot(distances_vec(7),Fy_points7_12(4),'o','color','b','linewidth',2)%,'markersize',8)
-plot(distances_vec(8),Fy_points8_12(4),'o','color','b','linewidth',2)%,'markersize',8)
-plot(distances_vec(1),Fy_points1_13(5),'o','color','r','linewidth',2)%,'markersize',8)
-plot(distances_vec(2),Fy_points2_13(5),'o','color','r','linewidth',2)%,'markersize',8)
-plot(distances_vec(3),Fy_points3_13(5),'o','color','r','linewidth',2)%,'markersize',8)
-plot(distances_vec(4),Fy_points4_13(5),'o','color','r','linewidth',2)%,'markersize',8)
-plot(distances_vec(5),Fy_points5_13(5),'o','color','r','linewidth',2)%,'markersize',8)
-plot(distances_vec(6),Fy_points6_13(5),'o','color','r','linewidth',2)%,'markersize',8)
-plot(distances_vec(7),Fy_points7_13(5),'o','color','r','linewidth',2)%,'markersize',8)
-plot(distances_vec(8),Fy_points8_13(5),'o','color','r','linewidth',2)%,'markersize',8)
-% xlim([1 3.5])
-% ylim([-1*0 mxlim])
-% ylabel('M$_{Wall}$ [N]','fontsize',15)
-legend('10"x4.5" F$_z$ = 8 N','','','','','','','','12"x6" F$_z$ = 8 N','','','','','','','','13"x6.5" F$_z$ = 8 N','fontsize',12)
-subplot(4,1,2)
-hold on;grid on;
-plot(distances_vec(1),Fy_points1_10(3),'o','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(2),Fy_points2_10(3),'o','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(3),Fy_points3_10(3),'o','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(4),Fy_points4_10(3),'o','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(5),Fy_points5_10(3),'o','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(6),Fy_points6_10(3),'o','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(7),Fy_points7_10(3),'o','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(8),Fy_points8_10(3),'o','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(1),Fy_points1_12(3),'o','color','b','linewidth',2)%,'markersize',8)
-plot(distances_vec(2),Fy_points2_12(3),'o','color','b','linewidth',2)%,'markersize',8)
-plot(distances_vec(3),Fy_points3_12(3),'o','color','b','linewidth',2)%,'markersize',8)
-plot(distances_vec(4),Fy_points4_12(3),'o','color','b','linewidth',2)%,'markersize',8)
-plot(distances_vec(5),Fy_points5_12(3),'o','color','b','linewidth',2)%,'markersize',8)
-plot(distances_vec(6),Fy_points6_12(3),'o','color','b','linewidth',2)%,'markersize',8)
-plot(distances_vec(7),Fy_points7_12(3),'o','color','b','linewidth',2)%,'markersize',8)
-plot(distances_vec(8),Fy_points8_12(3),'o','color','b','linewidth',2)%,'markersize',8)
-plot(distances_vec(1),Fy_points1_13(4),'o','color','r','linewidth',2)%,'markersize',8)
-plot(distances_vec(2),Fy_points2_13(4),'o','color','r','linewidth',2)%,'markersize',8)
-plot(distances_vec(3),Fy_points3_13(4),'o','color','r','linewidth',2)%,'markersize',8)
-plot(distances_vec(4),Fy_points4_13(4),'o','color','r','linewidth',2)%,'markersize',8)
-plot(distances_vec(5),Fy_points5_13(4),'o','color','r','linewidth',2)%,'markersize',8)
-plot(distances_vec(6),Fy_points6_13(4),'o','color','r','linewidth',2)%,'markersize',8)
-plot(distances_vec(7),Fy_points7_13(4),'o','color','r','linewidth',2)%,'markersize',8)
-plot(distances_vec(8),Fy_points8_13(4),'o','color','r','linewidth',2)%,'markersize',8)
-% xlim([1 3.5])
-% ylim([-1*0 mxlim])
-% ylabel('M$_{Wall}$ [N]','fontsize',15)
-legend('10"x4.5" F$_z$ = 10 N','','','','','','','','12"x6" F$_z$ = 10 N','','','','','','','','13"x6.5" F$_z$ = 10 N','fontsize',12)
-subplot(4,1,3)
-hold on;grid on;
-plot(distances_vec(1),Fy_points1_10(2),'o','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(2),Fy_points2_10(2),'o','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(3),Fy_points3_10(2),'o','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(4),Fy_points4_10(2),'o','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(5),Fy_points5_10(2),'o','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(6),Fy_points6_10(2),'o','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(7),Fy_points7_10(2),'o','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(8),Fy_points8_10(2),'o','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(1),Fy_points1_12(2),'o','color','b','linewidth',2)%,'markersize',8)
-plot(distances_vec(2),Fy_points2_12(2),'o','color','b','linewidth',2)%,'markersize',8)
-plot(distances_vec(3),Fy_points3_12(2),'o','color','b','linewidth',2)%,'markersize',8)
-plot(distances_vec(4),Fy_points4_12(2),'o','color','b','linewidth',2)%,'markersize',8)
-plot(distances_vec(5),Fy_points5_12(2),'o','color','b','linewidth',2)%,'markersize',8)
-plot(distances_vec(6),Fy_points6_12(2),'o','color','b','linewidth',2)%,'markersize',8)
-plot(distances_vec(7),Fy_points7_12(2),'o','color','b','linewidth',2)%,'markersize',8)
-plot(distances_vec(8),Fy_points8_12(2),'o','color','b','linewidth',2)%,'markersize',8)
-plot(distances_vec(1),Fy_points1_13(3),'o','color','r','linewidth',2)%,'markersize',8)
-plot(distances_vec(2),Fy_points2_13(3),'o','color','r','linewidth',2)%,'markersize',8)
-plot(distances_vec(3),Fy_points3_13(3),'o','color','r','linewidth',2)%,'markersize',8)
-plot(distances_vec(4),Fy_points4_13(3),'o','color','r','linewidth',2)%,'markersize',8)
-plot(distances_vec(5),Fy_points5_13(3),'o','color','r','linewidth',2)%,'markersize',8)
-plot(distances_vec(6),Fy_points6_13(3),'o','color','r','linewidth',2)%,'markersize',8)
-plot(distances_vec(7),Fy_points7_13(3),'o','color','r','linewidth',2)%,'markersize',8)
-plot(distances_vec(8),Fy_points8_13(3),'o','color','r','linewidth',2)%,'markersize',8)
-% xlim([1 3.5])
-% ylim([-1*0 mxlim])
-% ylabel('M$_{Wall}$ [N]','fontsize',15)
-legend('10"x4.5" F$_z$ = 12 N','','','','','','','','12"x6" F$_z$ = 12 N','','','','','','','','13"x6.5" F$_z$ = 12 N','fontsize',12)
-subplot(4,1,4)
-hold on;grid on;
-plot(distances_vec(1),Fy_points1_10(1),'o','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(2),Fy_points2_10(1),'o','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(3),Fy_points3_10(1),'o','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(4),Fy_points4_10(1),'o','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(5),Fy_points5_10(1),'o','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(6),Fy_points6_10(1),'o','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(7),Fy_points7_10(1),'o','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(8),Fy_points8_10(1),'o','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(1),Fy_points1_12(1),'o','color','b','linewidth',2)%,'markersize',8)
-plot(distances_vec(2),Fy_points2_12(1),'o','color','b','linewidth',2)%,'markersize',8)
-plot(distances_vec(3),Fy_points3_12(1),'o','color','b','linewidth',2)%,'markersize',8)
-plot(distances_vec(4),Fy_points4_12(1),'o','color','b','linewidth',2)%,'markersize',8)
-plot(distances_vec(5),Fy_points5_12(1),'o','color','b','linewidth',2)%,'markersize',8)
-plot(distances_vec(6),Fy_points6_12(1),'o','color','b','linewidth',2)%,'markersize',8)
-plot(distances_vec(7),Fy_points7_12(1),'o','color','b','linewidth',2)%,'markersize',8)
-plot(distances_vec(8),Fy_points8_12(1),'o','color','b','linewidth',2)%,'markersize',8)
-plot(distances_vec(1),Fy_points1_13(1),'o','color','r','linewidth',2)%,'markersize',8)
-plot(distances_vec(2),Fy_points2_13(1),'o','color','r','linewidth',2)%,'markersize',8)
-plot(distances_vec(3),Fy_points3_13(1),'o','color','r','linewidth',2)%,'markersize',8)
-plot(distances_vec(4),Fy_points4_13(1),'o','color','r','linewidth',2)%,'markersize',8)
-plot(distances_vec(5),Fy_points5_13(1),'o','color','r','linewidth',2)%,'markersize',8)
-plot(distances_vec(6),Fy_points6_13(1),'o','color','r','linewidth',2)%,'markersize',8)
-plot(distances_vec(7),Fy_points7_13(1),'o','color','r','linewidth',2)%,'markersize',8)
-plot(distances_vec(8),Fy_points8_13(1),'o','color','r','linewidth',2)%,'markersize',8)
-ylabel('F$_{Wall}$ [N]','fontsize',15)
-legend('10"x4.5" F$_z$ = 14 N','','','','','','','','12"x6" F$_z$ = 14 N','','','','','','','','13"x6.5" F$_z$ = 14 N','fontsize',12)
-% xlim([1 3.5])
-% ylim([-1*0 mxlim])
-xlabel('D/R [-]','fontsize',15)
 
 
 figure()
@@ -2183,66 +2063,6 @@ plot(distances_vec(6),Mx_points6_10(1),'x','color','k','linewidth',2)%,'markersi
 plot(distances_vec(7),Mx_points7_10(1),'x','color','k','linewidth',2)%,'markersize',8)
 plot(distances_vec(8),Mx_points8_10(1),'x','color','k','linewidth',2)%,'markersize',8)
 ylabel('M$_{Wall}$ [N$\cdot $m]','fontsize',15)
-legend('10"x4.5" F$_z$ = 14 N','','','','','','','','12"x6" F$_z$ = 14 N','','','','','','','','13"x6.5" F$_z$ = 14 N','fontsize',12)
-% xlim([1 3.5])
-ylim([-1*0 mxlim])
-xlabel('D/R [-]','fontsize',15)
-
-
-figure()
-subplot(4,1,1)
-hold on;grid on;
-plot(distances_vec(1),Fy_points1_10(4),'x','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(2),Fy_points2_10(4),'x','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(3),Fy_points3_10(4),'x','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(4),Fy_points4_10(4),'x','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(5),Fy_points5_10(4),'x','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(6),Fy_points6_10(4),'x','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(7),Fy_points7_10(4),'x','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(8),Fy_points8_10(4),'x','color','k','linewidth',2)%,'markersize',8)
-% xlim([1 3.5])
-ylim([-1*0 mxlim])
-ylabel('M$_{Wall}$ [N]','fontsize',15)
-legend('10"x4.5" F$_z$ = 8 N','','','','','','','','12"x6" F$_z$ = 8 N','','','','','','','','13"x6.5" F$_z$ = 8 N','fontsize',12)
-subplot(4,1,2)
-hold on;grid on;
-plot(distances_vec(1),Fy_points1_10(3),'x','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(2),Fy_points2_10(3),'x','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(3),Fy_points3_10(3),'x','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(4),Fy_points4_10(3),'x','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(5),Fy_points5_10(3),'x','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(6),Fy_points6_10(3),'x','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(7),Fy_points7_10(3),'x','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(8),Fy_points8_10(3),'x','color','k','linewidth',2)%,'markersize',8)
-% xlim([1 3.5])
-ylim([-1*0 mxlim])
-ylabel('M$_{Wall}$ [N]','fontsize',15)
-legend('10"x4.5" F$_z$ = 10 N','','','','','','','','12"x6" F$_z$ = 10 N','','','','','','','','13"x6.5" F$_z$ = 10 N','fontsize',12)
-subplot(4,1,3)
-hold on;grid on;
-plot(distances_vec(1),Fy_points1_10(2),'x','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(2),Fy_points2_10(2),'x','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(3),Fy_points3_10(2),'x','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(4),Fy_points4_10(2),'x','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(5),Fy_points5_10(2),'x','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(6),Fy_points6_10(2),'x','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(7),Fy_points7_10(2),'x','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(8),Fy_points8_10(2),'x','color','k','linewidth',2)%,'markersize',8=
-% xlim([1 3.5])
-ylim([-1*0 mxlim])
-ylabel('M$_{Wall}$ [N]','fontsize',15)
-legend('10"x4.5" F$_z$ = 12 N','','','','','','','','12"x6" F$_z$ = 12 N','','','','','','','','13"x6.5" F$_z$ = 12 N','fontsize',12)
-subplot(4,1,4)
-hold on;grid on;
-plot(distances_vec(1),Fy_points1_10(1),'x','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(2),Fy_points2_10(1),'x','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(3),Fy_points3_10(1),'x','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(4),Fy_points4_10(1),'x','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(5),Fy_points5_10(1),'x','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(6),Fy_points6_10(1),'x','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(7),Fy_points7_10(1),'x','color','k','linewidth',2)%,'markersize',8)
-plot(distances_vec(8),Fy_points8_10(1),'x','color','k','linewidth',2)%,'markersize',8)
-ylabel('F$_{Wall}$ [N]','fontsize',15)
 legend('10"x4.5" F$_z$ = 14 N','','','','','','','','12"x6" F$_z$ = 14 N','','','','','','','','13"x6.5" F$_z$ = 14 N','fontsize',12)
 % xlim([1 3.5])
 ylim([-1*0 mxlim])
@@ -2854,6 +2674,98 @@ Ct7Scana_13inch  = abs(file7_13.result.Fz_points./for7Scana_13inch);
 Ct8Scana_13inch  = abs(file8_13.result.Fz_points./for8Scana_13inch);
 
 
+Ct_txc1_10inch_Fz1  = file11.txcWall10.Ct1{1};
+Ct_txc1_10inch_Fz2  = file11.txcWall10.Ct1{2};
+Ct_txc1_10inch_RPM1 = file11.txcWall10.Ct1{3};
+Ct_txc1_10inch_RPM2 = file11.txcWall10.Ct1{4};
+Ct_txc2_10inch_Fz1  = file11.txcWall10.Ct2{1};
+Ct_txc2_10inch_Fz2  = file11.txcWall10.Ct2{2};
+Ct_txc2_10inch_RPM1 = file11.txcWall10.Ct2{3};
+Ct_txc2_10inch_RPM2 = file11.txcWall10.Ct2{4};
+Ct_txc3_10inch_Fz1  = file11.txcWall10.Ct3{1};
+Ct_txc3_10inch_Fz2  = file11.txcWall10.Ct3{2};
+Ct_txc3_10inch_RPM1 = file11.txcWall10.Ct3{3};
+Ct_txc3_10inch_RPM2 = file11.txcWall10.Ct3{4};
+Ct_txc4_10inch_Fz1  = file11.txcWall10.Ct4{1};
+Ct_txc4_10inch_Fz2  = file11.txcWall10.Ct4{2};
+Ct_txc4_10inch_RPM1 = file11.txcWall10.Ct4{3};
+Ct_txc4_10inch_RPM2 = file11.txcWall10.Ct4{4};
+Ct_txc5_10inch_Fz1  = file11.txcWall10.Ct5{1};
+Ct_txc5_10inch_Fz2  = file11.txcWall10.Ct5{2};
+Ct_txc5_10inch_RPM1 = file11.txcWall10.Ct5{3};
+Ct_txc5_10inch_RPM2 = file11.txcWall10.Ct5{4};
+Ct_txc6_10inch_Fz1  = file11.txcWall10.Ct6{1};
+Ct_txc6_10inch_Fz2  = file11.txcWall10.Ct6{2};
+Ct_txc6_10inch_RPM1 = file11.txcWall10.Ct6{3};
+Ct_txc6_10inch_RPM2 = file11.txcWall10.Ct6{4};
+
+Ct_txc1_12inch_Fz1  = file11.txcWall12.Ct1{1};
+Ct_txc1_12inch_Fz2  = file11.txcWall12.Ct1{2};
+Ct_txc1_12inch_RPM1 = file11.txcWall12.Ct1{3};
+Ct_txc1_12inch_RPM2 = file11.txcWall12.Ct1{4};
+Ct_txc2_12inch_Fz1  = file11.txcWall12.Ct2{1};
+Ct_txc2_12inch_Fz2  = file11.txcWall12.Ct2{2};
+Ct_txc2_12inch_RPM1 = file11.txcWall12.Ct2{3};
+Ct_txc2_12inch_RPM2 = file11.txcWall12.Ct2{4};
+Ct_txc3_12inch_Fz1  = file11.txcWall12.Ct3{1};
+Ct_txc3_12inch_Fz2  = file11.txcWall12.Ct3{2};
+Ct_txc3_12inch_RPM1 = file11.txcWall12.Ct3{3};
+Ct_txc3_12inch_RPM2 = file11.txcWall12.Ct3{4};
+Ct_txc4_12inch_Fz1  = file11.txcWall12.Ct4{1};
+Ct_txc4_12inch_Fz2  = file11.txcWall12.Ct4{2};
+Ct_txc4_12inch_RPM1 = file11.txcWall12.Ct4{3};
+Ct_txc4_12inch_RPM2 = file11.txcWall12.Ct4{4};
+Ct_txc5_12inch_Fz1  = file11.txcWall12.Ct5{1};
+Ct_txc5_12inch_Fz2  = file11.txcWall12.Ct5{2};
+Ct_txc5_12inch_RPM1 = file11.txcWall12.Ct5{3};
+Ct_txc5_12inch_RPM2 = file11.txcWall12.Ct5{4};
+Ct_txc6_12inch_Fz1  = file11.txcWall12.Ct6{1};
+Ct_txc6_12inch_Fz2  = file11.txcWall12.Ct6{2};
+Ct_txc6_12inch_RPM1 = file11.txcWall12.Ct6{3};
+Ct_txc6_12inch_RPM2 = file11.txcWall12.Ct6{4};
+
+Temp1_10inch_txc = file11.txcWall10.temp1;
+Temp2_10inch_txc = file11.txcWall10.temp2;
+Temp3_10inch_txc = file11.txcWall10.temp3;
+Temp4_10inch_txc = file11.txcWall10.temp4;
+Temp5_10inch_txc = file11.txcWall10.temp5;
+Temp6_10inch_txc = file11.txcWall10.temp6;
+Pres1_10inch_txc = file11.txcWall10.pres1;
+Pres2_10inch_txc = file11.txcWall10.pres2;
+Pres3_10inch_txc = file11.txcWall10.pres3;
+Pres4_10inch_txc = file11.txcWall10.pres4;
+Pres5_10inch_txc = file11.txcWall10.pres5;
+Pres6_10inch_txc = file11.txcWall10.pres6;
+
+Temp1_12inch_txc = file11.txcWall12.temp1;
+Temp2_12inch_txc = file11.txcWall12.temp2;
+Temp3_12inch_txc = file11.txcWall12.temp3;
+Temp4_12inch_txc = file11.txcWall12.temp4;
+Temp5_12inch_txc = file11.txcWall12.temp5;
+Temp6_12inch_txc = file11.txcWall12.temp6;
+Pres1_12inch_txc = file11.txcWall12.pres1;
+Pres2_12inch_txc = file11.txcWall12.pres2;
+Pres3_12inch_txc = file11.txcWall12.pres3;
+Pres4_12inch_txc = file11.txcWall12.pres4;
+Pres5_12inch_txc = file11.txcWall12.pres5;
+Pres6_12inch_txc = file11.txcWall12.pres6;
+
+rho1_10inch_txc = Pres1_10inch_txc/(R_constant*(Temp1_10inch_txc+toKelvin));
+rho2_10inch_txc = Pres2_10inch_txc/(R_constant*(Temp2_10inch_txc+toKelvin));
+rho3_10inch_txc = Pres3_10inch_txc/(R_constant*(Temp3_10inch_txc+toKelvin));
+rho4_10inch_txc = Pres4_10inch_txc/(R_constant*(Temp4_10inch_txc+toKelvin));
+rho5_10inch_txc = Pres5_10inch_txc/(R_constant*(Temp5_10inch_txc+toKelvin));
+rho6_10inch_txc = Pres6_10inch_txc/(R_constant*(Temp6_10inch_txc+toKelvin));
+
+rho1_12inch_txc = Pres1_12inch_txc/(R_constant*(Temp1_12inch_txc+toKelvin));
+rho2_12inch_txc = Pres2_12inch_txc/(R_constant*(Temp2_12inch_txc+toKelvin));
+rho3_12inch_txc = Pres3_12inch_txc/(R_constant*(Temp3_12inch_txc+toKelvin));
+rho4_12inch_txc = Pres4_12inch_txc/(R_constant*(Temp4_12inch_txc+toKelvin));
+rho5_12inch_txc = Pres5_12inch_txc/(R_constant*(Temp5_12inch_txc+toKelvin));
+rho6_12inch_txc = Pres6_12inch_txc/(R_constant*(Temp6_12inch_txc+toKelvin));
+
+distances_txc = [1,1.5,2,2.5,3,10];
+
 rpm10 = [3,9,4,10];  %%% Levels to be taken for equal RPM comparison
 rpm12 = [3,9,5,11];  %%% Levels to be taken for equal RPM comparison
 rpm13 = [6,12,5,11];  %%% Levels to be taken for equal RPM comparison
@@ -3323,7 +3235,7 @@ Ct6_off_13inches_Fz_4 = mean([Ct6Scana_13inch(Fz13(7)),Ct6Scana_13inch(Fz13(8))]
 Ct7_off_13inches_Fz_4 = mean([Ct7Scana_13inch(Fz13(7)),Ct7Scana_13inch(Fz13(8))]);
 Ct8_off_13inches_Fz_4 = mean([Ct8Scana_13inch(Fz13(7)),Ct8Scana_13inch(Fz13(8))]);
 
-
+%{
 
 figure()
 subplot(2,1,1)
@@ -3659,12 +3571,282 @@ plot(distances(5), Ct5_off_13inches_Fz_1,'o','color','r','markersize',7,'lineWid
 plot(distances(6), Ct6_off_13inches_Fz_1,'o','color','r','markersize',7,'lineWidth',2);
 plot(distances(7), Ct7_off_13inches_Fz_1,'o','color','r','markersize',7,'lineWidth',2);
 plot(distances(8), Ct8_off_13inches_Fz_1,'o','color','r','markersize',7,'lineWidth',2);
+plot(distances_txc(1), Ct_txc1_10inch_RPM2,'x','color','k','markersize',7,'lineWidth',2);
+plot(distances_txc(2), Ct_txc2_10inch_RPM2,'x','color','k','markersize',7,'lineWidth',2);
+plot(distances_txc(3), Ct_txc3_10inch_RPM2,'x','color','k','markersize',7,'lineWidth',2);
+plot(distances_txc(4), Ct_txc4_10inch_RPM2,'x','color','k','markersize',7,'lineWidth',2);
+plot(distances_txc(5), Ct_txc5_10inch_RPM2,'x','color','k','markersize',7,'lineWidth',2);
+plot(distances_txc(6), Ct_txc6_10inch_RPM2,'x','color','k','markersize',7,'lineWidth',2);
+plot(distances_txc(1), Ct_txc1_12inch_RPM2,'x','color','b','markersize',7,'lineWidth',2);
+plot(distances_txc(2), Ct_txc2_12inch_RPM2,'x','color','b','markersize',7,'lineWidth',2);
+plot(distances_txc(3), Ct_txc3_12inch_RPM2,'x','color','b','markersize',7,'lineWidth',2);
+plot(distances_txc(4), Ct_txc4_12inch_RPM2,'x','color','b','markersize',7,'lineWidth',2);
+plot(distances_txc(5), Ct_txc5_12inch_RPM2,'x','color','b','markersize',7,'lineWidth',2);
+plot(distances_txc(6), Ct_txc6_12inch_RPM2,'x','color','b','markersize',7,'lineWidth',2);
 % xlabel('Segment [-]')
 % legend('12"x6"')
 xlabel('D/R [-]')
 % ylim([0,0.03])
-legend('10"x4.5" 4000 RPM','','','','','','','','12"x6" 4000 RPM','','','','','','','','13"x6.5" 4000 RPM')
+legend('10"x4.5" DU','','','','','','','','12"x6" DU','','','','','','','','13"x6.5" DU','','','','','','','','10"x4.7" txc','','','','','','12"x6" txc')
+ylabel('C$_T$ @ 4000 RPM [-]')
+
+%}
+
+%% Surface plots
+
+temps_10inch_txc = [Temp1_10inch_txc,Temp2_10inch_txc,Temp3_10inch_txc,Temp4_10inch_txc,Temp5_10inch_txc,Temp6_10inch_txc].*ones(4,6);
+press_10inch_txc = [Pres1_10inch_txc,Pres2_10inch_txc,Pres3_10inch_txc,Pres4_10inch_txc,Pres5_10inch_txc,Pres6_10inch_txc].*ones(4,6);
+rho_10inch_txc = [rho1_10inch_txc,rho2_10inch_txc,rho3_10inch_txc,rho4_10inch_txc,rho5_10inch_txc,rho6_10inch_txc].*ones(4,6);
+
+temps_12inch_txc = [Temp1_12inch_txc,Temp2_12inch_txc,Temp3_12inch_txc,Temp4_12inch_txc,Temp5_12inch_txc,Temp6_12inch_txc].*ones(4,6);
+press_12inch_txc = [Pres1_12inch_txc,Pres2_12inch_txc,Pres3_12inch_txc,Pres4_12inch_txc,Pres5_12inch_txc,Pres6_12inch_txc].*ones(4,6);
+rho_12inch_txc = [rho1_12inch_txc,rho2_12inch_txc,rho3_12inch_txc,rho4_12inch_txc,rho5_12inch_txc,rho6_12inch_txc].*ones(4,6);
+
+coefs_10inch_txc =      [Ct_txc1_10inch_Fz1,Ct_txc2_10inch_Fz1,Ct_txc3_10inch_Fz1,Ct_txc4_10inch_Fz1,Ct_txc5_10inch_Fz1,Ct_txc6_10inch_Fz1;
+                         Ct_txc1_10inch_Fz2,Ct_txc2_10inch_Fz2,Ct_txc3_10inch_Fz2,Ct_txc4_10inch_Fz2,Ct_txc5_10inch_Fz2,Ct_txc6_10inch_Fz2;
+                         Ct_txc1_10inch_RPM1,Ct_txc2_10inch_RPM1,Ct_txc3_10inch_RPM1,Ct_txc4_10inch_RPM1,Ct_txc5_10inch_RPM1,Ct_txc6_10inch_RPM1;
+                         Ct_txc1_10inch_RPM2,Ct_txc2_10inch_RPM2,Ct_txc3_10inch_RPM2,Ct_txc4_10inch_RPM2,Ct_txc5_10inch_RPM2,Ct_txc6_10inch_RPM2];                       
+coefs_12inch_txc =      [Ct_txc1_12inch_Fz1,Ct_txc2_12inch_Fz1,Ct_txc3_12inch_Fz1,Ct_txc4_12inch_Fz1,Ct_txc5_12inch_Fz1,Ct_txc6_12inch_Fz1;
+                         Ct_txc1_12inch_Fz2,Ct_txc2_12inch_Fz2,Ct_txc3_12inch_Fz2,Ct_txc4_12inch_Fz2,Ct_txc5_12inch_Fz2,Ct_txc6_12inch_Fz2;
+                         Ct_txc1_12inch_RPM1,Ct_txc2_12inch_RPM1,Ct_txc3_12inch_RPM1,Ct_txc4_12inch_RPM1,Ct_txc5_12inch_RPM1,Ct_txc6_12inch_RPM1;
+                         Ct_txc1_12inch_RPM2,Ct_txc2_12inch_RPM2,Ct_txc3_12inch_RPM2,Ct_txc4_12inch_RPM2,Ct_txc5_12inch_RPM2,Ct_txc6_12inch_RPM2];  
+
+temps_10inch_du = [Temp1_10inch,Temp2_10inch,Temp3_10inch,Temp4_10inch,Temp5_10inch,Temp6_10inch,Temp7_10inch,Temp8_10inch].*ones(5,8);
+press_10inch_du = [Pres1_10inch,Pres2_10inch,Pres3_10inch,Pres4_10inch,Pres5_10inch,Pres6_10inch,Pres7_10inch,Pres8_10inch].*ones(5,8);
+rho_10inch_du = [rho1_10inch,rho2_10inch,rho3_10inch,rho4_10inch,rho5_10inch,rho6_10inch,rho7_10inch,rho8_10inch].*ones(5,8);
+
+
+temps_12inch_du = [Temp1_12inch,Temp2_12inch,Temp3_12inch,Temp4_12inch,Temp5_12inch,Temp6_12inch,Temp7_12inch,Temp8_12inch].*ones(5,8);
+press_12inch_du = [Pres1_12inch,Pres2_12inch,Pres3_12inch,Pres4_12inch,Pres5_12inch,Pres6_12inch,Pres7_12inch,Pres8_12inch].*ones(5,8);
+rho_12inch_du = [rho1_12inch,rho2_12inch,rho3_12inch,rho4_12inch,rho5_12inch,rho6_12inch,rho7_12inch,rho8_12inch].*ones(5,8);
+
+temps_13inch_du = [Temp1_13inch,Temp2_13inch,Temp3_13inch,Temp4_13inch,Temp5_13inch,Temp6_13inch,Temp7_13inch,Temp8_13inch].*ones(5,8);
+press_13inch_du = [Pres1_13inch,Pres2_13inch,Pres3_13inch,Pres4_13inch,Pres5_13inch,Pres6_13inch,Pres7_13inch,Pres8_13inch].*ones(5,8);
+rho_13inch_du = [rho1_13inch,rho2_13inch,rho3_13inch,rho4_13inch,rho5_13inch,rho6_13inch,rho7_13inch,rho8_13inch].*ones(5,8);
+
+coefs_10inch_du =      [Ct1_off_10inches_Fz_1,Ct2_off_10inches_Fz_1,Ct3_off_10inches_Fz_1,Ct4_off_10inches_Fz_1,Ct5_off_10inches_Fz_1,Ct6_off_10inches_Fz_1,Ct7_off_10inches_Fz_1,Ct8_off_10inches_Fz_1;
+                         Ct1_off_10inches_Fz_2,Ct2_off_10inches_Fz_2,Ct3_off_10inches_Fz_2,Ct4_off_10inches_Fz_2,Ct5_off_10inches_Fz_2,Ct6_off_10inches_Fz_2,Ct7_off_10inches_Fz_2,Ct8_off_10inches_Fz_2;
+                         Ct1_off_10inches_Fz_3,Ct2_off_10inches_Fz_3,Ct3_off_10inches_Fz_3,Ct4_off_10inches_Fz_3,Ct5_off_10inches_Fz_3,Ct6_off_10inches_Fz_3,Ct7_off_10inches_Fz_3,Ct8_off_10inches_Fz_3;
+                         Ct1_off_10inches_Fz_4,Ct2_off_10inches_Fz_4,Ct3_off_10inches_Fz_4,Ct4_off_10inches_Fz_4,Ct5_off_10inches_Fz_4,Ct6_off_10inches_Fz_4,Ct7_off_10inches_Fz_4,Ct8_off_10inches_Fz_4;
+                         Ct1_off_10inches_RPM_1,Ct2_off_10inches_RPM_1,Ct3_off_10inches_RPM_1,Ct4_off_10inches_RPM_1,Ct5_off_10inches_RPM_1,Ct6_off_10inches_RPM_1,Ct7_off_10inches_RPM_1,Ct8_off_10inches_RPM_1];
+coefs_12inch_du =      [Ct1_off_12inches_Fz_1,Ct2_off_12inches_Fz_1,Ct3_off_12inches_Fz_1,Ct4_off_12inches_Fz_1,Ct5_off_12inches_Fz_1,Ct6_off_12inches_Fz_1,Ct7_off_12inches_Fz_1,Ct8_off_12inches_Fz_1;
+                         Ct1_off_12inches_Fz_2,Ct2_off_12inches_Fz_2,Ct3_off_12inches_Fz_2,Ct4_off_12inches_Fz_2,Ct5_off_12inches_Fz_2,Ct6_off_12inches_Fz_2,Ct7_off_12inches_Fz_2,Ct8_off_12inches_Fz_2;
+                         Ct1_off_12inches_Fz_3,Ct2_off_12inches_Fz_3,Ct3_off_12inches_Fz_3,Ct4_off_12inches_Fz_3,Ct5_off_12inches_Fz_3,Ct6_off_12inches_Fz_3,Ct7_off_12inches_Fz_3,Ct8_off_12inches_Fz_3;
+                         Ct1_off_12inches_Fz_4,Ct2_off_12inches_Fz_4,Ct3_off_12inches_Fz_4,Ct4_off_12inches_Fz_4,Ct5_off_12inches_Fz_4,Ct6_off_12inches_Fz_4,Ct7_off_12inches_Fz_4,Ct8_off_12inches_Fz_4;
+                         Ct1_off_12inches_RPM_1,Ct2_off_12inches_RPM_1,Ct3_off_12inches_RPM_1,Ct4_off_12inches_RPM_1,Ct5_off_12inches_RPM_1,Ct6_off_12inches_RPM_1,Ct7_off_12inches_RPM_1,Ct8_off_12inches_RPM_1];
+coefs_13inch_du =       [Ct1_off_13inches_Fz_1,Ct2_off_13inches_Fz_1,Ct3_off_13inches_Fz_1,Ct4_off_13inches_Fz_1,Ct5_off_13inches_Fz_1,Ct6_off_13inches_Fz_1,Ct7_off_13inches_Fz_1,Ct8_off_13inches_Fz_1;
+                         Ct1_off_13inches_Fz_2,Ct2_off_13inches_Fz_2,Ct3_off_13inches_Fz_2,Ct4_off_13inches_Fz_2,Ct5_off_13inches_Fz_2,Ct6_off_13inches_Fz_2,Ct7_off_13inches_Fz_2,Ct8_off_13inches_Fz_2;
+                         Ct1_off_13inches_Fz_3,Ct2_off_13inches_Fz_3,Ct3_off_13inches_Fz_3,Ct4_off_13inches_Fz_3,Ct5_off_13inches_Fz_3,Ct6_off_13inches_Fz_3,Ct7_off_13inches_Fz_3,Ct8_off_13inches_Fz_3;
+                         Ct1_off_13inches_Fz_4,Ct2_off_13inches_Fz_4,Ct3_off_13inches_Fz_4,Ct4_off_13inches_Fz_4,Ct5_off_13inches_Fz_4,Ct6_off_13inches_Fz_4,Ct7_off_13inches_Fz_4,Ct8_off_13inches_Fz_4;
+                         Ct1_off_13inches_RPM_1,Ct2_off_13inches_RPM_1,Ct3_off_13inches_RPM_1,Ct4_off_13inches_RPM_1,Ct5_off_13inches_RPM_1,Ct6_off_13inches_RPM_1,Ct7_off_13inches_RPM_1,Ct8_off_13inches_RPM_1];
+
+figure()
+hold on;grid on;
+% surf(temps_10inch_txc,press_10inch_txc,coefs_10inch_txc)
+plot3(temps_10inch_txc,rho_10inch_txc.*coefs_10inch_txc,press_10inch_txc,'x','color','k','markersize',7,'lineWidth',2)
+plot3(temps_12inch_txc,rho_12inch_txc.*coefs_12inch_txc,press_12inch_txc,'x','color','b','markersize',7,'lineWidth',2)
+plot3(temps_10inch_du,rho_10inch_du.*coefs_10inch_du,press_10inch_du,'o','color','k','markersize',7,'lineWidth',2)
+plot3(temps_12inch_du,rho_12inch_du.*coefs_12inch_du,press_12inch_du,'o','color','b','markersize',7,'lineWidth',2)
+plot3(temps_13inch_du,rho_13inch_du.*coefs_13inch_du,press_13inch_du,'o','color','r','markersize',7,'lineWidth',2)
+surf(temps_10inch_txc,rho_10inch_txc.*coefs_10inch_txc,press_10inch_txc)
+surf(temps_12inch_txc,rho_12inch_txc.*coefs_12inch_txc,press_12inch_txc)
+surf(temps_10inch_du,rho_10inch_du.*coefs_10inch_du,press_10inch_du)
+surf(temps_12inch_du,rho_12inch_du.*coefs_12inch_du,press_12inch_du)
+surf(temps_13inch_du,rho_13inch_du.*coefs_13inch_du,press_13inch_du)
+% plot3(Pres1_10inch, Temp1_10inch, Ct1_off_10inches_Fz_1,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres1_10inch, Temp1_10inch, Ct1_off_10inches_Fz_2,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres1_10inch, Temp1_10inch, Ct1_off_10inches_RPM_1,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres1_10inch, Temp1_10inch, Ct1_off_10inches_RPM_2,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres2_10inch, Temp2_10inch, Ct2_off_10inches_Fz_1,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres2_10inch, Temp2_10inch, Ct2_off_10inches_Fz_2,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres2_10inch, Temp2_10inch, Ct2_off_10inches_RPM_1,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres2_10inch, Temp2_10inch, Ct2_off_10inches_RPM_2,'x','color','b','markersize',7,'lineWidth',2)
+zlabel('Pressure [mbar]')
+xlabel('Temperature [\circ C]')
+ylabel('C$_T\cdot\rho$ [-]')
+% legend('10"x4.5 DU"')
+
+figure()
+hold on;grid on;
+% surf(temps_10inch_txc,press_10inch_txc,coefs_10inch_txc)
+plot(rho_10inch_txc,coefs_10inch_txc,'x','color','k','markersize',7,'lineWidth',2)
+plot(rho_12inch_txc,coefs_12inch_txc,'x','color','b','markersize',7,'lineWidth',2)
+plot(rho_10inch_du,coefs_10inch_du,'o','color','k','markersize',7,'lineWidth',2)
+plot(rho_12inch_du,coefs_12inch_du,'o','color','b','markersize',7,'lineWidth',2)
+plot(rho_13inch_du,coefs_13inch_du,'o','color','r','markersize',7,'lineWidth',2)
+% plot3(Pres1_10inch, Temp1_10inch, Ct1_off_10inches_Fz_1,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres1_10inch, Temp1_10inch, Ct1_off_10inches_Fz_2,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres1_10inch, Temp1_10inch, Ct1_off_10inches_RPM_1,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres1_10inch, Temp1_10inch, Ct1_off_10inches_RPM_2,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres2_10inch, Temp2_10inch, Ct2_off_10inches_Fz_1,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres2_10inch, Temp2_10inch, Ct2_off_10inches_Fz_2,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres2_10inch, Temp2_10inch, Ct2_off_10inches_RPM_1,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres2_10inch, Temp2_10inch, Ct2_off_10inches_RPM_2,'x','color','b','markersize',7,'lineWidth',2)
+xlabel('$\rho$ [kg/m$^3$]')
+% ylabel('Temperature [\circ C]')
 ylabel('C$_T$ [-]')
+% legend('10"x4.5 DU"')
+
+figure()
+hold on;grid on;
+t = tiledlayout(1,1);
+ax1 = axes(t);
+% surf(temps_10inch_txc,press_10inch_txc,coefs_10inch_txc)
+ax1.YAxisLocation = 'right';
+ax1.FontSize = 12;
+ax1.FontWeight = 'bold';
+ax1.XColor = 'k';
+ax1.YColor = '#D95319';
+ylabel('C$_T$ [-] @ 4000 RPM','FontSize',15)
+xlim([0.90, 1.2])
+ylim([0.4, 1.4])
+ax2 = axes(t);
+plot(ax2,rho_10inch_txc,rho_10inch_txc.*coefs_10inch_txc,'x','color','k','markersize',7,'lineWidth',2)
+hold on
+plot(ax2,rho_12inch_txc,rho_12inch_txc.*coefs_12inch_txc,'x','color','b','markersize',7,'lineWidth',2)
+plot(ax2,rho_10inch_du,rho_10inch_du.*coefs_10inch_du,'o','color','k','markersize',7,'lineWidth',2)
+plot(ax2,rho_12inch_du,rho_12inch_du.*coefs_12inch_du,'o','color','b','markersize',7,'lineWidth',2)
+plot(ax2,rho_13inch_du,rho_13inch_du.*coefs_13inch_du,'o','color','r','markersize',7,'lineWidth',2) 
+plot(ax2,rho_10inch_txc,coefs_10inch_txc,'x','color',"#D95319",'markersize',5,'lineWidth',1)
+plot(ax2,rho_12inch_txc,coefs_12inch_txc,'x','color',"#D95319",'markersize',5,'lineWidth',1)
+plot(ax2,rho_10inch_du,coefs_10inch_du,'o','color',"#D95319",'markersize',5,'lineWidth',1)
+plot(ax2,rho_12inch_du,coefs_12inch_du,'o','color',"#D95319",'markersize',5,'lineWidth',1)
+plot(ax2,rho_13inch_du,coefs_13inch_du,'o','color',"#D95319",'markersize',5,'lineWidth',1)
+legend('10"x4.7"', '', '', '' ,'' ,'' ,'12"x5"', '', '', '' ,'' ,'' ,'10"x4.5"', '', '', '' ,'' ,'' ,'','','12"x6"', '', '', '' ,'' ,'' ,'','','13"x6.5"','Location','best','fontsize',13)
+grid on;
+ax2.XAxisLocation = 'bottom';
+ax2.YAxisLocation = 'left';
+ax2.FontSize = 12;
+ax2.FontWeigth = 'bold';
+ax2.Color = 'none';
+ax1.Box = 'off';
+ax2.Box = 'off';
+ylim([0.4, 1.4])
+ylabel('C$_T \cdot\rho$ [kg/m$^3$] @ 4000 RPM','FontSize',15)
+% plot3(Pres1_10inch, Temp1_10inch, Ct1_off_10inches_Fz_1,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres1_10inch, Temp1_10inch, Ct1_off_10inches_Fz_2,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres1_10inch, Temp1_10inch, Ct1_off_10inches_RPM_1,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres1_10inch, Temp1_10inch, Ct1_off_10inches_RPM_2,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres2_10inch, Temp2_10inch, Ct2_off_10inches_Fz_1,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres2_10inch, Temp2_10inch, Ct2_off_10inches_Fz_2,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres2_10inch, Temp2_10inch, Ct2_off_10inches_RPM_1,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres2_10inch, Temp2_10inch, Ct2_off_10inches_RPM_2,'x','color','b','markersize',7,'lineWidth',2)
+% ylabel('Temperature [\circ C]')
+xlim([0.90, 1.2])
+xlabel('$\rho$ [kg/m$^3$]','FontSize',15)
+% ylim([0, 1.4])
+
+
+
+figure()
+hold on;grid on;
+% surf(temps_10inch_txc,press_10inch_txc,coefs_10inch_txc)
+plot(rho_10inch_txc./rho_10inch_du(1:4,1:6),coefs_10inch_txc,'x','color','k','markersize',7,'lineWidth',2)
+plot(rho_12inch_txc./rho_12inch_du(1:4,1:6),coefs_12inch_txc,'x','color','b','markersize',7,'lineWidth',2)
+plot(rho_10inch_du./rho_10inch_du,coefs_10inch_du,'o','color','k','markersize',7,'lineWidth',2)
+plot(rho_12inch_du./rho_12inch_du,coefs_12inch_du,'o','color','b','markersize',7,'lineWidth',2)
+plot(rho_13inch_du./rho_13inch_du,coefs_13inch_du,'o','color','r','markersize',7,'lineWidth',2)
+% plot3(Pres1_10inch, Temp1_10inch, Ct1_off_10inches_Fz_1,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres1_10inch, Temp1_10inch, Ct1_off_10inches_Fz_2,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres1_10inch, Temp1_10inch, Ct1_off_10inches_RPM_1,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres1_10inch, Temp1_10inch, Ct1_off_10inches_RPM_2,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres2_10inch, Temp2_10inch, Ct2_off_10inches_Fz_1,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres2_10inch, Temp2_10inch, Ct2_off_10inches_Fz_2,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres2_10inch, Temp2_10inch, Ct2_off_10inches_RPM_1,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres2_10inch, Temp2_10inch, Ct2_off_10inches_RPM_2,'x','color','b','markersize',7,'lineWidth',2)
+xlabel('$\rho$ [kg/m$^3$]','FontSize',15)
+% ylabel('Temperature [\circ C]')
+ylabel('c$_T$ [-]','FontSize',15)
+legend('10"x4.7"', '', '', '' ,'' ,'' ,'12"x5"', '', '', '' ,'' ,'' ,'10"x4.5"', '', '', '' ,'' ,'' ,'','','12"x6"', '', '', '' ,'' ,'' ,'','','13"x6.5"','Location','best','fontsize',13)
+xlim([0.9,1.3])
+
+figure()
+hold on;grid on;
+% surf(temps_10inch_txc,press_10inch_txc,coefs_10inch_txc)
+plot(rho_10inch_txc./rho_10inch_du(1:4,1:6),coefs_10inch_txc,'x','color','k','markersize',7,'lineWidth',2)
+plot(rho_12inch_txc./rho_12inch_du(1:4,1:6),coefs_12inch_txc,'x','color','b','markersize',7,'lineWidth',2)
+plot(mean(rho_10inch_txc(1,:)./rho_10inch_du(1,1:6)),mean(mean(coefs_10inch_txc)),'*','color','m','markersize',7,'lineWidth',2)
+plot(mean(rho_12inch_txc(1,:)./rho_12inch_du(1,1:6)),mean(mean(coefs_12inch_txc)),'*','color','m','markersize',7,'lineWidth',2)
+plot(rho_10inch_du./rho_10inch_du,coefs_10inch_du,'o','color','k','markersize',7,'lineWidth',2)
+plot(rho_12inch_du./rho_12inch_du,coefs_12inch_du,'o','color','b','markersize',7,'lineWidth',2)
+plot(rho_13inch_du./rho_13inch_du,coefs_13inch_du,'o','color','r','markersize',7,'lineWidth',2)
+plot(mean(rho_10inch_du(1,:)./rho_10inch_du(1,:)),mean(mean(coefs_10inch_du)),'*','color','m','markersize',7,'lineWidth',2)
+plot(mean(rho_12inch_du(1,:)./rho_12inch_du(1,:)),mean(mean(coefs_12inch_du)),'*','color','m','markersize',7,'lineWidth',2)
+plot(mean(rho_13inch_du(1,:)./rho_13inch_du(1,:)),mean(mean(coefs_13inch_du)),'*','color','m','markersize',7,'lineWidth',2)
+% plot3(Pres1_10inch, Temp1_10inch, Ct1_off_10inches_Fz_1,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres1_10inch, Temp1_10inch, Ct1_off_10inches_Fz_2,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres1_10inch, Temp1_10inch, Ct1_off_10inches_RPM_1,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres1_10inch, Temp1_10inch, Ct1_off_10inches_RPM_2,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres2_10inch, Temp2_10inch, Ct2_off_10inches_Fz_1,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres2_10inch, Temp2_10inch, Ct2_off_10inches_Fz_2,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres2_10inch, Temp2_10inch, Ct2_off_10inches_RPM_1,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres2_10inch, Temp2_10inch, Ct2_off_10inches_RPM_2,'x','color','b','markersize',7,'lineWidth',2)
+xlabel('$\rho/\rho_{DU}$ [-]','FontSize',15)
+% ylabel('Temperature [\circ C]')
+ylabel('c$_T$ [-]','FontSize',15)
+legend('10"x4.7" tXc', '', '', '' ,'' ,'' ,'12"x5" tXc', '', '', '' ,'' ,'' ,'','','10"x4.5" DU', '', '', '' ,'' ,'' ,'','','12"x6" DU', '', '', '' ,'' ,'' ,'','','13"x6.5" DU', '', '', '' ,'' ,'' ,'','','Average','Location','best','fontsize',13)
+xlim([0.9,1.3])
+ylim([0.5,1.3])
+
+htmlGray = [128 128 128]/255;
+
+figure()
+hold on;grid on;
+% surf(temps_10inch_txc,press_10inch_txc,coefs_10inch_txc)
+plot(rho_10inch_txc./rho_10inch_du(1:4,1:6),coefs_10inch_txc.*(rho_10inch_txc./rho_10inch_du(1:4,1:6)),'x','color','k','markersize',7,'lineWidth',2)
+plot(rho_12inch_txc./rho_12inch_du(1:4,1:6),coefs_12inch_txc.*(rho_12inch_txc./rho_12inch_du(1:4,1:6)),'x','color','b','markersize',7,'lineWidth',2)
+plot(mean(rho_10inch_txc(1,:)./rho_10inch_du(1,1:6)),mean(mean(coefs_10inch_txc.*(rho_10inch_txc(1,:)./rho_10inch_du(1,1:6)))),'*','color','m','markersize',7,'lineWidth',2)
+plot(mean(rho_12inch_txc(1,:)./rho_12inch_du(1,1:6)),mean(mean(coefs_12inch_txc.*(rho_12inch_txc(1,:)./rho_12inch_du(1,1:6)))),'*','color','m','markersize',7,'lineWidth',2)
+% plot(rho_10inch_txc./rho_10inch_du(1:4,1:6),coefs_10inch_txc,'x','color',htmlGray,'markersize',7,'lineWidth',2)
+% plot(rho_12inch_txc./rho_12inch_du(1:4,1:6),coefs_12inch_txc,'x','color','c','markersize',7,'lineWidth',2)
+plot(rho_10inch_du./rho_10inch_du,coefs_10inch_du,'o','color','k','markersize',7,'lineWidth',2)
+plot(rho_12inch_du./rho_12inch_du,coefs_12inch_du,'o','color','b','markersize',7,'lineWidth',2)
+plot(rho_13inch_du./rho_13inch_du,coefs_13inch_du,'o','color','r','markersize',7,'lineWidth',2)
+plot(mean(rho_10inch_du(1,:)./rho_10inch_du(1,:)),mean(mean(coefs_10inch_du)),'*','color','m','markersize',7,'lineWidth',2)
+plot(mean(rho_12inch_du(1,:)./rho_12inch_du(1,:)),mean(mean(coefs_12inch_du)),'*','color','m','markersize',7,'lineWidth',2)
+plot(mean(rho_13inch_du(1,:)./rho_13inch_du(1,:)),mean(mean(coefs_13inch_du)),'*','color','m','markersize',7,'lineWidth',2)
+% plot3(Pres1_10inch, Temp1_10inch, Ct1_off_10inches_Fz_1,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres1_10inch, Temp1_10inch, Ct1_off_10inches_Fz_2,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres1_10inch, Temp1_10inch, Ct1_off_10inches_RPM_1,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres1_10inch, Temp1_10inch, Ct1_off_10inches_RPM_2,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres2_10inch, Temp2_10inch, Ct2_off_10inches_Fz_1,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres2_10inch, Temp2_10inch, Ct2_off_10inches_Fz_2,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres2_10inch, Temp2_10inch, Ct2_off_10inches_RPM_1,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres2_10inch, Temp2_10inch, Ct2_off_10inches_RPM_2,'x','color','b','markersize',7,'lineWidth',2)
+xlabel('$\rho/\rho_{DU}$ [-]','FontSize',15)
+% ylabel('Temperature [\circ C]')
+ylabel('c$_T\cdot\frac{\rho}{\rho_{DU}}$ @ 4000 RPM [-]','FontSize',15)
+legend('10"x4.7" tXc', '', '', '' ,'' ,'' ,'12"x5" tXc', '', '', '' ,'' ,'' , '', '','10"x4.5" DU', '', '', '' ,'' ,'' ,'','','12"x6" DU', '', '', '' ,'' ,'' ,'','','13"x6.5" DU', '', '', '' ,'' ,'' ,'','', 'Average','Location','best','fontsize',13)
+xlim([0.9,1.3])
+
+figure()
+hold on;grid on;
+% surf(temps_10inch_txc,press_10inch_txc,coefs_10inch_txc)
+plot(rho_10inch_txc./rho_10inch_du(1:4,1:6),coefs_10inch_txc.*(rho_10inch_txc./rho_10inch_du(1:4,1:6)),'x','color','k','markersize',7,'lineWidth',2)
+plot(rho_12inch_txc./rho_12inch_du(1:4,1:6),coefs_12inch_txc.*(rho_12inch_txc./rho_12inch_du(1:4,1:6)),'x','color','b','markersize',7,'lineWidth',2)
+plot(mean(rho_10inch_txc(1,:)./rho_10inch_du(1,1:6)),mean(mean(coefs_10inch_txc.*(rho_10inch_txc(1,:)./rho_10inch_du(1,1:6)))),'*','color','m','markersize',7,'lineWidth',2)
+plot(mean(rho_12inch_txc(1,:)./rho_12inch_du(1,1:6)),mean(mean(coefs_12inch_txc.*(rho_12inch_txc(1,:)./rho_12inch_du(1,1:6)))),'*','color','m','markersize',7,'lineWidth',2)
+plot(rho_10inch_txc./rho_10inch_du(1:4,1:6),coefs_10inch_txc,'o','color',htmlGray,'markersize',7,'lineWidth',2)
+plot(rho_12inch_txc./rho_12inch_du(1:4,1:6),coefs_12inch_txc,'o','color','c','markersize',7,'lineWidth',2)
+% plot(rho_10inch_du./rho_10inch_du,coefs_10inch_du,'o','color','k','markersize',7,'lineWidth',2)
+% plot(rho_12inch_du./rho_12inch_du,coefs_12inch_du,'o','color','b','markersize',7,'lineWidth',2)
+% plot(rho_13inch_du./rho_13inch_du,coefs_13inch_du,'o','color','r','markersize',7,'lineWidth',2)
+% plot(mean(rho_10inch_du(1,:)./rho_10inch_du(1,:)),mean(mean(coefs_10inch_du)),'*','color','m','markersize',7,'lineWidth',2)
+% plot(mean(rho_12inch_du(1,:)./rho_12inch_du(1,:)),mean(mean(coefs_12inch_du)),'*','color','m','markersize',7,'lineWidth',2)
+% plot(mean(rho_13inch_du(1,:)./rho_13inch_du(1,:)),mean(mean(coefs_13inch_du)),'*','color','m','markersize',7,'lineWidth',2)
+% plot3(Pres1_10inch, Temp1_10inch, Ct1_off_10inches_Fz_1,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres1_10inch, Temp1_10inch, Ct1_off_10inches_Fz_2,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres1_10inch, Temp1_10inch, Ct1_off_10inches_RPM_1,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres1_10inch, Temp1_10inch, Ct1_off_10inches_RPM_2,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres2_10inch, Temp2_10inch, Ct2_off_10inches_Fz_1,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres2_10inch, Temp2_10inch, Ct2_off_10inches_Fz_2,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres2_10inch, Temp2_10inch, Ct2_off_10inches_RPM_1,'x','color','b','markersize',7,'lineWidth',2)
+% plot3(Pres2_10inch, Temp2_10inch, Ct2_off_10inches_RPM_2,'x','color','b','markersize',7,'lineWidth',2)
+xlabel('$\rho/\rho_{DU}$ [-]','FontSize',15)
+% ylabel('Temperature [\circ C]')
+ylabel('c$_T\cdot\frac{\rho}{\rho_{DU}}$ @ 4000 RPM [-]','FontSize',15)
+legend('10"x4.7" tXc', '', '', '' ,'' ,'' ,'12"x5" tXc', '', '', '' ,'' ,'' , '', '','10"x4.5" DU', '', '', '' ,'' ,'' ,'','','12"x6" DU', '', '', '' ,'' ,'' ,'','','13"x6.5" DU', '', '', '' ,'' ,'' ,'','', 'Average','Location','best','fontsize',13)
+xlim([0.9,1.3])
 
 
 %{

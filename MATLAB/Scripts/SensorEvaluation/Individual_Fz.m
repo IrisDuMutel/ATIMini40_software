@@ -2,12 +2,12 @@ close all
 clear variables
 %%%% File selection and loading of data
 
-file1 = '../LogFiles/SensorComparison/Individual/ATI_test10g_Fz_test1.csv'; %LoadCell
-file2 = '../LogFiles/SensorComparison/Individual/ATI_test50g_Fz_test1.csv'; %LoadCell
-file3 = '../LogFiles/SensorComparison/Individual/ATI_test100g_Fz_test1.csv'; %LoadCell
-file4 = '../LogFiles/SensorComparison/Individual/ATI_test500g_Fz_test1.csv'; %LoadCell
-file5 = '../LogFiles/SensorComparison/Individual/ATI_test1000g_Fz_test1.csv'; %LoadCell
-file6 = '../LogFiles/SensorComparison/Individual/ATI_test1500g_Fz_test1.csv'; %LoadCell
+file1 = '../../LogFiles/SensorComparison/Individual/ATI_test10g_Fz_test1.csv'; %LoadCell
+file2 = '../../LogFiles/SensorComparison/Individual/ATI_test50g_Fz_test1.csv'; %LoadCell
+file3 = '../../LogFiles/SensorComparison/Individual/ATI_test100g_Fz_test1.csv'; %LoadCell
+file4 = '../../LogFiles/SensorComparison/Individual/ATI_test500g_Fz_test1.csv'; %LoadCell
+file5 = '../../LogFiles/SensorComparison/Individual/ATI_test1000g_Fz_test1.csv'; %LoadCell
+file6 = '../../LogFiles/SensorComparison/Individual/ATI_test1500g_Fz_test1.csv'; %LoadCell
 
 weight= [10e-3;
          50e-3;
@@ -56,7 +56,7 @@ f_sampling = 1/Ts1;
 w_n = f_cutoff/(f_sampling/2);  % Cutoff frequency
 [b_5,a_5] = butter(5,w_n,'low');   % Create Butterworth filter of order 5
 fromm=10000;
-tooo=14000;
+tooo=13700;
 offset1 = 1496;
 offset2 = 1496;
 offset3 = 1496;
@@ -140,6 +140,19 @@ Mz3 = Mz3 - Mz3(offset3);
 Mz4 = Mz4 - Mz4(offset4);
 Mz5 = Mz5 - Mz5(offset5);
 Mz6 = Mz6 - Mz6(offset6);
+
+figure()
+hold on; grid on;
+plot(Fz1,'lineWidth',2)
+plot(Fz2,'lineWidth',2)
+plot(Fz3,'lineWidth',2)
+plot(Fz4,'lineWidth',2)
+plot(Fz5,'lineWidth',2)
+plot(Fz6,'lineWidth',2)
+xlabel('Datapoints')
+ylabel('Fz1 [N]')
+
+
 
 Fz1_avg = mean(Fz1(fromm:tooo));
 Fz2_avg = mean(Fz2(fromm:tooo));

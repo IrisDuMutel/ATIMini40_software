@@ -2,13 +2,13 @@ close all
 clear variables
 %%%% File selection and loading of data
 
-file1 = '../LogFiles/SensorComparison/Individual/ATI_test10g_My_test1.csv'; %LoadCell
-file2 = '../LogFiles/SensorComparison/Individual/ATI_test20g_My_test1.csv'; %LoadCell
-file3 = '../LogFiles/SensorComparison/Individual/ATI_test30g_My_test1.csv'; %LoadCell
-file4 = '../LogFiles/SensorComparison/Individual/ATI_test40g_My_test1.csv'; %LoadCell
-file5 = '../LogFiles/SensorComparison/Individual/ATI_test50g_My_test1.csv'; %LoadCell
-file6 = '../LogFiles/SensorComparison/Individual/ATI_test100g_My_test1.csv'; %LoadCell
-file7 = '../LogFiles/SensorComparison/Individual/ATI_test200g_My_test1.csv'; %LoadCell
+file1 = '../../LogFiles/SensorComparison/Individual/ATI_test10g_Mx_test1.csv'; %LoadCell
+file2 = '../../LogFiles/SensorComparison/Individual/ATI_test20g_Mx_test1.csv'; %LoadCell
+file3 = '../../LogFiles/SensorComparison/Individual/ATI_test30g_Mx_test1.csv'; %LoadCell
+file4 = '../../LogFiles/SensorComparison/Individual/ATI_test40g_Mx_test1.csv'; %LoadCell
+file5 = '../../LogFiles/SensorComparison/Individual/ATI_test50g_Mx_test2.csv'; %LoadCell
+file6 = '../../LogFiles/SensorComparison/Individual/ATI_test100g_Mx_test1.csv'; %LoadCell
+file7 = '../../LogFiles/SensorComparison/Individual/ATI_test200g_Mx_test1.csv'; %LoadCell
 
 weight= [10e-3;
          20e-3;
@@ -20,7 +20,7 @@ weight= [10e-3;
 
 
 %%% Text for plots
-Title = 'My individual tests';
+Title = 'Mx individual tests';
 
 fx_column = 1;
 fy_column = 2;
@@ -61,13 +61,13 @@ w_n = f_cutoff/(f_sampling/2);  % Cutoff frequency
 [b_5,a_5] = butter(5,w_n,'low');   % Create Butterworth filter of order 5
 fromm=10000;
 tooo=14000;
-offset1 = 2000;
-offset2 = 2000;
-offset3 = 2000;
-offset4 = 2000;
-offset5 = 2000;
-offset6 = 2000;
-offset7 = 2000;
+offset1 = 1;
+offset2 = 1;
+offset3 = 1;
+offset4 = 1;
+offset5 = 1;
+offset6 = 1;
+offset7 = 1;
 
 Fx1 = filter(b_5, a_5,loadCell_data1{indx1:end,fx_column});
 Fx2 = filter(b_5, a_5,loadCell_data2{indx2:end,fx_column});
@@ -319,23 +319,23 @@ Fzstd = [Fz1_std;
     Fz6_std;
     Fz7_std];
 
-rel_err1 = abs((My1_avg-M_expected(1))/F_expected(1))*100;
-rel_err2 = abs((My2_avg-M_expected(2))/F_expected(2))*100;
-rel_err3 = abs((My3_avg-M_expected(3))/F_expected(3))*100;
-rel_err4 = abs((My4_avg-M_expected(4))/F_expected(4))*100;
-rel_err5 = abs((My5_avg-M_expected(5))/F_expected(5))*100;
-rel_err6 = abs((My6_avg-M_expected(6))/F_expected(6))*100;
-rel_err7 = abs((My7_avg-M_expected(7))/F_expected(7))*100;
+rel_err1 = abs((Mx1_avg-M_expected(1))/M_expected(1))*100;
+rel_err2 = abs((Mx2_avg-M_expected(2))/M_expected(2))*100;
+rel_err3 = abs((Mx3_avg-M_expected(3))/M_expected(3))*100;
+rel_err4 = abs((Mx4_avg-M_expected(4))/M_expected(4))*100;
+rel_err5 = abs((Mx5_avg-M_expected(5))/M_expected(5))*100;
+rel_err6 = abs((Mx6_avg-M_expected(6))/M_expected(6))*100;
+rel_err7 = abs((Mx7_avg-M_expected(7))/M_expected(7))*100;
 rel_err = [rel_err1,rel_err2,rel_err3,rel_err4,rel_err5,rel_err6,rel_err7]'
 avg_relErr = mean([rel_err1,rel_err2,rel_err3,rel_err4,rel_err5,rel_err6,rel_err7]);
 fprintf('The average relative error is: %f \n', avg_relErr)
-abs_err1 = abs((My1_avg-M_expected(1)));
-abs_err2 = abs((My2_avg-M_expected(2)));
-abs_err3 = abs((My3_avg-M_expected(3)));
-abs_err4 = abs((My4_avg-M_expected(4)));
-abs_err5 = abs((My5_avg-M_expected(5)));
-abs_err6 = abs((My6_avg-M_expected(6)));
-abs_err7 = abs((My7_avg-M_expected(7)));
+abs_err1 = abs((Mx1_avg-M_expected(1)));
+abs_err2 = abs((Mx2_avg-M_expected(2)));
+abs_err3 = abs((Mx3_avg-M_expected(3)));
+abs_err4 = abs((Mx4_avg-M_expected(4)));
+abs_err5 = abs((Mx5_avg-M_expected(5)));
+abs_err6 = abs((Mx6_avg-M_expected(6)));
+abs_err7 = abs((Mx7_avg-M_expected(7)));
 abs_err = [abs_err1,abs_err2,abs_err3,abs_err4,abs_err5,abs_err6,abs_err7]'
 avg_absErr = mean([abs_err1,abs_err2,abs_err3,abs_err4,abs_err5,abs_err6,abs_err7]);
 fprintf('The average absolute error is: %f \n', avg_absErr)
@@ -427,15 +427,15 @@ fprintf('The average absolute error is: %f \n', avg_absErr)
 %% %% Plotting %%%%
 figure()
 hold on; grid on;
-plot(My1,'lineWidth',2)
-plot(My2,'lineWidth',2)
-plot(My3,'lineWidth',2)
-plot(My4,'lineWidth',2)
-plot(My5,'lineWidth',2)
-plot(My6,'lineWidth',2)
-plot(My7,'lineWidth',2)
+plot(Mx1,'lineWidth',2)
+plot(Mx2,'lineWidth',2)
+plot(Mx3,'lineWidth',2)
+plot(Mx4,'lineWidth',2)
+plot(Mx5,'lineWidth',2)
+plot(Mx6,'lineWidth',2)
+plot(Mx7,'lineWidth',2)
 xlabel('Datapoints')
-ylabel('My1 [Nm]')
+ylabel('Mx1 [Nm]')
 legend
 
 % figure()
@@ -462,13 +462,13 @@ legend
 
 figure()
 hold on;
-plot(time1, My1,'lineWidth',2)
-plot(time2, My2,'lineWidth',2)
-plot(time3, My3,'lineWidth',2)
-plot(time4, My4,'lineWidth',2)
-plot(time5, My5,'lineWidth',2)
-plot(time6, My6,'lineWidth',2)
-plot(time7, My7,'lineWidth',2)
+plot(time1, Mx1,'lineWidth',2)
+plot(time2, Mx2,'lineWidth',2)
+plot(time3, Mx3,'lineWidth',2)
+plot(time4, Mx4,'lineWidth',2)
+plot(time5, Mx5,'lineWidth',2)
+plot(time6, Mx6,'lineWidth',2)
+plot(time7, Mx7,'lineWidth',2)
 plot(time1,M_expected(1)*ones(1,length(time1)),'-','lineWidth',1.5,'color','k')
 plot(time2,M_expected(2)*ones(1,length(time2)),'-','lineWidth',1.5,'color','k')
 plot(time3,M_expected(3)*ones(1,length(time3)),'-','lineWidth',1.5,'color','k')
@@ -476,7 +476,7 @@ plot(time4,M_expected(4)*ones(1,length(time4)),'-','lineWidth',1.5,'color','k')
 plot(time5,M_expected(5)*ones(1,length(time5)),'-','lineWidth',1.5,'color','k')
 plot(time6,M_expected(6)*ones(1,length(time6)),'-','lineWidth',1.5,'color','k')
 plot(time7,M_expected(7)*ones(1,length(time7)),'-','lineWidth',1.5,'color','k')
-ylabel('M_y [N]')
+ylabel('M_x [N]')
 xlabel('Time [s]')
 N = [1:1:length(weight)];
 legendStrings = weight(N) + "Kg";
@@ -505,15 +505,15 @@ grid on
 
 figure()
 hold on
-plot(M_expected(1), My1_avg,'o', 'lineWidth',2)
-plot(M_expected(2), My2_avg,'o', 'lineWidth',2)
-plot(M_expected(3), My3_avg,'o', 'lineWidth',2)
-plot(M_expected(4), My4_avg,'o', 'lineWidth',2)
-plot(M_expected(5), My5_avg,'o', 'lineWidth',2)
-plot(M_expected(6), My6_avg,'o', 'lineWidth',2)
-plot(M_expected(7), My7_avg,'o', 'lineWidth',2)
+plot(M_expected(1), Mx1_avg,'o', 'lineWidth',2)
+plot(M_expected(2), Mx2_avg,'o', 'lineWidth',2)
+plot(M_expected(3), Mx3_avg,'o', 'lineWidth',2)
+plot(M_expected(4), Mx4_avg,'o', 'lineWidth',2)
+plot(M_expected(5), Mx5_avg,'o', 'lineWidth',2)
+plot(M_expected(6), Mx6_avg,'o', 'lineWidth',2)
+plot(M_expected(7), Mx7_avg,'o', 'lineWidth',2)
 plot([M_expected],[M_expected],'-', 'lineWidth',1.5)
-ylabel('Measured value My [Nm]')
+ylabel('Measured value Mx [Nm]')
 xlabel('True Value [N]')
 N = [1:1:length(weight)];
 legendStrings = weight(N) + "Kg";
