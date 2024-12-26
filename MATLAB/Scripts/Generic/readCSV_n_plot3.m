@@ -7,7 +7,7 @@ close all
 %%%% Columns of the file:
 %%%% Fx  Fy  Fz  Mx  My  Mz
 
-%%%% RPM values can also be read from the corrisponding csv files in which the values are
+%%%% RPM values can also be read from the corresponding csv files in which the values are
 %%%% structured in four columns:
 %%%% T1  T2  T3  T4
 
